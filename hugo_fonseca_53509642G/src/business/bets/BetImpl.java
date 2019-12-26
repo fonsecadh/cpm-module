@@ -41,7 +41,16 @@ public class BetImpl implements Bet {
 
 	@Override
 	public double getBetBenefit() {
-		return ammount * type.getMultiplier();
+		switch (status) {
+			case ZERO:
+				return ammount + (ammount / 2);
+			case LOST:
+				return 0;
+			case WON:
+				return ammount + (ammount * type.getMultiplier());
+			default:
+				return 0;
+		}
 	}
 
 	@Override
@@ -56,7 +65,7 @@ public class BetImpl implements Bet {
 
 	@Override
 	public void update() {
-		setStatus(manager.evaluateBet(this));
+		setStatus(manager.evaluateBet(this));	
 	}
 
 	@Override

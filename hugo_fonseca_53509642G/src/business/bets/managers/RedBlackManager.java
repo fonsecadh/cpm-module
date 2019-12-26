@@ -10,6 +10,12 @@ public class RedBlackManager implements BetManager {
 	@Override
 	public BetStatus evaluateBet(Bet bet) {
 		Roulette r = Roulette.getInstance();
+		
+		// Special case: Zero
+		if (r.getRoundResult().getNumber() == 0) {
+			return BetStatus.ZERO;
+		}
+		
 		if ((boolean) bet.getType().getPlayerBet() == RedBlackType.RED 
 				&& r.getRoundResult().isRed()) {
 			return BetStatus.WON;

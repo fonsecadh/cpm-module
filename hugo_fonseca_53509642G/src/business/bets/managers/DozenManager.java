@@ -9,6 +9,12 @@ public class DozenManager implements BetManager {
 	@Override
 	public BetStatus evaluateBet(Bet bet) {
 		Roulette r = Roulette.getInstance();
+		
+		// Special case: Zero
+		if (r.getRoundResult().getNumber() == 0) {
+			return BetStatus.ZERO;
+		}
+		
 		if ((int) bet.getType().getPlayerBet() == r.getRoundResult().getDozen()) {
 			return BetStatus.WON;
 		} else {
