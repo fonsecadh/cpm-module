@@ -2,6 +2,6 @@ package business.bets;
 
 public enum BetStatus {
 	
-	WON, LOST
+	WON, LOST, DEFAULT
 
 }

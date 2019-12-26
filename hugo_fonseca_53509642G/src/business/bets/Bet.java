@@ -15,7 +15,6 @@ public interface Bet {
 	
 	// Bet benefit
 	double getBetBenefit();
-	void setBetBenefit(double benefit);
 	
 	// Bet manager
 	BetManager getBetManager();
