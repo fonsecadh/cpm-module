@@ -6,27 +6,13 @@ import business.roulette.Roulette;
 
 public class NumberManager implements BetManager {
 
-	// Attributes
-	private Bet bet;
-	
-
 	@Override
-	public Bet getBet() {
-		return bet;
-	}
-
-	@Override
-	public void setBet(Bet bet) {
-		this.bet = bet;
-	}
-
-	@Override
-	public void evaluateBet() {
+	public BetStatus evaluateBet(Bet bet) {
 		Roulette r = Roulette.getInstance();
 		if ((int) bet.getType().getPlayerBet() == r.getRoundResult().getNumber()) {
-			bet.setStatus(BetStatus.WON);
+			return BetStatus.WON;
 		} else {
-			bet.setStatus(BetStatus.LOST);
+			return BetStatus.LOST;
 		}
 	}
 

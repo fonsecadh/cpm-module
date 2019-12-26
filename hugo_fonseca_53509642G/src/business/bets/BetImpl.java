@@ -56,7 +56,7 @@ public class BetImpl implements Bet {
 
 	@Override
 	public void update() {
-		manager.evaluateBet();
+		setStatus(manager.evaluateBet(this));
 	}
 
 	@Override

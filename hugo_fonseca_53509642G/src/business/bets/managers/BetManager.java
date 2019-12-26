@@ -1,14 +1,11 @@
 package business.bets.managers;
 
 import business.bets.Bet;
+import business.bets.BetStatus;
 
 public interface BetManager {
 	
-	// Bet
-	Bet getBet();
-	void setBet(Bet bet);
-	
 	// Evaluate bet
-	void evaluateBet();
+	BetStatus evaluateBet(Bet bet);
 
 }

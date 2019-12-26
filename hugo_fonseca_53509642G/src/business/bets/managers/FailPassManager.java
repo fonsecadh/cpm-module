@@ -7,31 +7,17 @@ import business.roulette.Roulette;
 
 public class FailPassManager implements BetManager {
 
-	// Attributes
-	private Bet bet;
-	
-
 	@Override
-	public Bet getBet() {
-		return bet;
-	}
-
-	@Override
-	public void setBet(Bet bet) {
-		this.bet = bet;
-	}
-
-	@Override
-	public void evaluateBet() {
+	public BetStatus evaluateBet(Bet bet) {
 		Roulette r = Roulette.getInstance();
 		if ((boolean) bet.getType().getPlayerBet() == FailPassType.PASS 
 				&& r.getRoundResult().hasPassed()) {
-			bet.setStatus(BetStatus.WON);
+			return BetStatus.WON;
 		} else if ((boolean) bet.getType().getPlayerBet() == !FailPassType.PASS 
 				&& !r.getRoundResult().hasPassed()) {
-			bet.setStatus(BetStatus.WON);
+			return BetStatus.WON;
 		} else {
-			bet.setStatus(BetStatus.LOST);
+			return BetStatus.LOST;
 		}
 	}
 
