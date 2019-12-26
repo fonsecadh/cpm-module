@@ -1,15 +1,29 @@
 package business.roulette.results;
 
-import business.bets.Bet;
-
-public interface RoundResult {
+public interface RoundResult {	
 	
-	// Status
-	ResultStatus getStatus();
-	void setStatsus(ResultStatus result);
+	// Red - Black
+	boolean isRed();
+	void setRed(boolean red);
 	
-	// Bet
-	Bet getBet();
-	void setBet(Bet bet);
+	// Odd - Even
+	boolean isEven();
+	void setEven(boolean even);
+	
+	// Fail - Pass
+	boolean hasPassed();
+	void setPass(boolean pass);
+	
+	// Dozens
+	int getDozen();
+	void setDozen(int dozen);
+	
+	// Column
+	int getColumn();
+	void setColumn(int column);
+	
+	// Number
+	int getNumber();
+	void setNumber(int number);
 
 }

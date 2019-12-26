@@ -6,8 +6,8 @@ import business.bets.types.BetType;
 public interface Bet {
 	
 	// Bet types
-	BetType getType();
-	void setType(BetType type);
+	BetType<?> getType();
+	void setType(BetType<?> type);
 	
 	// Bet amount
 	double getBetAmmount();
@@ -22,6 +22,10 @@ public interface Bet {
 	void setBetManager(BetManager bm);
 	
 	// Current round results
-	double getAmmountForCurrentRound();
+	void update();
+	
+	// Status
+	BetStatus getStatus();
+	void setStatus(BetStatus status);
 
 }

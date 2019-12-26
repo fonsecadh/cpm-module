@@ -1,22 +1,49 @@
 package business.roulette;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import business.bets.Bet;
 import business.roulette.results.RoundResult;
 
-public interface Roulette {
+public class Roulette {
+	
+	// Attributes
+	private static Roulette r = new Roulette();
+	private List<Bet> bets = new ArrayList<Bet>();
+	private RoundResult roundResult;
+	
+	
 	
 	// Singleton
-	Roulette getInstance();
+	public static Roulette getInstance() {
+		return r;
+	}
 	
 	// Spinning
-	void spin();
+	public void spin() {
+		
+	}
+	
+	public RoundResult getRoundResult() {
+		return roundResult;
+	}
 	
 	// Bet management
-	void attachBet(Bet bet);
-	void detachBet(Bet bet);
-	void notifyBets();
-	List<RoundResult> getResults();
+	public void attachBet(Bet bet) {
+		bets.add(bet);
+	}
+	
+	public void detachBet(Bet bet) {
+		bets.remove(bet);
+	}	
+	
+	public void notifyBets() {
+		bets.parallelStream().forEach(b -> b.update());
+	}
+	
+	public List<Bet> getResults() {
+		return new ArrayList<Bet>(bets);		
+	}
 
 }
