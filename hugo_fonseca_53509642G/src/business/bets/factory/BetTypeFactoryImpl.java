@@ -11,32 +11,32 @@ import business.bets.types.RedBlackType;
 public class BetTypeFactoryImpl implements BetTypeFactory {
 
 	@Override
-	public BetType<?> makeColumnType() {
+	public BetType<Integer> makeColumnType() {
 		return new ColumnType();
 	}
 
 	@Override
-	public BetType<?> makeDozenType() {
+	public BetType<Integer> makeDozenType() {
 		return new DozenType();
 	}
 
 	@Override
-	public BetType<?> makeFailPassType() {
+	public BetType<Boolean> makeFailPassType() {
 		return new FailPassType();
 	}
 
 	@Override
-	public BetType<?> makeNumberType() {
+	public BetType<Integer> makeNumberType() {
 		return new NumberType();
 	}
 
 	@Override
-	public BetType<?> makeOddEvenType() {
+	public BetType<Boolean> makeOddEvenType() {
 		return new OddEvenType();
 	}
 
 	@Override
-	public BetType<?> makeRedBlackType() {
+	public BetType<Boolean> makeRedBlackType() {
 		return new RedBlackType();
 	}
 
