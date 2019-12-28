@@ -1,5 +1,6 @@
 package business.bets.factory;
 
+import business.bets.managers.BetManager;
 import business.bets.managers.ColumnManager;
 import business.bets.managers.DozenManager;
 import business.bets.managers.FailPassManager;
@@ -10,32 +11,32 @@ import business.bets.managers.RedBlackManager;
 public class BetManagerFactoryImpl implements BetManagerFactory {
 
 	@Override
-	public ColumnManager makeColumnManager() {
+	public BetManager makeColumnManager() {
 		return new ColumnManager();
 	}
 
 	@Override
-	public DozenManager makeDozenManager() {
+	public BetManager makeDozenManager() {
 		return new DozenManager();
 	}
 
 	@Override
-	public FailPassManager makeFailPassManager() {
+	public BetManager makeFailPassManager() {
 		return new FailPassManager();
 	}
 
 	@Override
-	public NumberManager makeNumberManager() {
+	public BetManager makeNumberManager() {
 		return new NumberManager();
 	}
 
 	@Override
-	public OddEvenManager makeOddEvenManager() {
+	public BetManager makeOddEvenManager() {
 		return new OddEvenManager();
 	}
 
 	@Override
-	public RedBlackManager makeRedBlackManager() {
+	public BetManager makeRedBlackManager() {
 		return new RedBlackManager();
 	}
 

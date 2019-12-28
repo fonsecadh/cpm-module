@@ -1,19 +1,14 @@
 package business.bets.factory;
 
-import business.bets.managers.ColumnManager;
-import business.bets.managers.DozenManager;
-import business.bets.managers.FailPassManager;
-import business.bets.managers.NumberManager;
-import business.bets.managers.OddEvenManager;
-import business.bets.managers.RedBlackManager;
+import business.bets.managers.BetManager;
 
 public interface BetManagerFactory {
 	
-	ColumnManager makeColumnManager();
-	DozenManager makeDozenManager();
-	FailPassManager makeFailPassManager();
-	NumberManager makeNumberManager();
-	OddEvenManager makeOddEvenManager();
-	RedBlackManager makeRedBlackManager();
+	BetManager makeColumnManager();
+	BetManager makeDozenManager();
+	BetManager makeFailPassManager();
+	BetManager makeNumberManager();
+	BetManager makeOddEvenManager();
+	BetManager makeRedBlackManager();
 
 }

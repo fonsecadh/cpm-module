@@ -7,7 +7,7 @@ public class BetImpl implements Bet {
 	
 	// Attributes
 	private BetType<?> type;
-	private double ammount;
+	private double amount;
 	private BetStatus status;
 	private BetManager manager;
 	
@@ -30,24 +30,24 @@ public class BetImpl implements Bet {
 	}
 
 	@Override
-	public double getBetAmmount() {
-		return ammount;
+	public double getBetAmount() {
+		return amount;
 	}
 
 	@Override
-	public void setBetAmmount(double ammount) {
-		this.ammount = ammount;
+	public void setBetAmount(double amount) {
+		this.amount = amount;
 	}
 
 	@Override
 	public double getBetBenefit() {
 		switch (status) {
 			case ZERO:
-				return ammount + (ammount / 2);
+				return amount + (amount / 2);
 			case LOST:
 				return 0;
 			case WON:
-				return ammount + (ammount * type.getMultiplier());
+				return amount + (amount * type.getMultiplier());
 			default:
 				return 0;
 		}
@@ -76,6 +76,6 @@ public class BetImpl implements Bet {
 	@Override
 	public void setStatus(BetStatus status) {
 		this.status = status;
-	}
+	}	
 
 }

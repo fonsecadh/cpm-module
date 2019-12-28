@@ -10,8 +10,8 @@ public interface Bet {
 	void setType(BetType<?> type);
 	
 	// Bet amount
-	double getBetAmmount();
-	void setBetAmmount(double ammount);
+	double getBetAmount();
+	void setBetAmount(double amount);
 	
 	// Bet benefit
 	double getBetBenefit();

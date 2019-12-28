@@ -52,6 +52,7 @@ public class Roulette {
 		roundResult.setPass(hasPassedNumber(resultingNumber));
 		roundResult.setColumn(getColumn(resultingNumber));
 		roundResult.setDozen(getDozen(resultingNumber));
+		notifyBets(); // Update current round's bets
 	}
 	
 	private int getDozen(int n) {

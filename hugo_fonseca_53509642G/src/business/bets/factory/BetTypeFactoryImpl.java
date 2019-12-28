@@ -1,5 +1,6 @@
 package business.bets.factory;
 
+import business.bets.types.BetType;
 import business.bets.types.ColumnType;
 import business.bets.types.DozenType;
 import business.bets.types.FailPassType;
@@ -10,32 +11,32 @@ import business.bets.types.RedBlackType;
 public class BetTypeFactoryImpl implements BetTypeFactory {
 
 	@Override
-	public ColumnType makeColumnType() {
+	public BetType<?> makeColumnType() {
 		return new ColumnType();
 	}
 
 	@Override
-	public DozenType makeDozenType() {
+	public BetType<?> makeDozenType() {
 		return new DozenType();
 	}
 
 	@Override
-	public FailPassType makeFailPassType() {
+	public BetType<?> makeFailPassType() {
 		return new FailPassType();
 	}
 
 	@Override
-	public NumberType makeNumberType() {
+	public BetType<?> makeNumberType() {
 		return new NumberType();
 	}
 
 	@Override
-	public OddEvenType makeOddEvenType() {
+	public BetType<?> makeOddEvenType() {
 		return new OddEvenType();
 	}
 
 	@Override
-	public RedBlackType makeRedBlackType() {
+	public BetType<?> makeRedBlackType() {
 		return new RedBlackType();
 	}
 
