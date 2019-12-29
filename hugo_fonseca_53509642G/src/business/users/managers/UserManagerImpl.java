@@ -4,6 +4,7 @@ import java.util.List;
 
 import business.exceptions.users.UserException;
 import business.users.User;
+import business.users.factory.UserFactoryImpl;
 import persistence.users.UserDataAccess;
 import persistence.users.UserDataAccessImpl;
 
@@ -16,7 +17,9 @@ public class UserManagerImpl implements UserManager {
 	
 	// Constructor
 	public UserManagerImpl() {
-		this.uda = new UserDataAccessImpl();
+		UserDataAccess aux = new UserDataAccessImpl();
+		aux.setUserFactory(new UserFactoryImpl());
+		this.uda = aux;
 	}	
 	
 

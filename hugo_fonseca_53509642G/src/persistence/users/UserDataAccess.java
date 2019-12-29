@@ -4,6 +4,7 @@ import java.util.List;
 
 import business.exceptions.users.UserException;
 import business.users.User;
+import business.users.factory.UserFactory;
 
 public interface UserDataAccess {
 
@@ -12,5 +13,8 @@ public interface UserDataAccess {
 	List<User> loadUsers();
 	User loadUserForID(String id) throws UserException;
 	User loadUserForUsername(String username) throws UserException;
+	
+	UserFactory getUserFactory();
+	void setUserFactory(UserFactory userFactory);	
 
 }
