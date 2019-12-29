@@ -220,6 +220,11 @@ public class GameWindow extends JFrame {
 	
 	private void spinRoulette() {
 		roulette.spin();
+		writeInResultsTextArea();
+		roulette.detachAllBets();
+	}
+
+	private void writeInResultsTextArea() {
 		StringBuilder sb = new StringBuilder();
 		roulette.getResults().parallelStream().forEach(b -> sb.append(b.toString() + "\n"));
 		taResults.setText(sb.toString());

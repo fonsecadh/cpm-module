@@ -117,6 +117,10 @@ public class Roulette {
 		bets.parallelStream().forEach(b -> b.update());
 	}
 	
+	public void detachAllBets() {
+		bets.clear();
+	}
+	
 	public List<Bet> getResults() {
 		return new ArrayList<Bet>(bets);		
 	}
