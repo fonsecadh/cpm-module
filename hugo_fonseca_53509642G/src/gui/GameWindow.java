@@ -34,6 +34,8 @@ public class GameWindow extends JFrame {
 	private JButton btnRoulette;
 	private JScrollPane spResults;
 	private JTextArea taResults;
+	private JPanel pnBets;
+	private JPanel pnChips;
 
 	/**
 	 * Launch the application.
@@ -108,6 +110,9 @@ public class GameWindow extends JFrame {
 	private JPanel getPnGame() {
 		if (pnGame == null) {
 			pnGame = new JPanel();
+			pnGame.setLayout(new BorderLayout(0, 0));
+			pnGame.add(getPnBets(), BorderLayout.CENTER);
+			pnGame.add(getPnChips(), BorderLayout.WEST);
 		}
 		return pnGame;
 	}
@@ -123,6 +128,7 @@ public class GameWindow extends JFrame {
 	private JTextField getTxtBalance() {
 		if (txtBalance == null) {
 			txtBalance = new JTextField();
+			txtBalance.setEditable(false);
 			txtBalance.setFont(new Font("Dialog", Font.PLAIN, 14));
 			txtBalance.setColumns(10);
 		}
@@ -172,8 +178,23 @@ public class GameWindow extends JFrame {
 	private JTextArea getTaResults() {
 		if (taResults == null) {
 			taResults = new JTextArea();
+			taResults.setEditable(false);
 			taResults.setFont(new Font("Dialog", Font.PLAIN, 14));
 		}
 		return taResults;
+	}
+
+	private JPanel getPnBets() {
+		if (pnBets == null) {
+			pnBets = new JPanel();
+		}
+		return pnBets;
+	}
+
+	private JPanel getPnChips() {
+		if (pnChips == null) {
+			pnChips = new JPanel();
+		}
+		return pnChips;
 	}
 }
