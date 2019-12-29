@@ -77,5 +77,10 @@ public class BetImpl implements Bet {
 	public void setStatus(BetStatus status) {
 		this.status = status;
 	}	
+	
+	@Override
+	public String toString() {
+		return "(" + status.toString() + ") Type: " + type.toString() + ", amount: " + amount + ", benefit: " + getBetBenefit();
+	}
 
 }

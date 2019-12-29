@@ -20,5 +20,10 @@ public class DozenType implements BetType<Integer> {
 	public void setPlayerBet(Integer playerBet) {
 		this.playerBet = playerBet;
 	}
+	
+	@Override
+	public String toString() {
+		return "Dozen";
+	}
 
 }

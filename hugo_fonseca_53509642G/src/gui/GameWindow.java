@@ -2,17 +2,21 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import business.roulette.Roulette;
 
 public class GameWindow extends JFrame {
 
@@ -20,6 +24,8 @@ public class GameWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	// Attributes
+	private Roulette roulette;
+	
 	private JPanel contentPane;
 	private JPanel pnRound;
 	private JPanel pnInfo;
@@ -69,6 +75,9 @@ public class GameWindow extends JFrame {
 		contentPane.add(getPnLogOut(), BorderLayout.SOUTH);
 		contentPane.add(getPnBar(), BorderLayout.EAST);
 		contentPane.add(getPnGame(), BorderLayout.CENTER);
+		
+		// Business logic
+		this.roulette = Roulette.getInstance(); // Singleton
 	}
 
 	private JPanel getPnRound() {
@@ -162,6 +171,11 @@ public class GameWindow extends JFrame {
 	private JButton getBtnRoulette() {
 		if (btnRoulette == null) {
 			btnRoulette = new JButton("RouletteIcon");
+			btnRoulette.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					spinRoulette();
+				}				
+			});
 			btnRoulette.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnRoulette;
@@ -197,4 +211,18 @@ public class GameWindow extends JFrame {
 		}
 		return pnChips;
 	}
+	
+	
+	
+	
+	
+	// Auxiliary methods
+	
+	private void spinRoulette() {
+		roulette.spin();
+		StringBuilder sb = new StringBuilder();
+		roulette.getResults().parallelStream().forEach(b -> sb.append(b.toString() + "\n"));
+		taResults.setText(sb.toString());
+	}
+	
 }

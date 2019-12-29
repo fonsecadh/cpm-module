@@ -24,5 +24,10 @@ public class FailPassType implements BetType<Boolean> {
 	public void setPlayerBet(Boolean playerBet) {
 		this.playerBet = playerBet;
 	}
+	
+	@Override
+	public String toString() {
+		return "Fail/Pass";
+	}
 
 }

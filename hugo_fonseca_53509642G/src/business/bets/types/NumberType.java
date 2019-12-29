@@ -20,5 +20,10 @@ public class NumberType implements BetType<Integer> {
 	public void setPlayerBet(Integer playerBet) {
 		this.playerBet = playerBet;
 	}
+	
+	@Override
+	public String toString() {
+		return "Number";
+	}
 
 }
