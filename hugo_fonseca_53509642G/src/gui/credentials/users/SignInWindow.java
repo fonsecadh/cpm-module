@@ -8,8 +8,13 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 public class SignInWindow extends JDialog {
+
+	// Constants
+	private static final long serialVersionUID = 1L;
 
 	// Attributes
 	private JLabel lblUsername;
@@ -20,6 +25,8 @@ public class SignInWindow extends JDialog {
 	private JButton btnSignIn;
 	private JLabel lblNewUser;
 	private JButton btnNewUser;
+	private JPanel pnSignIn;
+	private JPanel pnSignUp;
 
 	/**
 	 * Create the dialog.
@@ -33,14 +40,15 @@ public class SignInWindow extends JDialog {
 		getContentPane().add(getTxtUsername());
 		getContentPane().add(getLblPasswd());
 		getContentPane().add(getPfPasswd());
-		getContentPane().add(getBtnSignIn());
+		getContentPane().add(getPnSignIn());
 		getContentPane().add(getLblNewUser());
-		getContentPane().add(getBtnNewUser());
+		getContentPane().add(getPnSignUp());
 	}
 
 	private JLabel getLblUsername() {
 		if (lblUsername == null) {
 			lblUsername = new JLabel("User Name:");
+			lblUsername.setLabelFor(getTxtUsername());
 			lblUsername.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return lblUsername;
@@ -66,6 +74,7 @@ public class SignInWindow extends JDialog {
 	private JLabel getLblPasswd() {
 		if (lblPasswd == null) {
 			lblPasswd = new JLabel("Password:");
+			lblPasswd.setLabelFor(getPfPasswd());
 			lblPasswd.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return lblPasswd;
@@ -82,6 +91,7 @@ public class SignInWindow extends JDialog {
 	private JButton getBtnSignIn() {
 		if (btnSignIn == null) {
 			btnSignIn = new JButton("Sign In");
+			btnSignIn.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnSignIn;
 	}
@@ -97,7 +107,28 @@ public class SignInWindow extends JDialog {
 	private JButton getBtnNewUser() {
 		if (btnNewUser == null) {
 			btnNewUser = new JButton("Sign Up");
+			btnNewUser.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnNewUser;
+	}
+
+	private JPanel getPnSignIn() {
+		if (pnSignIn == null) {
+			pnSignIn = new JPanel();
+			FlowLayout flowLayout = (FlowLayout) pnSignIn.getLayout();
+			flowLayout.setAlignment(FlowLayout.LEFT);
+			pnSignIn.add(getBtnSignIn());
+		}
+		return pnSignIn;
+	}
+
+	private JPanel getPnSignUp() {
+		if (pnSignUp == null) {
+			pnSignUp = new JPanel();
+			FlowLayout flowLayout = (FlowLayout) pnSignUp.getLayout();
+			flowLayout.setAlignment(FlowLayout.LEFT);
+			pnSignUp.add(getBtnNewUser());
+		}
+		return pnSignUp;
 	}
 }

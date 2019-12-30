@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import business.roulette.Roulette;
+import java.awt.FlowLayout;
 
 public class GameWindow extends JFrame {
 
@@ -110,6 +111,7 @@ public class GameWindow extends JFrame {
 	private JPanel getPnBar() {
 		if (pnBar == null) {
 			pnBar = new JPanel();
+			pnBar.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			pnBar.add(getLblBarIcon());
 			pnBar.add(getBtnBar());
 		}
@@ -129,6 +131,7 @@ public class GameWindow extends JFrame {
 	private JLabel getLblBalance() {
 		if (lblBalance == null) {
 			lblBalance = new JLabel("Balance:");
+			lblBalance.setLabelFor(getTxtBalance());
 			lblBalance.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return lblBalance;
