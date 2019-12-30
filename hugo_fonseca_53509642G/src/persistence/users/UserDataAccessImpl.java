@@ -16,7 +16,7 @@ import business.users.factory.UserFactory;
 public class UserDataAccessImpl implements UserDataAccess {
 	
 	// Constants
-	private static final String USER_FILENAME = "customers.dat";
+	private static final String USER_FILENAME_URL = "files/customers.dat";
 	
 	// Attributes
 	private UserFactory userFactory;
@@ -30,7 +30,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 		boolean found = false;
 
 		try {
-			BufferedReader file = new BufferedReader(new FileReader(USER_FILENAME));
+			BufferedReader file = new BufferedReader(new FileReader(USER_FILENAME_URL));
 			while (file.ready()) {
 				line = file.readLine();
 				userData = line.split("@");
@@ -54,7 +54,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 	@Override
 	public void writeUserToFile(String id, String fullName, String userName, String passwd, double balance) {
 		try {
-			BufferedWriter file = new BufferedWriter(new FileWriter("files/" + USER_FILENAME + ".dat"));
+			BufferedWriter file = new BufferedWriter(new FileWriter("files/" + USER_FILENAME_URL + ".dat"));
 			String line = id + "@" + fullName + "@" + userName + "@" + passwd + "@" + balance;
 			file.write(line);
 			file.close();
@@ -75,7 +75,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 		List<User> users = new ArrayList<User>();
 
 		try {
-			BufferedReader file = new BufferedReader(new FileReader(USER_FILENAME));
+			BufferedReader file = new BufferedReader(new FileReader(USER_FILENAME_URL));
 			while (file.ready()) {
 				line = file.readLine();
 				userData = line.split("@");
@@ -106,7 +106,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 		boolean found = false;
 
 		try {
-			BufferedReader file = new BufferedReader(new FileReader(USER_FILENAME));
+			BufferedReader file = new BufferedReader(new FileReader(USER_FILENAME_URL));
 			while (file.ready()) {
 				line = file.readLine();
 				userData = line.split("@");
@@ -141,7 +141,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 		boolean found = false;
 
 		try {
-			BufferedReader file = new BufferedReader(new FileReader(USER_FILENAME));
+			BufferedReader file = new BufferedReader(new FileReader(USER_FILENAME_URL));
 			while (file.ready()) {
 				line = file.readLine();
 				userData = line.split("@");
