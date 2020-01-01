@@ -26,7 +26,7 @@ public class GameWindow extends JFrame {
 
 	// Attributes
 	private Roulette roulette;
-	
+
 	private JPanel contentPane;
 	private JPanel pnRound;
 	private JPanel pnInfo;
@@ -43,6 +43,7 @@ public class GameWindow extends JFrame {
 	private JTextArea taResults;
 	private JPanel pnBets;
 	private JPanel pnChips;
+	private JPanel pnBarBtn;
 
 	/**
 	 * Launch the application.
@@ -76,7 +77,7 @@ public class GameWindow extends JFrame {
 		contentPane.add(getPnLogOut(), BorderLayout.SOUTH);
 		contentPane.add(getPnBar(), BorderLayout.EAST);
 		contentPane.add(getPnGame(), BorderLayout.CENTER);
-		
+
 		// Business logic
 		this.roulette = Roulette.getInstance(); // Singleton
 	}
@@ -103,6 +104,8 @@ public class GameWindow extends JFrame {
 	private JPanel getPnLogOut() {
 		if (pnLogOut == null) {
 			pnLogOut = new JPanel();
+			FlowLayout flowLayout = (FlowLayout) pnLogOut.getLayout();
+			flowLayout.setAlignment(FlowLayout.RIGHT);
 			pnLogOut.add(getBtnLogOut());
 		}
 		return pnLogOut;
@@ -111,9 +114,9 @@ public class GameWindow extends JFrame {
 	private JPanel getPnBar() {
 		if (pnBar == null) {
 			pnBar = new JPanel();
-			pnBar.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+			pnBar.setLayout(new GridLayout(0, 1, 0, 0));
 			pnBar.add(getLblBarIcon());
-			pnBar.add(getBtnBar());
+			pnBar.add(getPnBarBtn());
 		}
 		return pnBar;
 	}
@@ -177,7 +180,7 @@ public class GameWindow extends JFrame {
 			btnRoulette.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					spinRoulette();
-				}				
+				}
 			});
 			btnRoulette.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -214,13 +217,18 @@ public class GameWindow extends JFrame {
 		}
 		return pnChips;
 	}
-	
-	
-	
-	
-	
+
+	private JPanel getPnBarBtn() {
+		if (pnBarBtn == null) {
+			pnBarBtn = new JPanel();
+			pnBarBtn.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+			pnBarBtn.add(getBtnBar());
+		}
+		return pnBarBtn;
+	}
+
 	// Auxiliary methods
-	
+
 	private void spinRoulette() {
 		roulette.spin();
 		writeInResultsTextArea();
@@ -232,5 +240,5 @@ public class GameWindow extends JFrame {
 		roulette.getResults().parallelStream().forEach(b -> sb.append(b.toString() + "\n"));
 		taResults.setText(sb.toString());
 	}
-	
+
 }
