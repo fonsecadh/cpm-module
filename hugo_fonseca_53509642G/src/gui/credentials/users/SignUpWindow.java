@@ -32,6 +32,7 @@ public class SignUpWindow extends JDialog {
 	private JTextField txtBankCardNumber;
 	private JPanel pnSignUp;
 	private JButton btnSignUp;
+	private JButton btnCancel;
 
 	/**
 	 * Create the dialog.
@@ -175,8 +176,9 @@ public class SignUpWindow extends JDialog {
 		if (pnSignUp == null) {
 			pnSignUp = new JPanel();
 			FlowLayout flowLayout = (FlowLayout) pnSignUp.getLayout();
-			flowLayout.setAlignment(FlowLayout.LEFT);
+			flowLayout.setAlignment(FlowLayout.RIGHT);
 			pnSignUp.add(getBtnSignUp());
+			pnSignUp.add(getBtnCancel());
 		}
 		return pnSignUp;
 	}
@@ -184,7 +186,16 @@ public class SignUpWindow extends JDialog {
 	private JButton getBtnSignUp() {
 		if (btnSignUp == null) {
 			btnSignUp = new JButton("SignUp");
+			btnSignUp.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnSignUp;
+	}
+
+	private JButton getBtnCancel() {
+		if (btnCancel == null) {
+			btnCancel = new JButton("Cancel");
+			btnCancel.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return btnCancel;
 	}
 }

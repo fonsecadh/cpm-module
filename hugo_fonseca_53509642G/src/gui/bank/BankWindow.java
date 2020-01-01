@@ -87,6 +87,7 @@ public class BankWindow extends JDialog {
 	private JTextField getTxtCurrentBalance() {
 		if (txtCurrentBalance == null) {
 			txtCurrentBalance = new JTextField();
+			txtCurrentBalance.setEditable(false);
 			txtCurrentBalance.setFont(new Font("Dialog", Font.PLAIN, 14));
 			txtCurrentBalance.setColumns(10);
 		}
