@@ -1,17 +1,16 @@
 package gui.bank.balance;
 
-import java.awt.EventQueue;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 public class RechargeWindow extends JDialog {
 
@@ -29,23 +28,6 @@ public class RechargeWindow extends JDialog {
 	private JTextField tfBalance;
 	private JLabel lblExtract;
 	private JSpinner spinExtract;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RechargeWindow dialog = new RechargeWindow();
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the dialog.
