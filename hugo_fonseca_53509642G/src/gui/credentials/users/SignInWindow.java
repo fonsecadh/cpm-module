@@ -1,18 +1,22 @@
 package gui.credentials.users;
 
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.JPanel;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import business.exceptions.users.UserException;
+import business.facade.UserFacade;
+import business.player.Player;
 
 public class SignInWindow extends JDialog {
 
@@ -20,6 +24,10 @@ public class SignInWindow extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	// Attributes
+	private UserFacade userFacade;
+	private Player player;
+	private SignUpWindow signUp;
+	
 	private JLabel lblUsername;
 	private JLabel lblSignIn;
 	private JTextField txtUsername;
@@ -46,6 +54,10 @@ public class SignInWindow extends JDialog {
 		getContentPane().add(getPnSignIn());
 		getContentPane().add(getLblNewUser());
 		getContentPane().add(getPnSignUp());
+		
+		// Business logic
+		this.player = Player.getInstance();
+		this.userFacade = new UserFacade();
 	}
 
 	private JLabel getLblUsername() {
@@ -115,6 +127,11 @@ public class SignInWindow extends JDialog {
 	private JButton getBtnNewUser() {
 		if (btnNewUser == null) {
 			btnNewUser = new JButton("Sign Up");
+			btnNewUser.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					startSignUpWindow();
+				}
+			});
 			btnNewUser.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnNewUser;
@@ -146,9 +163,36 @@ public class SignInWindow extends JDialog {
 		if (getTxtUsername().getText().equals("") 
 				|| String.valueOf(getPfPasswd().getPassword()).equals("")) {
 			JOptionPane.showMessageDialog(this, "Some of the fields are empty", 
-					"Error", JOptionPane.ERROR_MESSAGE);
+					"Empty fields", JOptionPane.ERROR_MESSAGE);
 		} else {
-			// UserFacade
+			boolean isValid = false;
+			try {
+				isValid = userFacade.validateUserCredentials(getTxtUsername().getText(), 
+						String.valueOf(getPfPasswd().getPassword()));
+			} catch (UserException e) {
+				JOptionPane.showMessageDialog(this, e.getMessage(), 
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			if (isValid) {
+				try {
+					this.player.setAssociatedUser(userFacade.loadUser(getTxtUsername().getText()));
+					dispose(); // Close dialog
+				} catch (UserException e) {
+					JOptionPane.showMessageDialog(this, e.getMessage(), 
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Invalid session credentials", 
+						"Invalid session", JOptionPane.ERROR_MESSAGE);
+			}
 		}
+	}
+	
+	void startSignUpWindow() {
+		this.signUp = new SignUpWindow(this);
+		this.signUp.setModal(true);
+		this.signUp.setLocationRelativeTo(this);
+		this.signUp.setVisible(true);
 	}
 }

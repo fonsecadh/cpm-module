@@ -17,6 +17,8 @@ public class SignUpWindow extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	// Attributes
+	private SignInWindow signInWindow;
+	
 	private JLabel lblSignUp;
 	private JLabel lblUsername;
 	private JLabel lblPasswd;
@@ -35,7 +37,7 @@ public class SignUpWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public SignUpWindow() {
+	public SignUpWindow(SignInWindow signInWindow) {
 		setTitle("Roulette: Sign Up");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
@@ -51,7 +53,9 @@ public class SignUpWindow extends JDialog {
 		getContentPane().add(getLblFullname());
 		getContentPane().add(getTxtFullname());
 		getContentPane().add(getPnSignUp());
-
+		
+		// Business logic
+		this.signInWindow = signInWindow;
 	}
 
 	private JLabel getLblSignUp() {
