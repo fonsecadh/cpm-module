@@ -54,7 +54,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 	@Override
 	public void writeUserToFile(String id, String fullName, String userName, String passwd, double balance) {
 		try {
-			BufferedWriter file = new BufferedWriter(new FileWriter("files/" + USER_FILENAME_URL + ".dat"));
+			BufferedWriter file = new BufferedWriter(new FileWriter(USER_FILENAME_URL));
 			String line = id + "@" + fullName + "@" + userName + "@" + passwd + "@" + balance;
 			file.write(line);
 			file.close();

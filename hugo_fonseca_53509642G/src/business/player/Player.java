@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import business.chips.Chip;
+import business.player.type.DefaultPlayerType;
 import business.player.type.PlayerType;
 import business.users.User;
 
@@ -19,7 +20,7 @@ public class Player {
 	
 	// Singleton
 	private Player() {
-		// Empty private constructor
+		this.type = new DefaultPlayerType();
 	}
 	
 	public static Player getInstance() {

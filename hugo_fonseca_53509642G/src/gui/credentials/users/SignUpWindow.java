@@ -7,9 +7,17 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import business.exceptions.users.UserException;
+import business.facade.UserFacade;
+import business.player.Player;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SignUpWindow extends JDialog {
 
@@ -18,6 +26,8 @@ public class SignUpWindow extends JDialog {
 
 	// Attributes
 	private SignInWindow signInWindow;
+	private UserFacade userFacade;
+	private Player player;
 	
 	private JLabel lblSignUp;
 	private JLabel lblUsername;
@@ -56,6 +66,8 @@ public class SignUpWindow extends JDialog {
 		
 		// Business logic
 		this.signInWindow = signInWindow;
+		this.player = Player.getInstance();
+		this.userFacade = new UserFacade();
 	}
 
 	private JLabel getLblSignUp() {
@@ -168,6 +180,11 @@ public class SignUpWindow extends JDialog {
 	private JButton getBtnSignUp() {
 		if (btnSignUp == null) {
 			btnSignUp = new JButton("SignUp");
+			btnSignUp.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					signUpUser();
+				}
+			});
 			btnSignUp.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnSignUp;
@@ -176,8 +193,73 @@ public class SignUpWindow extends JDialog {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
+			btnCancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
 			btnCancel.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnCancel;
+	}
+	
+	
+	// Auxiliary methods
+	void signUpUser() {
+		if (checkEmptyFields() == false) {
+			if (checkPasswdMatch() == true) {
+				String username = getTxtUsername().getText();
+				String fullname = getTxtFullname().getText();
+				String passwd = String.valueOf(getPfPasswd().getPassword());
+				String nationalID = getTxtUserID().getText();
+				
+				if (!userFacade.existsUsername(username)) {
+					userFacade.signUpUser(nationalID, fullname, username, passwd);
+					try {
+						this.player.setAssociatedUser(userFacade.loadUser(username));
+						this.signInWindow.dispose();
+						dispose();
+					} catch (UserException e) {
+						JOptionPane.showMessageDialog(this, e.getMessage(), 
+								"Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Username already exists", 
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+		
+	}
+
+	private boolean checkPasswdMatch() {
+		String passwd = String.valueOf(getPfPasswd().getPassword());
+		String rePasswd = String.valueOf(getPfRePasswd().getPassword());
+		boolean areEqual = passwd.equals(rePasswd) ? true : false;
+		
+		if (areEqual == false) {
+			JOptionPane.showMessageDialog(this, "Passwords do not match", 
+					"Passwords do not match", JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	private boolean checkEmptyFields() {
+		String username = getTxtUsername().getText();
+		String fullname = getTxtFullname().getText();
+		String passwd = String.valueOf(getPfPasswd().getPassword());
+		String rePasswd = String.valueOf(getPfRePasswd().getPassword());
+		String nationalID = getTxtUserID().getText();
+		
+		if (username.equals("") || fullname.equals("") || passwd.equals("") 
+				|| rePasswd.equals("") || nationalID.equals("")) {
+			JOptionPane.showMessageDialog(this, "Some of the fields are empty", 
+					"Empty fields", JOptionPane.ERROR_MESSAGE);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
