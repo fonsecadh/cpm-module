@@ -6,10 +6,13 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SignInWindow extends JDialog {
 
@@ -91,6 +94,11 @@ public class SignInWindow extends JDialog {
 	private JButton getBtnSignIn() {
 		if (btnSignIn == null) {
 			btnSignIn = new JButton("Sign In");
+			btnSignIn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					checkForm();
+				}
+			});
 			btnSignIn.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnSignIn;
@@ -130,5 +138,17 @@ public class SignInWindow extends JDialog {
 			pnSignUp.add(getBtnNewUser());
 		}
 		return pnSignUp;
+	}
+	
+	
+	// Auxiliary methods
+	void checkForm() {
+		if (getTxtUsername().getText().equals("") 
+				|| String.valueOf(getPfPasswd().getPassword()).equals("")) {
+			JOptionPane.showMessageDialog(this, "Some of the fields are empty", 
+					"Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			// UserFacade
+		}
 	}
 }
