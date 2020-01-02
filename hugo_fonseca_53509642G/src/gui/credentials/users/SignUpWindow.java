@@ -23,13 +23,11 @@ public class SignUpWindow extends JDialog {
 	private JLabel lblRePasswd;
 	private JLabel lblUserID;
 	private JLabel lblFullname;
-	private JLabel lblBankCardNumber;
 	private JTextField txtUsername;
 	private JPasswordField pfPasswd;
 	private JPasswordField pfRePasswd;
 	private JTextField txtUserID;
 	private JTextField txtFullname;
-	private JTextField txtBankCardNumber;
 	private JPanel pnSignUp;
 	private JButton btnSignUp;
 	private JButton btnCancel;
@@ -52,8 +50,6 @@ public class SignUpWindow extends JDialog {
 		getContentPane().add(getTxtUserID());
 		getContentPane().add(getLblFullname());
 		getContentPane().add(getTxtFullname());
-		getContentPane().add(getLblBankCardNumber());
-		getContentPane().add(getTxtBankCardNumber());
 		getContentPane().add(getPnSignUp());
 
 	}
@@ -111,15 +107,6 @@ public class SignUpWindow extends JDialog {
 		return lblFullname;
 	}
 
-	private JLabel getLblBankCardNumber() {
-		if (lblBankCardNumber == null) {
-			lblBankCardNumber = new JLabel("Bank card number:");
-			lblBankCardNumber.setLabelFor(getTxtBankCardNumber());
-			lblBankCardNumber.setFont(new Font("Dialog", Font.BOLD, 14));
-		}
-		return lblBankCardNumber;
-	}
-
 	private JTextField getTxtUsername() {
 		if (txtUsername == null) {
 			txtUsername = new JTextField();
@@ -161,15 +148,6 @@ public class SignUpWindow extends JDialog {
 			txtFullname.setColumns(10);
 		}
 		return txtFullname;
-	}
-
-	private JTextField getTxtBankCardNumber() {
-		if (txtBankCardNumber == null) {
-			txtBankCardNumber = new JTextField();
-			txtBankCardNumber.setFont(new Font("Dialog", Font.PLAIN, 14));
-			txtBankCardNumber.setColumns(10);
-		}
-		return txtBankCardNumber;
 	}
 
 	private JPanel getPnSignUp() {
