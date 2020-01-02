@@ -133,6 +133,7 @@ public class RechargeWindow extends JDialog {
 		return lblExtract;
 	}
 
+	@SuppressWarnings("deprecation")
 	private JSpinner getSpinExtract() {
 		if (spinExtract == null) {
 			spinExtract = new JSpinner();
