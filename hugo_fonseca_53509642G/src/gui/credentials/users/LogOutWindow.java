@@ -14,7 +14,7 @@ public class LogOutWindow extends JDialog {
 
 	// Constants
 	private static final long serialVersionUID = 1L;
-	
+
 	// Attributes
 	private JPanel pnInfo;
 	private JPanel pnBtn;
@@ -96,6 +96,7 @@ public class LogOutWindow extends JDialog {
 	private JLabel getLblBalance() {
 		if (lblBalance == null) {
 			lblBalance = new JLabel("Updated balance:");
+			lblBalance.setLabelFor(getTxtBalance());
 			lblBalance.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return lblBalance;
