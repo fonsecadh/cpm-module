@@ -8,11 +8,19 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 import gui.credentials.bank.BankCredentialsWindow;
+import javax.swing.SpinnerNumberModel;
+
+import business.player.Player;
+
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.awt.event.ActionEvent;
 
 public class RechargeWindow extends JDialog {
 
@@ -21,6 +29,7 @@ public class RechargeWindow extends JDialog {
 
 	// Attributes
 	private BankCredentialsWindow bankCredentialsWindow;
+	private Player player;
 	
 	private JPanel pnForm;
 	private JPanel pnBtns;
@@ -42,6 +51,7 @@ public class RechargeWindow extends JDialog {
 		
 		// Business logic
 		this.bankCredentialsWindow = bankCredentialsWindow;
+		this.player = Player.getInstance();
 
 	}
 
@@ -71,6 +81,11 @@ public class RechargeWindow extends JDialog {
 	private JButton getBtnOk() {
 		if (btnOk == null) {
 			btnOk = new JButton("OK");
+			btnOk.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rechargeBalance();
+				}
+			});
 			btnOk.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnOk;
@@ -79,6 +94,12 @@ public class RechargeWindow extends JDialog {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
+			btnCancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					bankCredentialsWindow.dispose();
+					dispose();
+				}
+			});
 			btnCancel.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnCancel;
@@ -115,8 +136,37 @@ public class RechargeWindow extends JDialog {
 	private JSpinner getSpinExtract() {
 		if (spinExtract == null) {
 			spinExtract = new JSpinner();
+			spinExtract.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(10)));
 			spinExtract.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return spinExtract;
+	}
+	
+	
+	// Auxiliary methods
+	private void rechargeBalance() {
+		try {
+			getSpinExtract().commitEdit();
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), 
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		try {
+			if ((Double) getSpinExtract().getValue() >= 1) {
+				double oldBalance = player.getBalance();
+				double rechargeAmount = (Double) getSpinExtract().getValue();
+				player.setBalance(oldBalance + rechargeAmount);
+				this.bankCredentialsWindow.dispose();
+				dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Not a valid number", 
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (ClassCastException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), 
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 }
