@@ -28,11 +28,9 @@ public class BankWindow extends JDialog {
 	private JLabel lblActBalance;
 	private JPanel pnActBalBtns;
 	private JButton btnRechargeBal;
-	private JButton btnTransferBal;
 	private JLabel lblActChips;
 	private JPanel pnActChipsBtns;
 	private JButton btnGetChips;
-	private JButton btnTransferChips;
 
 	/**
 	 * Create the dialog.
@@ -134,7 +132,6 @@ public class BankWindow extends JDialog {
 		if (pnActBalBtns == null) {
 			pnActBalBtns = new JPanel();
 			pnActBalBtns.add(getBtnRechargeBal());
-			pnActBalBtns.add(getBtnTransferBal());
 		}
 		return pnActBalBtns;
 	}
@@ -145,14 +142,6 @@ public class BankWindow extends JDialog {
 			btnRechargeBal.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnRechargeBal;
-	}
-
-	private JButton getBtnTransferBal() {
-		if (btnTransferBal == null) {
-			btnTransferBal = new JButton("Transfer Balance");
-			btnTransferBal.setFont(new Font("Dialog", Font.BOLD, 14));
-		}
-		return btnTransferBal;
 	}
 
 	private JLabel getLblActChips() {
@@ -167,7 +156,6 @@ public class BankWindow extends JDialog {
 		if (pnActChipsBtns == null) {
 			pnActChipsBtns = new JPanel();
 			pnActChipsBtns.add(getBtnGetChips());
-			pnActChipsBtns.add(getBtnTransferChips());
 		}
 		return pnActChipsBtns;
 	}
@@ -178,13 +166,5 @@ public class BankWindow extends JDialog {
 			btnGetChips.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnGetChips;
-	}
-
-	private JButton getBtnTransferChips() {
-		if (btnTransferChips == null) {
-			btnTransferChips = new JButton("Transfer Chips");
-			btnTransferChips.setFont(new Font("Dialog", Font.BOLD, 14));
-		}
-		return btnTransferChips;
 	}
 }

@@ -16,14 +16,12 @@ public class RechargeWindow extends JDialog {
 
 	// Constants
 	private static final long serialVersionUID = 1L;
-	
+
 	// Attributes
 	private JPanel pnForm;
 	private JPanel pnBtns;
 	private JButton btnOk;
 	private JButton btnCancel;
-	private JLabel lblAmount;
-	private JTextField tfAmount;
 	private JLabel lblBalance;
 	private JTextField tfBalance;
 	private JLabel lblExtract;
@@ -44,8 +42,6 @@ public class RechargeWindow extends JDialog {
 		if (pnForm == null) {
 			pnForm = new JPanel();
 			pnForm.setLayout(new GridLayout(0, 1, 0, 0));
-			pnForm.add(getLblAmount());
-			pnForm.add(getTfAmount());
 			pnForm.add(getLblBalance());
 			pnForm.add(getTfBalance());
 			pnForm.add(getLblExtract());
@@ -79,25 +75,6 @@ public class RechargeWindow extends JDialog {
 			btnCancel.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnCancel;
-	}
-
-	private JLabel getLblAmount() {
-		if (lblAmount == null) {
-			lblAmount = new JLabel("Amount in account:");
-			lblAmount.setLabelFor(getTfAmount());
-			lblAmount.setFont(new Font("Dialog", Font.BOLD, 14));
-		}
-		return lblAmount;
-	}
-
-	private JTextField getTfAmount() {
-		if (tfAmount == null) {
-			tfAmount = new JTextField();
-			tfAmount.setEditable(false);
-			tfAmount.setFont(new Font("Dialog", Font.PLAIN, 14));
-			tfAmount.setColumns(10);
-		}
-		return tfAmount;
 	}
 
 	private JLabel getLblBalance() {
