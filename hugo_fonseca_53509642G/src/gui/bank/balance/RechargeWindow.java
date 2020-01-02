@@ -12,12 +12,16 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import gui.credentials.bank.BankCredentialsWindow;
+
 public class RechargeWindow extends JDialog {
 
 	// Constants
 	private static final long serialVersionUID = 1L;
 
 	// Attributes
+	private BankCredentialsWindow bankCredentialsWindow;
+	
 	private JPanel pnForm;
 	private JPanel pnBtns;
 	private JButton btnOk;
@@ -30,11 +34,14 @@ public class RechargeWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public RechargeWindow() {
+	public RechargeWindow(BankCredentialsWindow bankCredentialsWindow) {
 		setTitle("Roulette: Recharge Balance");
 		setBounds(100, 100, 450, 300);
 		getContentPane().add(getPnForm(), BorderLayout.CENTER);
 		getContentPane().add(getPnBtns(), BorderLayout.SOUTH);
+		
+		// Business logic
+		this.bankCredentialsWindow = bankCredentialsWindow;
 
 	}
 

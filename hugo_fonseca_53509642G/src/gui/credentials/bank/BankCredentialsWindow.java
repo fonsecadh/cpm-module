@@ -5,11 +5,17 @@ import java.awt.GridLayout;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import gui.bank.balance.RechargeWindow;
+
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BankCredentialsWindow extends JDialog {
 
@@ -17,6 +23,8 @@ public class BankCredentialsWindow extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	// Attributes
+	private RechargeWindow rechargeWindow;
+	
 	private JLabel lblBankCardNumber;
 	private JTextField txtBankCardNumber;
 	private JLabel lblSecretCode;
@@ -88,6 +96,11 @@ public class BankCredentialsWindow extends JDialog {
 	private JButton getBtnOk() {
 		if (btnOk == null) {
 			btnOk = new JButton("OK");
+			btnOk.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					checkForm();
+				}
+			});
 			btnOk.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnOk;
@@ -96,7 +109,34 @@ public class BankCredentialsWindow extends JDialog {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
+			btnCancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
+			btnCancel.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnCancel;
+	}
+	
+	
+	// Auxiliary methods
+	private void checkForm() {
+		String bankAccountNumber = getTxtBankCardNumber().getText();
+		String secretCode = String.valueOf(getPfSecretCode().getPassword());
+		
+		if (bankAccountNumber.equals("") || secretCode.equals("")) {
+			JOptionPane.showMessageDialog(this, "Some of the fields are empty", 
+					"Empty fields", JOptionPane.ERROR_MESSAGE);
+		} else {
+			openRechargeWindow();
+		}
+	}
+
+	private void openRechargeWindow() {
+		this.rechargeWindow = new RechargeWindow(this);
+		this.rechargeWindow.setModal(true);
+		this.rechargeWindow.setLocationRelativeTo(this);
+		this.rechargeWindow.setVisible(true);
 	}
 }

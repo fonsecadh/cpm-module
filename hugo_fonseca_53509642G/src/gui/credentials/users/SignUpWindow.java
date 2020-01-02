@@ -205,7 +205,7 @@ public class SignUpWindow extends JDialog {
 	
 	
 	// Auxiliary methods
-	void signUpUser() {
+	private void signUpUser() {
 		if (checkEmptyFields() == false) {
 			if (checkPasswdMatch() == true) {
 				String username = getTxtUsername().getText();

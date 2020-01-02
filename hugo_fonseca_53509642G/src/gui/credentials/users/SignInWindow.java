@@ -159,7 +159,7 @@ public class SignInWindow extends JDialog {
 	
 	
 	// Auxiliary methods
-	void checkForm() {
+	private void checkForm() {
 		if (getTxtUsername().getText().equals("") 
 				|| String.valueOf(getPfPasswd().getPassword()).equals("")) {
 			JOptionPane.showMessageDialog(this, "Some of the fields are empty", 
@@ -189,7 +189,7 @@ public class SignInWindow extends JDialog {
 		}
 	}
 	
-	void startSignUpWindow() {
+	private void startSignUpWindow() {
 		this.signUp = new SignUpWindow(this);
 		this.signUp.setModal(true);
 		this.signUp.setLocationRelativeTo(this);
