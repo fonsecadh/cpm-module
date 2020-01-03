@@ -46,6 +46,9 @@ public class BarWindow extends JDialog {
 	private JPanel pnBalance;
 	private JLabel lblBalance;
 	private JTextField txtBalance;
+	private JLabel lblComments;
+	private JScrollPane spComments;
+	private JTextArea taComments;
 
 	/**
 	 * Create the dialog.
@@ -151,6 +154,8 @@ public class BarWindow extends JDialog {
 			pnOrderActions.add(getPnActions());
 			pnOrderActions.add(getPnOrderPrice());
 			pnOrderActions.add(getPnBalance());
+			pnOrderActions.add(getLblComments());
+			pnOrderActions.add(getSpComments());
 		}
 		return pnOrderActions;
 	}
@@ -310,5 +315,30 @@ public class BarWindow extends JDialog {
 			txtBalance.setColumns(10);
 		}
 		return txtBalance;
+	}
+
+	private JLabel getLblComments() {
+		if (lblComments == null) {
+			lblComments = new JLabel("Comments:");
+			lblComments.setLabelFor(getTaComments());
+			lblComments.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return lblComments;
+	}
+
+	private JScrollPane getSpComments() {
+		if (spComments == null) {
+			spComments = new JScrollPane();
+			spComments.setViewportView(getTaComments());
+		}
+		return spComments;
+	}
+
+	private JTextArea getTaComments() {
+		if (taComments == null) {
+			taComments = new JTextArea();
+			taComments.setFont(new Font("Dialog", Font.PLAIN, 13));
+		}
+		return taComments;
 	}
 }
