@@ -655,7 +655,7 @@ public class GameWindow extends JFrame {
 
 	private JButton createNumberButton(int number) {
 		JButton btn = new JButton(String.valueOf(number));
-		btn.setFont(new Font("Dialog", Font.BOLD, 16));
+		btn.setFont(new Font("Dialog", Font.BOLD, 14));
 		return btn;
 	}
 
