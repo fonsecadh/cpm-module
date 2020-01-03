@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import business.roulette.Roulette;
 import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
 
 public class GameWindow extends JFrame {
 
@@ -120,6 +121,7 @@ public class GameWindow extends JFrame {
 
 		// Business logic
 		this.roulette = Roulette.getInstance(); // Singleton
+		createNumberButtons();
 	}
 
 	private JPanel getPnRound() {
@@ -463,7 +465,7 @@ public class GameWindow extends JFrame {
 	private JPanel getPnTopBoard() {
 		if (pnTopBoard == null) {
 			pnTopBoard = new JPanel();
-			pnTopBoard.setLayout(new GridLayout(1, 3, 0, 0));
+			pnTopBoard.setLayout(new BoxLayout(pnTopBoard, BoxLayout.X_AXIS));
 			pnTopBoard.add(getPnBoardZero());
 			pnTopBoard.add(getPnBoardNumbers());
 			pnTopBoard.add(getPnBoardColumns());
@@ -510,7 +512,7 @@ public class GameWindow extends JFrame {
 	private JButton getBtnBoardThirdCol() {
 		if (btnBoardThirdCol == null) {
 			btnBoardThirdCol = new JButton("3rd Col");
-			btnBoardThirdCol.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardThirdCol.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnBoardThirdCol;
 	}
@@ -518,7 +520,7 @@ public class GameWindow extends JFrame {
 	private JButton getBtnBoardSecCol() {
 		if (btnBoardSecCol == null) {
 			btnBoardSecCol = new JButton("2nd Col");
-			btnBoardSecCol.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardSecCol.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnBoardSecCol;
 	}
@@ -526,7 +528,7 @@ public class GameWindow extends JFrame {
 	private JButton getBtnBoardFirstCol() {
 		if (btnBoardFirstCol == null) {
 			btnBoardFirstCol = new JButton("1st Col");
-			btnBoardFirstCol.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardFirstCol.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnBoardFirstCol;
 	}
@@ -649,5 +651,19 @@ public class GameWindow extends JFrame {
 		StringBuilder sb = new StringBuilder();
 		roulette.getResults().parallelStream().forEach(b -> sb.append(b.toString() + "\n"));
 		taResults.setText(sb.toString());
+	}
+
+	private JButton createNumberButton(int number) {
+		JButton btn = new JButton(String.valueOf(number));
+		btn.setFont(new Font("Dialog", Font.BOLD, 16));
+		return btn;
+	}
+
+	private void createNumberButtons() {
+		for (int k = 3; k >= 1; k--) {
+			for (int i = k; i <= 33 + k; i += 3) {
+				getPnBoardNumbers().add(createNumberButton(i));
+			}
+		}
 	}
 }
