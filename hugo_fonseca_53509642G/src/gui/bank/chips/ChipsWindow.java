@@ -1,19 +1,27 @@
 package gui.bank.chips;
 
-import javax.swing.JDialog;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import gui.bank.BankWindow;
+import javax.swing.event.ChangeListener;
 
-import java.awt.GridLayout;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JButton;
+import business.player.Player;
+
+import javax.swing.event.ChangeEvent;
 
 public class ChipsWindow extends JDialog {
 
@@ -22,6 +30,8 @@ public class ChipsWindow extends JDialog {
 
 	// Attributes
 	private BankWindow bankWindow;
+	private Player player;
+	private double currentPlayerBalance;
 
 	private JPanel pnBalance;
 	private JPanel pnChips;
@@ -55,6 +65,8 @@ public class ChipsWindow extends JDialog {
 
 		// Business logic
 		this.bankWindow = bankWindow;
+		this.player = Player.getInstance();
+		this.currentPlayerBalance = player.getBalance();
 	}
 
 	private JPanel getPnBalance() {
@@ -136,6 +148,12 @@ public class ChipsWindow extends JDialog {
 	private JSpinner getSpinnerFiveChip() {
 		if (spinnerFiveChip == null) {
 			spinnerFiveChip = new JSpinner();
+			spinnerFiveChip.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+					checkMax(5, (Integer) spinnerFiveChip.getValue(), (Integer) spinnerFiveChip.getPreviousValue(),
+							spinnerFiveChip);
+				}
+			});
 			spinnerFiveChip.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinnerFiveChip.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -155,6 +173,12 @@ public class ChipsWindow extends JDialog {
 	private JSpinner getSpinnerTenChip() {
 		if (spinnerTenChip == null) {
 			spinnerTenChip = new JSpinner();
+			spinnerTenChip.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+					checkMax(10, (Integer) spinnerTenChip.getValue(), (Integer) spinnerTenChip.getPreviousValue(),
+							spinnerTenChip);
+				}
+			});
 			spinnerTenChip.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinnerTenChip.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -174,6 +198,12 @@ public class ChipsWindow extends JDialog {
 	private JSpinner getSpinnerTwentyChip() {
 		if (spinnerTwentyChip == null) {
 			spinnerTwentyChip = new JSpinner();
+			spinnerTwentyChip.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+					checkMax(20, (Integer) spinnerTwentyChip.getValue(), (Integer) spinnerTwentyChip.getPreviousValue(),
+							spinnerTwentyChip);
+				}
+			});
 			spinnerTwentyChip.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinnerTwentyChip.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -193,6 +223,12 @@ public class ChipsWindow extends JDialog {
 	private JSpinner getSpinnerFiftyChip() {
 		if (spinnerFiftyChip == null) {
 			spinnerFiftyChip = new JSpinner();
+			spinnerFiftyChip.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+					checkMax(50, (Integer) spinnerFiftyChip.getValue(), (Integer) spinnerFiftyChip.getPreviousValue(),
+							spinnerFiftyChip);
+				}
+			});
 			spinnerFiftyChip.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinnerFiftyChip.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -212,6 +248,12 @@ public class ChipsWindow extends JDialog {
 	private JSpinner getSpinnerOneHundredChip() {
 		if (spinnerOneHundredChip == null) {
 			spinnerOneHundredChip = new JSpinner();
+			spinnerOneHundredChip.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+					checkMax(100, (Integer) spinnerOneHundredChip.getValue(),
+							(Integer) spinnerOneHundredChip.getPreviousValue(), spinnerOneHundredChip);
+				}
+			});
 			spinnerOneHundredChip
 					.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinnerOneHundredChip.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -233,6 +275,11 @@ public class ChipsWindow extends JDialog {
 	private JButton getBtnOk() {
 		if (btnOk == null) {
 			btnOk = new JButton("OK");
+			btnOk.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					updateBalanceAndClose();
+				}
+			});
 			btnOk.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnOk;
@@ -241,8 +288,47 @@ public class ChipsWindow extends JDialog {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
+			btnCancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
 			btnCancel.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnCancel;
+	}
+
+	// Auxiliary methods
+	private void updateBalanceAndClose() {
+		this.player.setBalance(currentPlayerBalance);
+		this.bankWindow.updateCurrentBalanceTxt();
+		dispose();
+	}
+
+	private void checkMax(int amount, int units, int prevUnits, JSpinner spinner) {
+		if (prevUnits > units) {
+			double prevChipsAmount = amount * prevUnits;
+			double newChipsAmount = amount * units;
+			this.currentPlayerBalance += prevChipsAmount;
+			this.currentPlayerBalance -= newChipsAmount;
+			updatePlayerBalance();
+		} else {
+			double prevChipsAmount = amount * prevUnits;
+			double newChipsAmount = amount * units;
+			double aux = this.currentPlayerBalance;
+			aux += prevChipsAmount;
+			aux -= newChipsAmount;
+			if (aux < 0) {
+				JOptionPane.showMessageDialog(this, "Exceeded balance", "Error", JOptionPane.ERROR_MESSAGE);
+				spinner.setValue(prevUnits);
+			} else {
+				this.currentPlayerBalance = aux;
+				updatePlayerBalance();
+			}
+		}
+	}
+
+	private void updatePlayerBalance() {
+		this.getTxtBalance().setText(String.valueOf(this.currentPlayerBalance));
 	}
 }

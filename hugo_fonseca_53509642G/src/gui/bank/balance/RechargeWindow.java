@@ -157,7 +157,7 @@ public class RechargeWindow extends JDialog {
 			if ((Double) getSpinExtract().getValue() >= 1) {
 				double oldBalance = player.getBalance();
 				double rechargeAmount = (Double) getSpinExtract().getValue();
-				player.setBalance(oldBalance + rechargeAmount);
+				this.player.setBalance(oldBalance + rechargeAmount);
 				this.bankCredentialsWindow.getBankWindow().updateCurrentBalanceTxt();
 				this.bankCredentialsWindow.dispose();
 				dispose();
