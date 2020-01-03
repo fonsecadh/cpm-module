@@ -1,21 +1,21 @@
 package gui.credentials.bank;
 
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import gui.bank.BankWindow;
 import gui.bank.balance.RechargeWindow;
-
-import javax.swing.JPanel;
-import java.awt.FlowLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class BankCredentialsWindow extends JDialog {
 
@@ -24,7 +24,8 @@ public class BankCredentialsWindow extends JDialog {
 
 	// Attributes
 	private RechargeWindow rechargeWindow;
-	
+	private BankWindow bankWindow;
+
 	private JLabel lblBankCardNumber;
 	private JTextField txtBankCardNumber;
 	private JLabel lblSecretCode;
@@ -36,7 +37,7 @@ public class BankCredentialsWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public BankCredentialsWindow() {
+	public BankCredentialsWindow(BankWindow bankWindow) {
 		setTitle("Roulette: Bank Credentials");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
@@ -45,6 +46,9 @@ public class BankCredentialsWindow extends JDialog {
 		getContentPane().add(getLblSecretCode());
 		getContentPane().add(getPfSecretCode());
 		getContentPane().add(getPnBtn());
+		
+		// Business logic
+		this.bankWindow = bankWindow;
 	}
 
 	private JLabel getLblBankCardNumber() {
@@ -118,16 +122,15 @@ public class BankCredentialsWindow extends JDialog {
 		}
 		return btnCancel;
 	}
-	
-	
+
 	// Auxiliary methods
 	private void checkForm() {
 		String bankAccountNumber = getTxtBankCardNumber().getText();
 		String secretCode = String.valueOf(getPfSecretCode().getPassword());
-		
+
 		if (bankAccountNumber.equals("") || secretCode.equals("")) {
-			JOptionPane.showMessageDialog(this, "Some of the fields are empty", 
-					"Empty fields", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Some of the fields are empty", "Empty fields",
+					JOptionPane.ERROR_MESSAGE);
 		} else {
 			openRechargeWindow();
 		}
@@ -138,5 +141,9 @@ public class BankCredentialsWindow extends JDialog {
 		this.rechargeWindow.setModal(true);
 		this.rechargeWindow.setLocationRelativeTo(this);
 		this.rechargeWindow.setVisible(true);
+	}
+
+	public BankWindow getBankWindow() {
+		return this.bankWindow;
 	}
 }

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,12 +13,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import business.player.Player;
+import gui.bank.chips.ChipsWindow;
+import gui.credentials.bank.BankCredentialsWindow;
+
 public class BankWindow extends JDialog {
 
 	// Constants
 	private static final long serialVersionUID = 1L;
 
 	// Attributes
+	private BankCredentialsWindow bankCredentialsWindow;
+	private ChipsWindow chipsWindow;
+	private Player player;
+	
 	private JPanel pnCurrentBalance;
 	private JPanel pnBtn;
 	private JPanel pnActions;
@@ -41,7 +51,10 @@ public class BankWindow extends JDialog {
 		getContentPane().add(getPnCurrentBalance(), BorderLayout.NORTH);
 		getContentPane().add(getPnBtn(), BorderLayout.SOUTH);
 		getContentPane().add(getPnActions(), BorderLayout.CENTER);
-
+		
+		// Business logic
+		this.player = Player.getInstance();
+		updateCurrentBalanceTxt();
 	}
 
 	private JPanel getPnCurrentBalance() {
@@ -95,6 +108,11 @@ public class BankWindow extends JDialog {
 	private JButton getBtnFinish() {
 		if (btnFinish == null) {
 			btnFinish = new JButton("Finish");
+			btnFinish.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
 			btnFinish.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnFinish;
@@ -139,6 +157,11 @@ public class BankWindow extends JDialog {
 	private JButton getBtnRechargeBal() {
 		if (btnRechargeBal == null) {
 			btnRechargeBal = new JButton("Recharge Balance");
+			btnRechargeBal.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					openBankCredentialsWindow();
+				}
+			});
 			btnRechargeBal.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnRechargeBal;
@@ -163,8 +186,32 @@ public class BankWindow extends JDialog {
 	private JButton getBtnGetChips() {
 		if (btnGetChips == null) {
 			btnGetChips = new JButton("Get Chips");
+			btnGetChips.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					openChipsWindow();
+				}
+			});
 			btnGetChips.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnGetChips;
+	}
+	
+	// Auxiliary methods
+	private void openBankCredentialsWindow() {
+		this.bankCredentialsWindow = new BankCredentialsWindow(this);
+		this.bankCredentialsWindow.setModal(true);
+		this.bankCredentialsWindow.setLocationRelativeTo(this);
+		this.bankCredentialsWindow.setVisible(true);
+	}
+	
+	private void openChipsWindow() {
+		this.chipsWindow = new ChipsWindow(this);
+		this.chipsWindow.setModal(true);
+		this.chipsWindow.setLocationRelativeTo(this);
+		this.chipsWindow.setVisible(true);
+	}
+
+	public void updateCurrentBalanceTxt() {
+		this.getTxtCurrentBalance().setText(String.valueOf(player.getBalance()));
 	}
 }
