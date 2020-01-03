@@ -44,6 +44,46 @@ public class GameWindow extends JFrame {
 	private JPanel pnBets;
 	private JPanel pnChips;
 	private JPanel pnBarBtn;
+	private JPanel pnChipsInfo;
+	private JPanel pnChipsBtn;
+	private JButton btnGetChips;
+	private JLabel lblPlayerChips;
+	private JPanel pnPlayerChips;
+	private JPanel pnFiveChip;
+	private JLabel lblFiveChipIcon;
+	private JTextField txtFiveChipUnits;
+	private JPanel pnTenChip;
+	private JLabel lblTenChipIcon;
+	private JTextField txtTenChipUnits;
+	private JPanel pnTwentyChip;
+	private JLabel lblTwentyChipIcon;
+	private JTextField txtTwentyChipUnits;
+	private JPanel pnFiftyChip;
+	private JLabel lblFiftyChipIcon;
+	private JTextField txtFiftyChipUnits;
+	private JPanel pnOneHundredChip;
+	private JLabel lblOneHundredChipIcon;
+	private JTextField txtOneHundredChipUnits;
+	private JPanel pnTopBoard;
+	private JPanel pnBoardZero;
+	private JButton btnBoardZero;
+	private JPanel pnBoardNumbers;
+	private JPanel pnBoardColumns;
+	private JButton btnBoardThirdCol;
+	private JButton btnBoardSecCol;
+	private JButton btnBoardFirstCol;
+	private JPanel pnBotBoard;
+	private JPanel pnBoardDozens;
+	private JButton btnBoardFirstDozen;
+	private JButton btnBoardSecDozen;
+	private JButton btnBoardThirdDozen;
+	private JPanel pnBoardOther;
+	private JButton btnBoardFail;
+	private JButton btnBoardEven;
+	private JButton btnBoardBlack;
+	private JButton btnBoardRed;
+	private JButton btnBoardOdd;
+	private JButton btnBoardPass;
 
 	/**
 	 * Launch the application.
@@ -207,6 +247,9 @@ public class GameWindow extends JFrame {
 	private JPanel getPnBets() {
 		if (pnBets == null) {
 			pnBets = new JPanel();
+			pnBets.setLayout(new GridLayout(0, 1, 0, 0));
+			pnBets.add(getPnTopBoard());
+			pnBets.add(getPnBotBoard());
 		}
 		return pnBets;
 	}
@@ -214,6 +257,9 @@ public class GameWindow extends JFrame {
 	private JPanel getPnChips() {
 		if (pnChips == null) {
 			pnChips = new JPanel();
+			pnChips.setLayout(new GridLayout(0, 1, 0, 0));
+			pnChips.add(getPnChipsInfo());
+			pnChips.add(getPnChipsBtn());
 		}
 		return pnChips;
 	}
@@ -227,8 +273,372 @@ public class GameWindow extends JFrame {
 		return pnBarBtn;
 	}
 
-	// Auxiliary methods
+	private JPanel getPnChipsInfo() {
+		if (pnChipsInfo == null) {
+			pnChipsInfo = new JPanel();
+			pnChipsInfo.setLayout(new GridLayout(0, 1, 0, 0));
+			pnChipsInfo.add(getLblPlayerChips());
+			pnChipsInfo.add(getPnPlayerChips());
+		}
+		return pnChipsInfo;
+	}
 
+	private JPanel getPnChipsBtn() {
+		if (pnChipsBtn == null) {
+			pnChipsBtn = new JPanel();
+			pnChipsBtn.add(getBtnGetChips());
+		}
+		return pnChipsBtn;
+	}
+
+	private JButton getBtnGetChips() {
+		if (btnGetChips == null) {
+			btnGetChips = new JButton("Chips");
+			btnGetChips.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return btnGetChips;
+	}
+
+	private JLabel getLblPlayerChips() {
+		if (lblPlayerChips == null) {
+			lblPlayerChips = new JLabel("Chips:");
+			lblPlayerChips.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return lblPlayerChips;
+	}
+
+	private JPanel getPnPlayerChips() {
+		if (pnPlayerChips == null) {
+			pnPlayerChips = new JPanel();
+			pnPlayerChips.setLayout(new GridLayout(0, 1, 0, 0));
+			pnPlayerChips.add(getPnFiveChip());
+			pnPlayerChips.add(getPnTenChip());
+			pnPlayerChips.add(getPnTwentyChip());
+			pnPlayerChips.add(getPnFiftyChip());
+			pnPlayerChips.add(getPnOneHundredChip());
+		}
+		return pnPlayerChips;
+	}
+
+	private JPanel getPnFiveChip() {
+		if (pnFiveChip == null) {
+			pnFiveChip = new JPanel();
+			pnFiveChip.add(getLblFiveChipIcon());
+			pnFiveChip.add(getTxtFiveChipUnits());
+		}
+		return pnFiveChip;
+	}
+
+	private JLabel getLblFiveChipIcon() {
+		if (lblFiveChipIcon == null) {
+			lblFiveChipIcon = new JLabel("FiveChipIcon");
+			lblFiveChipIcon.setLabelFor(getTxtFiveChipUnits());
+			lblFiveChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return lblFiveChipIcon;
+	}
+
+	private JTextField getTxtFiveChipUnits() {
+		if (txtFiveChipUnits == null) {
+			txtFiveChipUnits = new JTextField();
+			txtFiveChipUnits.setFont(new Font("Dialog", Font.PLAIN, 14));
+			txtFiveChipUnits.setEditable(false);
+			txtFiveChipUnits.setColumns(10);
+		}
+		return txtFiveChipUnits;
+	}
+
+	private JPanel getPnTenChip() {
+		if (pnTenChip == null) {
+			pnTenChip = new JPanel();
+			pnTenChip.add(getLblTenChipIcon());
+			pnTenChip.add(getTxtTenChipUnits());
+		}
+		return pnTenChip;
+	}
+
+	private JLabel getLblTenChipIcon() {
+		if (lblTenChipIcon == null) {
+			lblTenChipIcon = new JLabel("TenChipIcon");
+			lblTenChipIcon.setLabelFor(getTxtTenChipUnits());
+			lblTenChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return lblTenChipIcon;
+	}
+
+	private JTextField getTxtTenChipUnits() {
+		if (txtTenChipUnits == null) {
+			txtTenChipUnits = new JTextField();
+			txtTenChipUnits.setFont(new Font("Dialog", Font.PLAIN, 14));
+			txtTenChipUnits.setEditable(false);
+			txtTenChipUnits.setColumns(10);
+		}
+		return txtTenChipUnits;
+	}
+
+	private JPanel getPnTwentyChip() {
+		if (pnTwentyChip == null) {
+			pnTwentyChip = new JPanel();
+			pnTwentyChip.add(getLblTwentyChipIcon());
+			pnTwentyChip.add(getTxtTwentyChipUnits());
+		}
+		return pnTwentyChip;
+	}
+
+	private JLabel getLblTwentyChipIcon() {
+		if (lblTwentyChipIcon == null) {
+			lblTwentyChipIcon = new JLabel("TwentyChipIcon");
+			lblTwentyChipIcon.setLabelFor(getTxtTwentyChipUnits());
+			lblTwentyChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return lblTwentyChipIcon;
+	}
+
+	private JTextField getTxtTwentyChipUnits() {
+		if (txtTwentyChipUnits == null) {
+			txtTwentyChipUnits = new JTextField();
+			txtTwentyChipUnits.setFont(new Font("Dialog", Font.PLAIN, 14));
+			txtTwentyChipUnits.setEditable(false);
+			txtTwentyChipUnits.setColumns(10);
+		}
+		return txtTwentyChipUnits;
+	}
+
+	private JPanel getPnFiftyChip() {
+		if (pnFiftyChip == null) {
+			pnFiftyChip = new JPanel();
+			pnFiftyChip.add(getLblFiftyChipIcon());
+			pnFiftyChip.add(getTxtFiftyChipUnits());
+		}
+		return pnFiftyChip;
+	}
+
+	private JLabel getLblFiftyChipIcon() {
+		if (lblFiftyChipIcon == null) {
+			lblFiftyChipIcon = new JLabel("FiftyChipIcon");
+			lblFiftyChipIcon.setLabelFor(getTxtFiftyChipUnits());
+			lblFiftyChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return lblFiftyChipIcon;
+	}
+
+	private JTextField getTxtFiftyChipUnits() {
+		if (txtFiftyChipUnits == null) {
+			txtFiftyChipUnits = new JTextField();
+			txtFiftyChipUnits.setFont(new Font("Dialog", Font.PLAIN, 14));
+			txtFiftyChipUnits.setEditable(false);
+			txtFiftyChipUnits.setColumns(10);
+		}
+		return txtFiftyChipUnits;
+	}
+
+	private JPanel getPnOneHundredChip() {
+		if (pnOneHundredChip == null) {
+			pnOneHundredChip = new JPanel();
+			pnOneHundredChip.add(getLblOneHundredChipIcon());
+			pnOneHundredChip.add(getTxtOneHundredChipUnits());
+		}
+		return pnOneHundredChip;
+	}
+
+	private JLabel getLblOneHundredChipIcon() {
+		if (lblOneHundredChipIcon == null) {
+			lblOneHundredChipIcon = new JLabel("OneHundredChipIcon");
+			lblOneHundredChipIcon.setLabelFor(getTxtOneHundredChipUnits());
+			lblOneHundredChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return lblOneHundredChipIcon;
+	}
+
+	private JTextField getTxtOneHundredChipUnits() {
+		if (txtOneHundredChipUnits == null) {
+			txtOneHundredChipUnits = new JTextField();
+			txtOneHundredChipUnits.setFont(new Font("Dialog", Font.PLAIN, 14));
+			txtOneHundredChipUnits.setEditable(false);
+			txtOneHundredChipUnits.setColumns(10);
+		}
+		return txtOneHundredChipUnits;
+	}
+
+	private JPanel getPnTopBoard() {
+		if (pnTopBoard == null) {
+			pnTopBoard = new JPanel();
+			pnTopBoard.setLayout(new GridLayout(1, 3, 0, 0));
+			pnTopBoard.add(getPnBoardZero());
+			pnTopBoard.add(getPnBoardNumbers());
+			pnTopBoard.add(getPnBoardColumns());
+		}
+		return pnTopBoard;
+	}
+
+	private JPanel getPnBoardZero() {
+		if (pnBoardZero == null) {
+			pnBoardZero = new JPanel();
+			pnBoardZero.setLayout(new GridLayout(1, 0, 0, 0));
+			pnBoardZero.add(getBtnBoardZero());
+		}
+		return pnBoardZero;
+	}
+
+	private JButton getBtnBoardZero() {
+		if (btnBoardZero == null) {
+			btnBoardZero = new JButton("0");
+			btnBoardZero.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardZero;
+	}
+
+	private JPanel getPnBoardNumbers() {
+		if (pnBoardNumbers == null) {
+			pnBoardNumbers = new JPanel();
+			pnBoardNumbers.setLayout(new GridLayout(3, 12, 0, 0));
+		}
+		return pnBoardNumbers;
+	}
+
+	private JPanel getPnBoardColumns() {
+		if (pnBoardColumns == null) {
+			pnBoardColumns = new JPanel();
+			pnBoardColumns.setLayout(new GridLayout(0, 1, 0, 0));
+			pnBoardColumns.add(getBtnBoardThirdCol());
+			pnBoardColumns.add(getBtnBoardSecCol());
+			pnBoardColumns.add(getBtnBoardFirstCol());
+		}
+		return pnBoardColumns;
+	}
+
+	private JButton getBtnBoardThirdCol() {
+		if (btnBoardThirdCol == null) {
+			btnBoardThirdCol = new JButton("3rd Col");
+			btnBoardThirdCol.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardThirdCol;
+	}
+
+	private JButton getBtnBoardSecCol() {
+		if (btnBoardSecCol == null) {
+			btnBoardSecCol = new JButton("2nd Col");
+			btnBoardSecCol.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardSecCol;
+	}
+
+	private JButton getBtnBoardFirstCol() {
+		if (btnBoardFirstCol == null) {
+			btnBoardFirstCol = new JButton("1st Col");
+			btnBoardFirstCol.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardFirstCol;
+	}
+
+	private JPanel getPnBotBoard() {
+		if (pnBotBoard == null) {
+			pnBotBoard = new JPanel();
+			pnBotBoard.setLayout(new GridLayout(2, 1, 0, 0));
+			pnBotBoard.add(getPnBoardDozens());
+			pnBotBoard.add(getPnBoardOther());
+		}
+		return pnBotBoard;
+	}
+
+	private JPanel getPnBoardDozens() {
+		if (pnBoardDozens == null) {
+			pnBoardDozens = new JPanel();
+			pnBoardDozens.setLayout(new GridLayout(1, 3, 0, 0));
+			pnBoardDozens.add(getBtnBoardFirstDozen());
+			pnBoardDozens.add(getBtnBoardSecDozen());
+			pnBoardDozens.add(getBtnBoardThirdDozen());
+		}
+		return pnBoardDozens;
+	}
+
+	private JButton getBtnBoardFirstDozen() {
+		if (btnBoardFirstDozen == null) {
+			btnBoardFirstDozen = new JButton("1st Dozen");
+			btnBoardFirstDozen.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardFirstDozen;
+	}
+
+	private JButton getBtnBoardSecDozen() {
+		if (btnBoardSecDozen == null) {
+			btnBoardSecDozen = new JButton("2nd Dozen");
+			btnBoardSecDozen.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardSecDozen;
+	}
+
+	private JButton getBtnBoardThirdDozen() {
+		if (btnBoardThirdDozen == null) {
+			btnBoardThirdDozen = new JButton("3rd Dozen");
+			btnBoardThirdDozen.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardThirdDozen;
+	}
+
+	private JPanel getPnBoardOther() {
+		if (pnBoardOther == null) {
+			pnBoardOther = new JPanel();
+			pnBoardOther.setLayout(new GridLayout(1, 6, 0, 0));
+			pnBoardOther.add(getBtnBoardFail());
+			pnBoardOther.add(getBtnBoardEven());
+			pnBoardOther.add(getBtnBoardBlack());
+			pnBoardOther.add(getBtnBoardRed());
+			pnBoardOther.add(getBtnBoardOdd());
+			pnBoardOther.add(getBtnBoardPass());
+		}
+		return pnBoardOther;
+	}
+
+	private JButton getBtnBoardFail() {
+		if (btnBoardFail == null) {
+			btnBoardFail = new JButton("1-18");
+			btnBoardFail.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardFail;
+	}
+
+	private JButton getBtnBoardEven() {
+		if (btnBoardEven == null) {
+			btnBoardEven = new JButton("Even");
+			btnBoardEven.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardEven;
+	}
+
+	private JButton getBtnBoardBlack() {
+		if (btnBoardBlack == null) {
+			btnBoardBlack = new JButton("Black");
+			btnBoardBlack.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardBlack;
+	}
+
+	private JButton getBtnBoardRed() {
+		if (btnBoardRed == null) {
+			btnBoardRed = new JButton("Red");
+			btnBoardRed.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardRed;
+	}
+
+	private JButton getBtnBoardOdd() {
+		if (btnBoardOdd == null) {
+			btnBoardOdd = new JButton("Odd");
+			btnBoardOdd.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardOdd;
+	}
+
+	private JButton getBtnBoardPass() {
+		if (btnBoardPass == null) {
+			btnBoardPass = new JButton("19-36");
+			btnBoardPass.setFont(new Font("Dialog", Font.BOLD, 18));
+		}
+		return btnBoardPass;
+	}
+
+	// Auxiliary methods
 	private void spinRoulette() {
 		roulette.spin();
 		writeInResultsTextArea();
@@ -240,5 +650,4 @@ public class GameWindow extends JFrame {
 		roulette.getResults().parallelStream().forEach(b -> sb.append(b.toString() + "\n"));
 		taResults.setText(sb.toString());
 	}
-
 }
