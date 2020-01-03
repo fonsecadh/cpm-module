@@ -277,7 +277,7 @@ public class ChipsWindow extends JDialog {
 			btnOk = new JButton("OK");
 			btnOk.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					updateBalanceAndClose();
+					updateBalanceAndChipsAndClose();
 				}
 			});
 			btnOk.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -299,7 +299,8 @@ public class ChipsWindow extends JDialog {
 	}
 
 	// Auxiliary methods
-	private void updateBalanceAndClose() {
+	private void updateBalanceAndChipsAndClose() {
+		// TODO: Add chips!
 		this.player.setBalance(currentPlayerBalance);
 		this.bankWindow.updateCurrentBalanceTxt();
 		dispose();
