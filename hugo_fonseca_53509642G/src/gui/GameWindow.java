@@ -2,11 +2,14 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,11 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
+
 import business.roulette.Roulette;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 
 public class GameWindow extends JFrame {
 
@@ -93,6 +97,11 @@ public class GameWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Properties props = new Properties();
+					props.put("logoString", "");
+					HiFiLookAndFeel.setCurrentTheme(props);
+					UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+					
 					GameWindow frame = new GameWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
