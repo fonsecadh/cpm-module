@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,7 +23,9 @@ import javax.swing.border.EmptyBorder;
 
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 
+import business.player.Player;
 import business.roulette.Roulette;
+import gui.credentials.users.SignInWindow;
 
 public class GameWindow extends JFrame {
 
@@ -31,6 +34,8 @@ public class GameWindow extends JFrame {
 
 	// Attributes
 	private Roulette roulette;
+	private Player player;
+	private SignInWindow signInWindow;
 
 	private JPanel contentPane;
 	private JPanel pnRound;
@@ -129,8 +134,10 @@ public class GameWindow extends JFrame {
 		contentPane.add(getPnGame(), BorderLayout.CENTER);
 
 		// Business logic
-		this.roulette = Roulette.getInstance(); // Singleton
 		createNumberButtons();
+		this.roulette = Roulette.getInstance();
+		this.player = Player.getInstance();
+		openUserCredentialsWindow();
 	}
 
 	private JPanel getPnRound() {
@@ -654,6 +661,18 @@ public class GameWindow extends JFrame {
 		roulette.spin();
 		writeInResultsTextArea();
 		roulette.detachAllBets();
+		updatePlayerBalance();
+		updateShownPlayerBalance();
+	}
+
+	private void updatePlayerBalance() {
+		double newBalance = roulette
+				.getResults()
+				.stream()
+				.map(r -> r.getBetBenefit())
+				.reduce(0.0,  (a, b) -> a + b);
+		double oldBalance = player.getBalance();
+		player.setBalance(oldBalance + newBalance);
 	}
 
 	private void writeInResultsTextArea() {
@@ -674,5 +693,47 @@ public class GameWindow extends JFrame {
 				getPnBoardNumbers().add(createNumberButton(i));
 			}
 		}
+	}
+	
+	public void onUserLogged() {
+		initializeRoulette();
+		updateShownPlayerBalance();
+	}
+	
+	private void updateShownPlayerBalance() {
+		getTxtBalance().setText(String.valueOf(player.getBalance()));
+	}
+
+	private void initializeRoulette() {
+		restartPlayerChips();
+	}
+
+	private void restartPlayerChips() {
+		getTxtFiveChipUnits().setText("0");
+		getTxtTenChipUnits().setText("0");
+		getTxtTwentyChipUnits().setText("0");
+		getTxtFiftyChipUnits().setText("0");
+		getTxtOneHundredChipUnits().setText("0");
+	}
+
+	private void updatePlayerChips() {
+		int chipsFive = player.getChips().stream().filter(c -> c.getAmount() == 5).collect(Collectors.toList()).size();
+		int chipsTen = player.getChips().stream().filter(c -> c.getAmount() == 10).collect(Collectors.toList()).size();
+		int chipsTwenty = player.getChips().stream().filter(c -> c.getAmount() == 20).collect(Collectors.toList()).size();
+		int chipsFifty = player.getChips().stream().filter(c -> c.getAmount() == 50).collect(Collectors.toList()).size();
+		int chipsOneHundred = player.getChips().stream().filter(c -> c.getAmount() == 100).collect(Collectors.toList()).size();
+		
+		getTxtFiveChipUnits().setText(String.valueOf(chipsFive));
+		getTxtTenChipUnits().setText(String.valueOf(chipsTen));
+		getTxtTwentyChipUnits().setText(String.valueOf(chipsTwenty));
+		getTxtFiftyChipUnits().setText(String.valueOf(chipsFifty));
+		getTxtOneHundredChipUnits().setText(String.valueOf(chipsOneHundred));
+	}
+
+	private void openUserCredentialsWindow() {
+		this.signInWindow = new SignInWindow(this);
+		this.signInWindow.setModal(true);
+		this.signInWindow.setLocationRelativeTo(this);
+		this.signInWindow.setVisible(true);
 	}
 }

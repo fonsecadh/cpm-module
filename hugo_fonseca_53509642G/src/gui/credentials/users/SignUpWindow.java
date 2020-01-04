@@ -217,6 +217,7 @@ public class SignUpWindow extends JDialog {
 					userFacade.signUpUser(nationalID, fullname, username, passwd);
 					try {
 						this.player.setAssociatedUser(userFacade.loadUser(username));
+						this.signInWindow.getGameWindow().onUserLogged();
 						this.signInWindow.dispose();
 						dispose();
 					} catch (UserException e) {

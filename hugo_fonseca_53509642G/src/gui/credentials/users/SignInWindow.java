@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import business.exceptions.users.UserException;
 import business.facade.UserFacade;
 import business.player.Player;
+import gui.GameWindow;
 
 public class SignInWindow extends JDialog {
 
@@ -27,6 +28,7 @@ public class SignInWindow extends JDialog {
 	private UserFacade userFacade;
 	private Player player;
 	private SignUpWindow signUp;
+	private GameWindow gameWindow;
 	
 	private JLabel lblUsername;
 	private JLabel lblSignIn;
@@ -42,7 +44,7 @@ public class SignInWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public SignInWindow() {
+	public SignInWindow(GameWindow gameWindow) {
 		setTitle("Roulette: Sign In");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
@@ -58,6 +60,7 @@ public class SignInWindow extends JDialog {
 		// Business logic
 		this.player = Player.getInstance();
 		this.userFacade = new UserFacade();
+		this.gameWindow = gameWindow;
 	}
 
 	private JLabel getLblUsername() {
@@ -177,6 +180,7 @@ public class SignInWindow extends JDialog {
 			if (isValid) {
 				try {
 					this.player.setAssociatedUser(userFacade.loadUser(getTxtUsername().getText()));
+					this.gameWindow.onUserLogged();
 					dispose(); // Close dialog
 				} catch (UserException e) {
 					JOptionPane.showMessageDialog(this, e.getMessage(), 
@@ -187,6 +191,10 @@ public class SignInWindow extends JDialog {
 						"Invalid session", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+	
+	public GameWindow getGameWindow() {
+		return gameWindow;
 	}
 	
 	private void startSignUpWindow() {
