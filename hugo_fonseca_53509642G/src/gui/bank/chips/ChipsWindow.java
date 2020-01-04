@@ -19,6 +19,7 @@ import javax.swing.SpinnerNumberModel;
 import gui.bank.BankWindow;
 import javax.swing.event.ChangeListener;
 
+import business.facade.ChipFacade;
 import business.player.Player;
 
 import javax.swing.event.ChangeEvent;
@@ -32,6 +33,7 @@ public class ChipsWindow extends JDialog {
 	private BankWindow bankWindow;
 	private Player player;
 	private double currentPlayerBalance;
+	private ChipFacade chipFacade;
 
 	private JPanel pnBalance;
 	private JPanel pnChips;
@@ -67,6 +69,7 @@ public class ChipsWindow extends JDialog {
 		this.bankWindow = bankWindow;
 		this.player = Player.getInstance();
 		this.currentPlayerBalance = player.getBalance();
+		this.chipFacade = new ChipFacade();
 	}
 
 	private JPanel getPnBalance() {
@@ -300,10 +303,37 @@ public class ChipsWindow extends JDialog {
 
 	// Auxiliary methods
 	private void updateBalanceAndChipsAndClose() {
-		// TODO: Add chips!
+		addChipsToPlayer();		
 		this.player.setBalance(currentPlayerBalance);
 		this.bankWindow.updateCurrentBalanceTxt();
 		dispose();
+	}
+
+	private void addChipsToPlayer() {
+		int fiveChipUnits = (int) getSpinnerFiveChip().getValue();
+		for (int i = 0; i < fiveChipUnits; i++) {
+			this.player.addChip(chipFacade.makeChipFive());
+		}
+		
+		int tenChipUnits = (int) getSpinnerTenChip().getValue();
+		for (int i = 0; i < tenChipUnits; i++) {
+			this.player.addChip(chipFacade.makeChipTen());
+		}
+		
+		int twentyChipUnits = (int) getSpinnerTwentyChip().getValue();
+		for (int i = 0; i < twentyChipUnits; i++) {
+			this.player.addChip(chipFacade.makeChipTwenty());
+		}
+		
+		int fiftyChipUnits = (int) getSpinnerFiftyChip().getValue();
+		for (int i = 0; i < fiftyChipUnits; i++) {
+			this.player.addChip(chipFacade.makeChipFifty());
+		}
+		
+		int oneHundredChipUnits = (int) getSpinnerOneHundredChip().getValue();
+		for (int i = 0; i < oneHundredChipUnits; i++) {
+			this.player.addChip(chipFacade.makeChipOneHundred());
+		}
 	}
 
 	private void checkMax(int amount, int units, int prevUnits, JSpinner spinner) {

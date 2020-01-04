@@ -19,6 +19,8 @@ public class BarWindow extends JDialog {
 
 	// Constants
 	private static final long serialVersionUID = 1L;
+	
+	// Attributes
 	private JPanel pnFilter;
 	private JButton btnAlcoholic;
 	private JButton btnNonAlcoholic;
