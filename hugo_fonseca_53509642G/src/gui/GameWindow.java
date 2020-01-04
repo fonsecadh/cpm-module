@@ -30,6 +30,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 
+import business.chips.Chip;
 import business.player.Player;
 import business.roulette.Roulette;
 import gui.credentials.users.SignInWindow;
@@ -43,6 +44,7 @@ public class GameWindow extends JFrame {
 	private Roulette roulette;
 	private Player player;
 	private SignInWindow signInWindow;
+	private Chip currentBetChip;
 	private ProcessDrag pd = new ProcessDrag();
 	private ProcessButton pb = new ProcessButton();
 
@@ -244,6 +246,7 @@ public class GameWindow extends JFrame {
 	private JButton getBtnRoulette() {
 		if (btnRoulette == null) {
 			btnRoulette = new JButton("RouletteIcon");
+			btnRoulette.setEnabled(false);
 			btnRoulette.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					spinRoulette();
@@ -687,6 +690,7 @@ public class GameWindow extends JFrame {
 		roulette.detachAllBets();
 		updatePlayerBalance();
 		updateShownPlayerBalance();
+		updatePlayerChips();
 	}
 
 	private void updatePlayerBalance() {
@@ -797,4 +801,8 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
+	
+	// TODO: Make a ProcessButton for every button (only one for the numbers)
+	// TODO: Make a ProcessDrag for every chip label
+	// TODO: Store last dragged chip in order to specify the amount of the bet in the buttons
 }
