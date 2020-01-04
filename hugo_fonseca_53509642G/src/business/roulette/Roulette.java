@@ -104,6 +104,10 @@ public class Roulette {
 		return roundResult;
 	}
 	
+	public Integer[] getRedNumbers() {
+		return redN;
+	}
+	
 	// Bet management
 	public void attachBet(Bet bet) {
 		bets.add(bet);
