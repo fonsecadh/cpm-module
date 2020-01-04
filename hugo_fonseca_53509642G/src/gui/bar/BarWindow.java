@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -14,6 +17,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import business.bar.products.Product;
+import business.facade.BarFacade;
+import business.facade.ImageFacade;
+import javax.swing.SpinnerNumberModel;
 
 public class BarWindow extends JDialog {
 
@@ -21,6 +31,9 @@ public class BarWindow extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
 	// Attributes
+	private BarFacade barFacade;
+	private ImageFacade imageFacade;
+	
 	private JPanel pnFilter;
 	private JButton btnAlcoholic;
 	private JButton btnNonAlcoholic;
@@ -32,7 +45,7 @@ public class BarWindow extends JDialog {
 	private JPanel pnOrderProducts;
 	private JPanel pnOrderActions;
 	private JLabel lblProducts;
-	private JComboBox cbProducts;
+	private JComboBox<Product> cbProducts;
 	private JPanel pnProducts;
 	private JLabel lblProductIcon;
 	private JScrollPane spCart;
@@ -61,6 +74,9 @@ public class BarWindow extends JDialog {
 		getContentPane().add(getPnFilter(), BorderLayout.WEST);
 		getContentPane().add(getPnBtns(), BorderLayout.SOUTH);
 		getContentPane().add(getPnOrdering(), BorderLayout.CENTER);
+		
+		// Business logic
+		this.barFacade = new BarFacade();
 
 	}
 
@@ -171,9 +187,16 @@ public class BarWindow extends JDialog {
 		return lblProducts;
 	}
 
-	private JComboBox getCbProducts() {
+	private JComboBox<Product> getCbProducts() {
 		if (cbProducts == null) {
-			cbProducts = new JComboBox();
+			cbProducts = new JComboBox<Product>();
+			cbProducts.setModel(new DefaultComboBoxModel<Product>(barFacade.getProductAsArray()));
+			cbProducts.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					showPicture();
+					isDeletionPossible();
+				}
+			});
 			cbProducts.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return cbProducts;
@@ -238,6 +261,12 @@ public class BarWindow extends JDialog {
 	private JSpinner getSpinnerUnits() {
 		if (spinnerUnits == null) {
 			spinnerUnits = new JSpinner();
+			spinnerUnits.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			spinnerUnits.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+					isDeletionPossible();
+				}
+			});
 			spinnerUnits.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return spinnerUnits;
@@ -254,6 +283,7 @@ public class BarWindow extends JDialog {
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
 			btnRemove = new JButton("Remove");
+			btnRemove.setEnabled(false);
 			btnRemove.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnRemove;
@@ -342,5 +372,20 @@ public class BarWindow extends JDialog {
 			taComments.setFont(new Font("Dialog", Font.PLAIN, 13));
 		}
 		return taComments;
+	}
+	
+	// Auxiliary methods
+	private void showPicture() {
+		this.imageFacade.getImageForProduct((Product) getCbProducts().getSelectedItem());
+	}
+	
+	private void isDeletionPossible() {
+		Product selectedProduct = (Product) getCbProducts().getSelectedItem();		
+		int units = (int) getSpinnerUnits().getValue();		
+		if (barFacade.isDeletionPossible(selectedProduct, units)) {
+			getBtnRemove().setEnabled(true);
+		} else {
+			getBtnRemove().setEnabled(false);
+		}
 	}
 }
