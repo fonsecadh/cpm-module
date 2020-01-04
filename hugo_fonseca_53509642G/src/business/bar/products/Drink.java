@@ -60,5 +60,16 @@ public class Drink implements Product {
 	public void setUnits(int units) {
 		this.units = units;
 	}
+	
+	@Override
+	public String toString() {
+		String typeString = "";
+		if (type == 0) {
+			typeString = "Alcoholic";
+		} else {
+			typeString = "Non alcoholic";
+		}
+		return typeString + " - " + name + " - " + price + " (" + units + " units)";
+	}
 
 }

@@ -97,5 +97,21 @@ public class OrderImpl implements Order {
 	public void initialize() {
 		this.products.clear();
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sbInfo = new StringBuilder();
+		sbInfo.append("This is the information regarding your order:\n");
+		sbInfo.append("Type - Name - Price (n units)\n");
+		
+		// We append the elements of the dictionary
+		products.entrySet().forEach(p -> sbInfo.append(p.getKey() + "\n"));
+		
+		if (!comment.equals("")) {
+			sbInfo.append("Customer's comments: \n");
+			sbInfo.append(comment + "\n");
+		}
+		return sbInfo.toString();
+	}
 
 }

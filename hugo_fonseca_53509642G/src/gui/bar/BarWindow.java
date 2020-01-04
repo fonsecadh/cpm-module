@@ -6,34 +6,39 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import business.bar.products.Product;
+import business.exceptions.order.OrderException;
 import business.facade.BarFacade;
 import business.facade.ImageFacade;
-import javax.swing.SpinnerNumberModel;
+import business.player.Player;
 
 public class BarWindow extends JDialog {
 
 	// Constants
 	private static final long serialVersionUID = 1L;
-	
+
 	// Attributes
 	private BarFacade barFacade;
 	private ImageFacade imageFacade;
-	
+	private Player player;
+
 	private JPanel pnFilter;
 	private JButton btnAlcoholic;
 	private JButton btnNonAlcoholic;
@@ -74,9 +79,11 @@ public class BarWindow extends JDialog {
 		getContentPane().add(getPnFilter(), BorderLayout.WEST);
 		getContentPane().add(getPnBtns(), BorderLayout.SOUTH);
 		getContentPane().add(getPnOrdering(), BorderLayout.CENTER);
-		
+
 		// Business logic
 		this.barFacade = new BarFacade();
+		this.imageFacade = new ImageFacade();
+		this.player = Player.getInstance();
 
 	}
 
@@ -129,6 +136,12 @@ public class BarWindow extends JDialog {
 	private JButton getBtnOk() {
 		if (btnOk == null) {
 			btnOk = new JButton("OK");
+			btnOk.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					saveAndClose();
+				}
+			});
+			btnOk.setEnabled(false);
 			btnOk.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnOk;
@@ -137,6 +150,11 @@ public class BarWindow extends JDialog {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
+			btnCancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
 			btnCancel.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnCancel;
@@ -258,6 +276,7 @@ public class BarWindow extends JDialog {
 		return pnActions;
 	}
 
+	@SuppressWarnings("deprecation")
 	private JSpinner getSpinnerUnits() {
 		if (spinnerUnits == null) {
 			spinnerUnits = new JSpinner();
@@ -275,6 +294,16 @@ public class BarWindow extends JDialog {
 	private JButton getBtnAdd() {
 		if (btnAdd == null) {
 			btnAdd = new JButton("Add");
+			btnAdd.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					addProductToOrder();
+					updateShownOrderPrice();
+					updateCurrentOrderInfo();
+					enableNextButton();
+					isDeletionPossible();
+					resetSpinner();
+				}
+			});
 			btnAdd.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnAdd;
@@ -283,6 +312,16 @@ public class BarWindow extends JDialog {
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
 			btnRemove = new JButton("Remove");
+			btnRemove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					deleteFromProduct();
+					updateShownOrderPrice();
+					updateCurrentOrderInfo();
+					enableNextButton();
+					isDeletionPossible();
+					resetSpinner();
+				}
+			});
 			btnRemove.setEnabled(false);
 			btnRemove.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -373,19 +412,75 @@ public class BarWindow extends JDialog {
 		}
 		return taComments;
 	}
-	
+
 	// Auxiliary methods
 	private void showPicture() {
 		this.imageFacade.getImageForProduct((Product) getCbProducts().getSelectedItem());
 	}
-	
+
 	private void isDeletionPossible() {
-		Product selectedProduct = (Product) getCbProducts().getSelectedItem();		
-		int units = (int) getSpinnerUnits().getValue();		
+		Product selectedProduct = (Product) getCbProducts().getSelectedItem();
+		int units = (int) getSpinnerUnits().getValue();
 		if (barFacade.isDeletionPossible(selectedProduct, units)) {
 			getBtnRemove().setEnabled(true);
 		} else {
 			getBtnRemove().setEnabled(false);
 		}
+	}
+
+	private void addProductToOrder() {
+		Product selectedProduct = (Product) getCbProducts().getSelectedItem();
+		int units = (int) getSpinnerUnits().getValue();
+		try {
+			barFacade.addProduct(selectedProduct, units);
+		} catch (OrderException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void resetSpinner() {
+		getSpinnerUnits().setValue(1);
+	}
+
+	private void enableNextButton() {
+		getBtnOk().setEnabled(true);
+	}
+
+	private void updateCurrentOrderInfo() {
+		getTaCart().setText(barFacade.getOrderInfo());
+	}
+
+	@SuppressWarnings("deprecation")
+	private void updateShownOrderPrice() {
+		double total = barFacade.calculateTotalPrice();
+		getTxtOrderPrice().setText(String.valueOf(BigDecimal.valueOf(total).setScale(2, BigDecimal.ROUND_HALF_UP)));
+		updateShownPlayerCurrentBalance(total);
+	}
+	
+	private void updateShownPlayerCurrentBalance(double orderTotal) {
+		double currentBalance = player.getBalance() - orderTotal;
+		getTxtBalance().setText(String.valueOf(currentBalance));
+		if (currentBalance < 0) {
+			getBtnOk().setEnabled(false);
+		} else {
+			getBtnOk().setEnabled(true);
+		}
+	}
+
+	private void deleteFromProduct() {
+		Product selectedProduct = (Product) getCbProducts().getSelectedItem();
+		int units = (int) getSpinnerUnits().getValue();
+		try {
+			barFacade.removeProduct(selectedProduct, units);
+		} catch (OrderException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void saveAndClose() {
+		this.player.setBalance(Double.parseDouble(getTxtBalance().getText()));
+		barFacade.addComment(getTaComments().getText());
+		JOptionPane.showMessageDialog(this, barFacade.getOrderInfo(), "Order details", JOptionPane.INFORMATION_MESSAGE);
+		dispose();
 	}
 }

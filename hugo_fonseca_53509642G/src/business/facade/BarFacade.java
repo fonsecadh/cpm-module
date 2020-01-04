@@ -32,6 +32,22 @@ public class BarFacade {
 		}
 	}
 
+	public void addProduct(Product selectedProduct, int units) throws OrderException {
+		order.addProduct(selectedProduct, units);
+	}
+
+	public void removeProduct(Product selectedProduct, int units) throws OrderException {
+		order.removeProduct(selectedProduct, units);
+	}
+
+	public double calculateTotalPrice() {
+		return order.getTotal();
+	}
+
+	public void addComment(String comment) {
+		order.addComment(comment);
+	}
+
 	public Product[] getProductAsArray() {
 		return bm.loadProductsAsArray();
 	}
@@ -42,6 +58,10 @@ public class BarFacade {
 	
 	public Product[] filterProductByType(int type) {
 		return bm.filterProductByType(type);
+	}
+
+	public String getOrderInfo() {
+		return order.toString();
 	}
 
 }
