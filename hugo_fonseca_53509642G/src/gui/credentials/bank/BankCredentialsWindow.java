@@ -54,6 +54,7 @@ public class BankCredentialsWindow extends JDialog {
 	private JLabel getLblBankCardNumber() {
 		if (lblBankCardNumber == null) {
 			lblBankCardNumber = new JLabel("Bank card number:");
+			lblBankCardNumber.setDisplayedMnemonic('B');
 			lblBankCardNumber.setLabelFor(getTxtBankCardNumber());
 			lblBankCardNumber.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -72,6 +73,7 @@ public class BankCredentialsWindow extends JDialog {
 	private JLabel getLblSecretCode() {
 		if (lblSecretCode == null) {
 			lblSecretCode = new JLabel("Secret code:");
+			lblSecretCode.setDisplayedMnemonic('S');
 			lblSecretCode.setLabelFor(getPfSecretCode());
 			lblSecretCode.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -113,6 +115,7 @@ public class BankCredentialsWindow extends JDialog {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
+			btnCancel.setMnemonic('C');
 			btnCancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();

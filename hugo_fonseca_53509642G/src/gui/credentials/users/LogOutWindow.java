@@ -130,6 +130,7 @@ public class LogOutWindow extends JDialog {
 	private JButton getBtnMoveBank() {
 		if (btnMoveBank == null) {
 			btnMoveBank = new JButton("Transfer Balance to Bank");
+			btnMoveBank.setMnemonic('T');
 			btnMoveBank.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnMoveBank;

@@ -160,6 +160,7 @@ public class BankWindow extends JDialog {
 	private JButton getBtnRechargeBal() {
 		if (btnRechargeBal == null) {
 			btnRechargeBal = new JButton("Recharge Balance");
+			btnRechargeBal.setMnemonic('R');
 			btnRechargeBal.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					openBankCredentialsWindow();
@@ -189,6 +190,7 @@ public class BankWindow extends JDialog {
 	private JButton getBtnGetChips() {
 		if (btnGetChips == null) {
 			btnGetChips = new JButton("Get Chips");
+			btnGetChips.setMnemonic('G');
 			btnGetChips.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					openChipsWindow();

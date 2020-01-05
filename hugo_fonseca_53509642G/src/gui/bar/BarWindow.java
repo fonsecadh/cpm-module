@@ -101,6 +101,7 @@ public class BarWindow extends JDialog {
 	private JButton getBtnAlcoholic() {
 		if (btnAlcoholic == null) {
 			btnAlcoholic = new JButton("Alcoholic");
+			btnAlcoholic.setMnemonic('A');
 			btnAlcoholic.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnAlcoholic;
@@ -109,6 +110,7 @@ public class BarWindow extends JDialog {
 	private JButton getBtnNonAlcoholic() {
 		if (btnNonAlcoholic == null) {
 			btnNonAlcoholic = new JButton("Non Alcoholic");
+			btnNonAlcoholic.setMnemonic('N');
 			btnNonAlcoholic.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnNonAlcoholic;
@@ -150,6 +152,7 @@ public class BarWindow extends JDialog {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
+			btnCancel.setMnemonic('C');
 			btnCancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();
@@ -199,6 +202,7 @@ public class BarWindow extends JDialog {
 	private JLabel getLblProducts() {
 		if (lblProducts == null) {
 			lblProducts = new JLabel("Products:");
+			lblProducts.setDisplayedMnemonic('P');
 			lblProducts.setLabelFor(getCbProducts());
 			lblProducts.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -258,6 +262,7 @@ public class BarWindow extends JDialog {
 	private JLabel getLblUnits() {
 		if (lblUnits == null) {
 			lblUnits = new JLabel("Units:");
+			lblUnits.setDisplayedMnemonic('U');
 			lblUnits.setLabelFor(getSpinnerUnits());
 			lblUnits.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -294,6 +299,7 @@ public class BarWindow extends JDialog {
 	private JButton getBtnAdd() {
 		if (btnAdd == null) {
 			btnAdd = new JButton("Add");
+			btnAdd.setMnemonic('d');
 			btnAdd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					addProductToOrder();
@@ -312,6 +318,7 @@ public class BarWindow extends JDialog {
 	private JButton getBtnRemove() {
 		if (btnRemove == null) {
 			btnRemove = new JButton("Remove");
+			btnRemove.setMnemonic('r');
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					deleteFromProduct();
@@ -391,6 +398,7 @@ public class BarWindow extends JDialog {
 	private JLabel getLblComments() {
 		if (lblComments == null) {
 			lblComments = new JLabel("Comments:");
+			lblComments.setDisplayedMnemonic('m');
 			lblComments.setLabelFor(getTaComments());
 			lblComments.setFont(new Font("Dialog", Font.BOLD, 14));
 		}

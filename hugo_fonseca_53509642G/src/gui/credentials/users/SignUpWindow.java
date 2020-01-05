@@ -81,6 +81,7 @@ public class SignUpWindow extends JDialog {
 	private JLabel getLblUsername() {
 		if (lblUsername == null) {
 			lblUsername = new JLabel("User Name:");
+			lblUsername.setDisplayedMnemonic('U');
 			lblUsername.setLabelFor(getTxtUsername());
 			lblUsername.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -90,6 +91,7 @@ public class SignUpWindow extends JDialog {
 	private JLabel getLblPasswd() {
 		if (lblPasswd == null) {
 			lblPasswd = new JLabel("Password:");
+			lblPasswd.setDisplayedMnemonic('P');
 			lblPasswd.setLabelFor(getPfPasswd());
 			lblPasswd.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -99,6 +101,7 @@ public class SignUpWindow extends JDialog {
 	private JLabel getLblRePasswd() {
 		if (lblRePasswd == null) {
 			lblRePasswd = new JLabel("Repeat password:");
+			lblRePasswd.setDisplayedMnemonic('R');
 			lblRePasswd.setLabelFor(getPfRePasswd());
 			lblRePasswd.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -108,6 +111,7 @@ public class SignUpWindow extends JDialog {
 	private JLabel getLblUserID() {
 		if (lblUserID == null) {
 			lblUserID = new JLabel("National ID:");
+			lblUserID.setDisplayedMnemonic('N');
 			lblUserID.setLabelFor(getTxtUserID());
 			lblUserID.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -117,6 +121,7 @@ public class SignUpWindow extends JDialog {
 	private JLabel getLblFullname() {
 		if (lblFullname == null) {
 			lblFullname = new JLabel("Full Name:");
+			lblFullname.setDisplayedMnemonic('F');
 			lblFullname.setLabelFor(getTxtFullname());
 			lblFullname.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -193,6 +198,7 @@ public class SignUpWindow extends JDialog {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
+			btnCancel.setMnemonic('C');
 			btnCancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();

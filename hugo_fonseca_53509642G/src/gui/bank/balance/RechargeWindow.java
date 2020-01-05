@@ -95,6 +95,7 @@ public class RechargeWindow extends JDialog {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
+			btnCancel.setMnemonic('C');
 			btnCancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					bankCredentialsWindow.dispose();
@@ -128,6 +129,7 @@ public class RechargeWindow extends JDialog {
 	private JLabel getLblExtract() {
 		if (lblExtract == null) {
 			lblExtract = new JLabel("Amount to extract:");
+			lblExtract.setDisplayedMnemonic('A');
 			lblExtract.setLabelFor(getSpinExtract());
 			lblExtract.setFont(new Font("Dialog", Font.BOLD, 14));
 		}

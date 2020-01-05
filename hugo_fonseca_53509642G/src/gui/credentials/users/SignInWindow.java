@@ -66,6 +66,7 @@ public class SignInWindow extends JDialog {
 	private JLabel getLblUsername() {
 		if (lblUsername == null) {
 			lblUsername = new JLabel("User Name:");
+			lblUsername.setDisplayedMnemonic('U');
 			lblUsername.setLabelFor(getTxtUsername());
 			lblUsername.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -92,6 +93,7 @@ public class SignInWindow extends JDialog {
 	private JLabel getLblPasswd() {
 		if (lblPasswd == null) {
 			lblPasswd = new JLabel("Password:");
+			lblPasswd.setDisplayedMnemonic('P');
 			lblPasswd.setLabelFor(getPfPasswd());
 			lblPasswd.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -130,6 +132,7 @@ public class SignInWindow extends JDialog {
 	private JButton getBtnNewUser() {
 		if (btnNewUser == null) {
 			btnNewUser = new JButton("Sign Up");
+			btnNewUser.setMnemonic('S');
 			btnNewUser.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					startSignUpWindow();

@@ -46,6 +46,10 @@ import business.roulette.Roulette;
 import gui.bank.BankWindow;
 import gui.credentials.users.LogOutWindow;
 import gui.credentials.users.SignInWindow;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 
 public class GameWindow extends JFrame {
 
@@ -120,6 +124,17 @@ public class GameWindow extends JFrame {
 	private JButton btnBoardRed;
 	private JButton btnBoardOdd;
 	private JButton btnBoardPass;
+	private JMenuBar menuBar;
+	private JMenu mnGame;
+	private JMenuItem mntmLogOut;
+	private JMenu mnBar;
+	private JMenuItem mntmOpenBar;
+	private JMenu mnBank;
+	private JMenuItem mntmOpenBank;
+	private JMenu mnHelp;
+	private JMenuItem mntmContents;
+	private JSeparator separatorHelp;
+	private JMenuItem mntmAbout;
 
 	/**
 	 * Launch the application.
@@ -150,6 +165,7 @@ public class GameWindow extends JFrame {
 		setTitle("Roulette");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setJMenuBar(getMenuBar_1());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -250,6 +266,7 @@ public class GameWindow extends JFrame {
 	private JButton getBtnBar() {
 		if (btnBar == null) {
 			btnBar = new JButton("Bar");
+			btnBar.setMnemonic('R');
 			btnBar.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnBar;
@@ -258,6 +275,7 @@ public class GameWindow extends JFrame {
 	private JButton getBtnLogOut() {
 		if (btnLogOut == null) {
 			btnLogOut = new JButton("Log Out");
+			btnLogOut.setMnemonic('G');
 			btnLogOut.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					openLogOutWindow();
@@ -271,7 +289,8 @@ public class GameWindow extends JFrame {
 	private JButton getBtnRoulette() {
 		if (btnRoulette == null) {
 			btnRoulette = new JButton("");
-			
+			btnRoulette.setToolTipText("Spins the roulette");
+
 			ImageIcon imageIcon = new ImageIcon(GameWindow.class.getResource("/img/roulette.jpg"));
 			Image img = imageIcon.getImage();
 			Image newImg = img.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH);
@@ -300,6 +319,7 @@ public class GameWindow extends JFrame {
 	private JTextArea getTaResults() {
 		if (taResults == null) {
 			taResults = new JTextArea();
+			taResults.setToolTipText("Shows the result of your bets");
 			taResults.setEditable(false);
 			taResults.setFont(new Font("Dialog", Font.PLAIN, 14));
 		}
@@ -358,6 +378,7 @@ public class GameWindow extends JFrame {
 	private JButton getBtnGetChips() {
 		if (btnGetChips == null) {
 			btnGetChips = new JButton("Chips");
+			btnGetChips.setMnemonic('S');
 			btnGetChips.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					openBankWindow();
@@ -779,10 +800,115 @@ public class GameWindow extends JFrame {
 		return btnBoardPass;
 	}
 
+	private JMenuBar getMenuBar_1() {
+		if (menuBar == null) {
+			menuBar = new JMenuBar();
+			menuBar.add(getMnGame());
+			menuBar.add(getMnBar());
+			menuBar.add(getMnBank());
+			menuBar.add(getMnHelp());
+		}
+		return menuBar;
+	}
+
+	private JMenu getMnGame() {
+		if (mnGame == null) {
+			mnGame = new JMenu("Game");
+			mnGame.setMnemonic('G');
+			mnGame.setFont(new Font("Dialog", Font.BOLD, 14));
+			mnGame.add(getMntmLogOut());
+		}
+		return mnGame;
+	}
+
+	private JMenuItem getMntmLogOut() {
+		if (mntmLogOut == null) {
+			mntmLogOut = new JMenuItem("Log Out");
+			mntmLogOut.setMnemonic('L');
+			mntmLogOut.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return mntmLogOut;
+	}
+
+	private JMenu getMnBar() {
+		if (mnBar == null) {
+			mnBar = new JMenu("Bar");
+			mnBar.setMnemonic('B');
+			mnBar.setFont(new Font("Dialog", Font.BOLD, 14));
+			mnBar.add(getMntmOpenBar());
+		}
+		return mnBar;
+	}
+
+	private JMenuItem getMntmOpenBar() {
+		if (mntmOpenBar == null) {
+			mntmOpenBar = new JMenuItem("Open bar");
+			mntmOpenBar.setMnemonic('O');
+			mntmOpenBar.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return mntmOpenBar;
+	}
+
+	private JMenu getMnBank() {
+		if (mnBank == null) {
+			mnBank = new JMenu("Bank");
+			mnBank.setMnemonic('N');
+			mnBank.setFont(new Font("Dialog", Font.BOLD, 14));
+			mnBank.add(getMntmOpenBank());
+		}
+		return mnBank;
+	}
+
+	private JMenuItem getMntmOpenBank() {
+		if (mntmOpenBank == null) {
+			mntmOpenBank = new JMenuItem("Open bank");
+			mntmOpenBank.setMnemonic('P');
+			mntmOpenBank.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return mntmOpenBank;
+	}
+
+	private JMenu getMnHelp() {
+		if (mnHelp == null) {
+			mnHelp = new JMenu("Help");
+			mnHelp.setMnemonic('H');
+			mnHelp.setFont(new Font("Dialog", Font.BOLD, 14));
+			mnHelp.add(getMntmContents());
+			mnHelp.add(getSeparatorHelp());
+			mnHelp.add(getMntmAbout());
+		}
+		return mnHelp;
+	}
+
+	private JMenuItem getMntmContents() {
+		if (mntmContents == null) {
+			mntmContents = new JMenuItem("Contents");
+			mntmContents.setMnemonic('C');
+			mntmContents.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return mntmContents;
+	}
+
+	private JSeparator getSeparatorHelp() {
+		if (separatorHelp == null) {
+			separatorHelp = new JSeparator();
+		}
+		return separatorHelp;
+	}
+
+	private JMenuItem getMntmAbout() {
+		if (mntmAbout == null) {
+			mntmAbout = new JMenuItem("About");
+			mntmAbout.setMnemonic('A');
+			mntmAbout.setFont(new Font("Dialog", Font.BOLD, 14));
+		}
+		return mntmAbout;
+	}
+
 	// Auxiliary methods
 	private void spinRoulette() {
 		roulette.spin();
-		writeInResultsTextArea();			
+		writeInResultsTextArea();
 		updatePlayerBalance();
 		updateShownPlayerBalance();
 		roulette.detachAllBets();
@@ -862,9 +988,12 @@ public class GameWindow extends JFrame {
 	public void updatePlayerChips() {
 		int chipsFive = player.getChips().stream().filter(c -> c.getAmount() == 5).collect(Collectors.toList()).size();
 		int chipsTen = player.getChips().stream().filter(c -> c.getAmount() == 10).collect(Collectors.toList()).size();
-		int chipsTwenty = player.getChips().stream().filter(c -> c.getAmount() == 20).collect(Collectors.toList()).size();
-		int chipsFifty = player.getChips().stream().filter(c -> c.getAmount() == 50).collect(Collectors.toList()).size();
-		int chipsOneHundred = player.getChips().stream().filter(c -> c.getAmount() == 100).collect(Collectors.toList()).size();
+		int chipsTwenty = player.getChips().stream().filter(c -> c.getAmount() == 20).collect(Collectors.toList())
+				.size();
+		int chipsFifty = player.getChips().stream().filter(c -> c.getAmount() == 50).collect(Collectors.toList())
+				.size();
+		int chipsOneHundred = player.getChips().stream().filter(c -> c.getAmount() == 100).collect(Collectors.toList())
+				.size();
 
 		getTxtFiveChipUnits().setText(String.valueOf(chipsFive));
 		getTxtTenChipUnits().setText(String.valueOf(chipsTen));
@@ -879,11 +1008,12 @@ public class GameWindow extends JFrame {
 		this.signInWindow.setLocationRelativeTo(this);
 		this.signInWindow.setVisible(true);
 	}
-	
+
 	private class ProcessDragChipFive extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			int playerChipsFive = player.getChips().stream().filter(c -> c.getAmount() == 5).collect(Collectors.toList()).size();
+			int playerChipsFive = player.getChips().stream().filter(c -> c.getAmount() == 5)
+					.collect(Collectors.toList()).size();
 			if (playerChipsFive > 0) {
 				currentBetChip = chipFacade.makeChipFive();
 				JComponent c = (JComponent) e.getSource();
@@ -892,11 +1022,12 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
-	
+
 	private class ProcessDragChipTen extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			int playerChipsTen = player.getChips().stream().filter(c -> c.getAmount() == 10).collect(Collectors.toList()).size();
+			int playerChipsTen = player.getChips().stream().filter(c -> c.getAmount() == 10)
+					.collect(Collectors.toList()).size();
 			if (playerChipsTen > 0) {
 				currentBetChip = chipFacade.makeChipTen();
 				JComponent c = (JComponent) e.getSource();
@@ -905,11 +1036,12 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
-	
+
 	private class ProcessDragChipTwenty extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			int playerChipsTwenty = player.getChips().stream().filter(c -> c.getAmount() == 20).collect(Collectors.toList()).size();
+			int playerChipsTwenty = player.getChips().stream().filter(c -> c.getAmount() == 20)
+					.collect(Collectors.toList()).size();
 			if (playerChipsTwenty > 0) {
 				currentBetChip = chipFacade.makeChipTwenty();
 				JComponent c = (JComponent) e.getSource();
@@ -918,11 +1050,12 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
-	
+
 	private class ProcessDragChipFifty extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			int playerChipsFifty = player.getChips().stream().filter(c -> c.getAmount() == 50).collect(Collectors.toList()).size();
+			int playerChipsFifty = player.getChips().stream().filter(c -> c.getAmount() == 50)
+					.collect(Collectors.toList()).size();
 			if (playerChipsFifty > 0) {
 				currentBetChip = chipFacade.makeChipFifty();
 				JComponent c = (JComponent) e.getSource();
@@ -931,11 +1064,12 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
-	
+
 	private class ProcessDragChipOneHundred extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			int playerChipsOneHundred = player.getChips().stream().filter(c -> c.getAmount() == 100).collect(Collectors.toList()).size();
+			int playerChipsOneHundred = player.getChips().stream().filter(c -> c.getAmount() == 100)
+					.collect(Collectors.toList()).size();
 			if (playerChipsOneHundred > 0) {
 				currentBetChip = chipFacade.makeChipOneHundred();
 				JComponent c = (JComponent) e.getSource();
@@ -944,133 +1078,133 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
-	
+
 	private class ProcessButtonNumber implements PropertyChangeListener {
-		
+
 		// Attribute
 		private int number;
-		
+
 		public ProcessButtonNumber(int number) {
 			this.number = number;
 		}
-		
+
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
-				setChipIconOnButton(btn, currentBetChip);				
+				setChipIconOnButton(btn, currentBetChip);
 				roulette.attachBet(betFacade.makeNumberBet(currentBetChip.getAmount(), number));
-				player.removeChipOfType(currentBetChip.getAmount()); 
+				player.removeChipOfType(currentBetChip.getAmount());
 				getBtnRoulette().setEnabled(true);
 				updatePlayerChips();
 			}
 		}
 	}
-	
+
 	private class ProcessButtonColumn implements PropertyChangeListener {
-		
+
 		// Attributes
 		private int column;
-		
+
 		public ProcessButtonColumn(int column) {
 			this.column = column;
 		}
-		
+
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
-				setChipIconOnButton(btn, currentBetChip);				
+				setChipIconOnButton(btn, currentBetChip);
 				roulette.attachBet(betFacade.makeColumnBet(currentBetChip.getAmount(), column));
-				player.removeChipOfType(currentBetChip.getAmount()); 
+				player.removeChipOfType(currentBetChip.getAmount());
 				getBtnRoulette().setEnabled(true);
 				updatePlayerChips();
 			}
 		}
 	}
-	
+
 	private class ProcessButtonDozen implements PropertyChangeListener {
-		
+
 		// Attributes
 		private int dozen;
-		
+
 		public ProcessButtonDozen(int dozen) {
 			this.dozen = dozen;
 		}
-		
+
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
-				setChipIconOnButton(btn, currentBetChip);				
+				setChipIconOnButton(btn, currentBetChip);
 				roulette.attachBet(betFacade.makeDozenBet(currentBetChip.getAmount(), dozen));
-				player.removeChipOfType(currentBetChip.getAmount()); 
+				player.removeChipOfType(currentBetChip.getAmount());
 				getBtnRoulette().setEnabled(true);
 				updatePlayerChips();
 			}
 		}
 	}
-	
+
 	private class ProcessButtonFailPass implements PropertyChangeListener {
-		
+
 		// Attributes
 		private boolean pass;
-		
+
 		public ProcessButtonFailPass(boolean pass) {
 			this.pass = pass;
 		}
-		
+
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
-				setChipIconOnButton(btn, currentBetChip);				
+				setChipIconOnButton(btn, currentBetChip);
 				roulette.attachBet(betFacade.makeFailPassBet(currentBetChip.getAmount(), pass));
-				player.removeChipOfType(currentBetChip.getAmount()); 
+				player.removeChipOfType(currentBetChip.getAmount());
 				getBtnRoulette().setEnabled(true);
 				updatePlayerChips();
 			}
 		}
 	}
-	
+
 	private class ProcessButtonOddEven implements PropertyChangeListener {
-		
+
 		// Attributes
 		private boolean even;
-		
+
 		public ProcessButtonOddEven(boolean even) {
 			this.even = even;
 		}
-		
+
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
-				setChipIconOnButton(btn, currentBetChip);				
+				setChipIconOnButton(btn, currentBetChip);
 				roulette.attachBet(betFacade.makeOddEvenBet(currentBetChip.getAmount(), even));
-				player.removeChipOfType(currentBetChip.getAmount()); 
+				player.removeChipOfType(currentBetChip.getAmount());
 				getBtnRoulette().setEnabled(true);
 				updatePlayerChips();
 			}
 		}
 	}
-	
+
 	private class ProcessButtonRedBlack implements PropertyChangeListener {
-		
+
 		// Attributes
 		private boolean red;
-		
+
 		public ProcessButtonRedBlack(boolean red) {
 			this.red = red;
 		}
-		
+
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
-				setChipIconOnButton(btn, currentBetChip);				
+				setChipIconOnButton(btn, currentBetChip);
 				roulette.attachBet(betFacade.makeRedBlackBet(currentBetChip.getAmount(), red));
-				player.removeChipOfType(currentBetChip.getAmount()); 
+				player.removeChipOfType(currentBetChip.getAmount());
 				getBtnRoulette().setEnabled(true);
 				updatePlayerChips();
 			}
@@ -1080,7 +1214,7 @@ public class GameWindow extends JFrame {
 	private void setChipIconOnButton(JButton btn, Chip chip) {
 		btn.setIcon(imgFacade.getImageForChip(chip));
 	}
-	
+
 	private void resetButtons() {
 		getBtnBoardZero().setIcon(null);
 		getBtnBoardZero().setForeground(Color.WHITE);
@@ -1105,19 +1239,19 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
-	
+
 	private void openLogOutWindow() {
 		this.logOutWindow = new LogOutWindow(this);
 		this.logOutWindow.setModal(true);
 		this.logOutWindow.setLocationRelativeTo(this);
 		this.logOutWindow.setVisible(true);
 	}
-	
+
 	private void openBankWindow() {
 		this.bankWindow = new BankWindow(this);
 		this.bankWindow.setModal(true);
 		this.bankWindow.setLocationRelativeTo(this);
 		this.bankWindow.setVisible(true);
 	}
-	
+
 }
