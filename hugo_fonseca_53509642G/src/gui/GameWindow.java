@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -574,6 +575,8 @@ public class GameWindow extends JFrame {
 			btnBoardZero.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardZero.addPropertyChangeListener(new ProcessButtonNumber(0));
 			btnBoardZero.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardZero.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardZero.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardZero;
 	}
@@ -603,6 +606,8 @@ public class GameWindow extends JFrame {
 			btnBoardThirdCol.setFont(new Font("Dialog", Font.BOLD, 14));
 			btnBoardThirdCol.addPropertyChangeListener(new ProcessButtonColumn(3));
 			btnBoardThirdCol.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardThirdCol.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardThirdCol.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardThirdCol;
 	}
@@ -613,6 +618,8 @@ public class GameWindow extends JFrame {
 			btnBoardSecCol.setFont(new Font("Dialog", Font.BOLD, 14));
 			btnBoardSecCol.addPropertyChangeListener(new ProcessButtonColumn(2));
 			btnBoardSecCol.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardSecCol.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardSecCol.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardSecCol;
 	}
@@ -623,6 +630,8 @@ public class GameWindow extends JFrame {
 			btnBoardFirstCol.setFont(new Font("Dialog", Font.BOLD, 14));
 			btnBoardFirstCol.addPropertyChangeListener(new ProcessButtonColumn(1));
 			btnBoardFirstCol.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardFirstCol.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardFirstCol.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardFirstCol;
 	}
@@ -654,6 +663,8 @@ public class GameWindow extends JFrame {
 			btnBoardFirstDozen.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardFirstDozen.addPropertyChangeListener(new ProcessButtonDozen(1));
 			btnBoardFirstDozen.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardFirstDozen.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardFirstDozen.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardFirstDozen;
 	}
@@ -664,6 +675,8 @@ public class GameWindow extends JFrame {
 			btnBoardSecDozen.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardSecDozen.addPropertyChangeListener(new ProcessButtonDozen(2));
 			btnBoardSecDozen.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardSecDozen.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardSecDozen.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardSecDozen;
 	}
@@ -674,6 +687,8 @@ public class GameWindow extends JFrame {
 			btnBoardThirdDozen.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardThirdDozen.addPropertyChangeListener(new ProcessButtonDozen(3));
 			btnBoardThirdDozen.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardThirdDozen.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardThirdDozen.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardThirdDozen;
 	}
@@ -698,6 +713,8 @@ public class GameWindow extends JFrame {
 			btnBoardFail.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardFail.addPropertyChangeListener(new ProcessButtonFailPass(FailPassType.FAIL));
 			btnBoardFail.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardFail.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardFail.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardFail;
 	}
@@ -708,6 +725,8 @@ public class GameWindow extends JFrame {
 			btnBoardEven.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardEven.addPropertyChangeListener(new ProcessButtonOddEven(OddEvenType.EVEN));
 			btnBoardEven.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardEven.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardEven.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardEven;
 	}
@@ -718,6 +737,8 @@ public class GameWindow extends JFrame {
 			btnBoardBlack.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardBlack.addPropertyChangeListener(new ProcessButtonRedBlack(RedBlackType.BLACK));
 			btnBoardBlack.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardBlack.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardBlack.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardBlack;
 	}
@@ -728,6 +749,8 @@ public class GameWindow extends JFrame {
 			btnBoardRed.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardRed.addPropertyChangeListener(new ProcessButtonRedBlack(RedBlackType.RED));
 			btnBoardRed.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardRed.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardRed.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardRed;
 	}
@@ -738,6 +761,8 @@ public class GameWindow extends JFrame {
 			btnBoardOdd.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardOdd.addPropertyChangeListener(new ProcessButtonOddEven(OddEvenType.ODD));
 			btnBoardOdd.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardOdd.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardOdd.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardOdd;
 	}
@@ -748,6 +773,8 @@ public class GameWindow extends JFrame {
 			btnBoardPass.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardPass.addPropertyChangeListener(new ProcessButtonFailPass(FailPassType.PASS));
 			btnBoardPass.setTransferHandler(new TransferHandler("foreground"));
+			btnBoardPass.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnBoardPass.setHorizontalTextPosition(SwingConstants.CENTER);
 		}
 		return btnBoardPass;
 	}
@@ -755,12 +782,13 @@ public class GameWindow extends JFrame {
 	// Auxiliary methods
 	private void spinRoulette() {
 		roulette.spin();
-		writeInResultsTextArea();
-		roulette.detachAllBets();
+		writeInResultsTextArea();			
 		updatePlayerBalance();
 		updateShownPlayerBalance();
+		roulette.detachAllBets();
 		updatePlayerChips();
 		resetButtons();
+		getBtnRoulette().setEnabled(false);
 	}
 
 	private void updatePlayerBalance() {
@@ -786,6 +814,8 @@ public class GameWindow extends JFrame {
 		btn.setActionCommand(String.valueOf(pos));
 		btn.addPropertyChangeListener(new ProcessButtonNumber(number));
 		btn.setTransferHandler(new TransferHandler("foreground"));
+		btn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btn.setHorizontalTextPosition(SwingConstants.CENTER);
 		return btn;
 	}
 
@@ -1036,7 +1066,7 @@ public class GameWindow extends JFrame {
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
-			if (e.getPropertyName().equals("foreground")) {
+			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeRedBlackBet(currentBetChip.getAmount(), red));

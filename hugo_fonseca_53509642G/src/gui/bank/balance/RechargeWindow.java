@@ -52,6 +52,7 @@ public class RechargeWindow extends JDialog {
 		// Business logic
 		this.bankCredentialsWindow = bankCredentialsWindow;
 		this.player = Player.getInstance();
+		getTfBalance().setText(String.valueOf(player.getBalance()));
 
 	}
 
@@ -137,7 +138,7 @@ public class RechargeWindow extends JDialog {
 	private JSpinner getSpinExtract() {
 		if (spinExtract == null) {
 			spinExtract = new JSpinner();
-			spinExtract.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(10)));
+			spinExtract.setModel(new SpinnerNumberModel(new Double(1), new Double(1), null, new Double(10)));
 			spinExtract.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return spinExtract;

@@ -14,7 +14,7 @@ public class ImageFactoryImpl implements ImageFactory {
 		String filename = getFilenameForChip(chip);
 		ImageIcon imgIcon = new ImageIcon(ImageFactoryImpl.class.getResource(filename));
 		Image img = imgIcon.getImage();
-		Image newImg = img.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+		Image newImg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 		imgIcon = new ImageIcon(newImg);
 		return imgIcon;
 	}
