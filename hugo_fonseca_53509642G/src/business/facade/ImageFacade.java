@@ -1,18 +1,23 @@
 package business.facade;
 
-import java.awt.Image;
+import javax.swing.ImageIcon;
 
 import business.bar.products.Product;
 import business.chips.Chip;
+import business.images.ImageFactory;
+import business.images.ImageFactoryImpl;
 
 public class ImageFacade {
+	
+	// Attributes
+	private ImageFactory imgFactory = new ImageFactoryImpl();
 
-	public Image getImageForProduct(Product product) {
-		return null;		
+	public ImageIcon getImageForProduct(Product product) {
+		return imgFactory.makeImageForProduct(product);
 	}
 
-	public Image getImageForChip(Chip chips) {
-		return null;
+	public ImageIcon getImageForChip(Chip chip) {
+		return imgFactory.makeImageForChip(chip);
 	}
 
 }

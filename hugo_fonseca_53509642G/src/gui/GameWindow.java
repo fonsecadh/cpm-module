@@ -853,50 +853,65 @@ public class GameWindow extends JFrame {
 	private class ProcessDragChipFive extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			currentBetChip = chipFacade.makeChipFive();
-			JComponent c = (JComponent) e.getSource();
-			TransferHandler handler = c.getTransferHandler();
-			handler.exportAsDrag(c, e, TransferHandler.COPY);
+			int playerChipsFive = player.getChips().stream().filter(c -> c.getAmount() == 5).collect(Collectors.toList()).size();
+			if (playerChipsFive > 0) {
+				currentBetChip = chipFacade.makeChipFive();
+				JComponent c = (JComponent) e.getSource();
+				TransferHandler handler = c.getTransferHandler();
+				handler.exportAsDrag(c, e, TransferHandler.COPY);
+			}
 		}
 	}
 	
 	private class ProcessDragChipTen extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			currentBetChip = chipFacade.makeChipTen();
-			JComponent c = (JComponent) e.getSource();
-			TransferHandler handler = c.getTransferHandler();
-			handler.exportAsDrag(c, e, TransferHandler.COPY);
+			int playerChipsTen = player.getChips().stream().filter(c -> c.getAmount() == 10).collect(Collectors.toList()).size();
+			if (playerChipsTen > 0) {
+				currentBetChip = chipFacade.makeChipTen();
+				JComponent c = (JComponent) e.getSource();
+				TransferHandler handler = c.getTransferHandler();
+				handler.exportAsDrag(c, e, TransferHandler.COPY);
+			}
 		}
 	}
 	
 	private class ProcessDragChipTwenty extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			currentBetChip = chipFacade.makeChipTwenty();
-			JComponent c = (JComponent) e.getSource();
-			TransferHandler handler = c.getTransferHandler();
-			handler.exportAsDrag(c, e, TransferHandler.COPY);
+			int playerChipsTwenty = player.getChips().stream().filter(c -> c.getAmount() == 20).collect(Collectors.toList()).size();
+			if (playerChipsTwenty > 0) {
+				currentBetChip = chipFacade.makeChipTwenty();
+				JComponent c = (JComponent) e.getSource();
+				TransferHandler handler = c.getTransferHandler();
+				handler.exportAsDrag(c, e, TransferHandler.COPY);
+			}
 		}
 	}
 	
 	private class ProcessDragChipFifty extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			currentBetChip = chipFacade.makeChipFifty();
-			JComponent c = (JComponent) e.getSource();
-			TransferHandler handler = c.getTransferHandler();
-			handler.exportAsDrag(c, e, TransferHandler.COPY);
+			int playerChipsFifty = player.getChips().stream().filter(c -> c.getAmount() == 50).collect(Collectors.toList()).size();
+			if (playerChipsFifty > 0) {
+				currentBetChip = chipFacade.makeChipFifty();
+				JComponent c = (JComponent) e.getSource();
+				TransferHandler handler = c.getTransferHandler();
+				handler.exportAsDrag(c, e, TransferHandler.COPY);
+			}
 		}
 	}
 	
 	private class ProcessDragChipOneHundred extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			currentBetChip = chipFacade.makeChipOneHundred();
-			JComponent c = (JComponent) e.getSource();
-			TransferHandler handler = c.getTransferHandler();
-			handler.exportAsDrag(c, e, TransferHandler.COPY);
+			int playerChipsOneHundred = player.getChips().stream().filter(c -> c.getAmount() == 100).collect(Collectors.toList()).size();
+			if (playerChipsOneHundred > 0) {
+				currentBetChip = chipFacade.makeChipOneHundred();
+				JComponent c = (JComponent) e.getSource();
+				TransferHandler handler = c.getTransferHandler();
+				handler.exportAsDrag(c, e, TransferHandler.COPY);
+			}
 		}
 	}
 	
@@ -915,7 +930,9 @@ public class GameWindow extends JFrame {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeNumberBet(currentBetChip.getAmount(), number));
+				player.removeChipOfType(currentBetChip.getAmount()); 
 				getBtnRoulette().setEnabled(true);
+				updatePlayerChips();
 			}
 		}
 	}
@@ -935,7 +952,9 @@ public class GameWindow extends JFrame {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeColumnBet(currentBetChip.getAmount(), column));
+				player.removeChipOfType(currentBetChip.getAmount()); 
 				getBtnRoulette().setEnabled(true);
+				updatePlayerChips();
 			}
 		}
 	}
@@ -955,7 +974,9 @@ public class GameWindow extends JFrame {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeDozenBet(currentBetChip.getAmount(), dozen));
+				player.removeChipOfType(currentBetChip.getAmount()); 
 				getBtnRoulette().setEnabled(true);
+				updatePlayerChips();
 			}
 		}
 	}
@@ -975,7 +996,9 @@ public class GameWindow extends JFrame {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeFailPassBet(currentBetChip.getAmount(), pass));
+				player.removeChipOfType(currentBetChip.getAmount()); 
 				getBtnRoulette().setEnabled(true);
+				updatePlayerChips();
 			}
 		}
 	}
@@ -995,7 +1018,9 @@ public class GameWindow extends JFrame {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeOddEvenBet(currentBetChip.getAmount(), even));
+				player.removeChipOfType(currentBetChip.getAmount()); 
 				getBtnRoulette().setEnabled(true);
+				updatePlayerChips();
 			}
 		}
 	}
@@ -1015,13 +1040,15 @@ public class GameWindow extends JFrame {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeRedBlackBet(currentBetChip.getAmount(), red));
+				player.removeChipOfType(currentBetChip.getAmount()); 
 				getBtnRoulette().setEnabled(true);
+				updatePlayerChips();
 			}
 		}
 	}
 
 	private void setChipIconOnButton(JButton btn, Chip chip) {
-		btn.setIcon(new ImageIcon(imgFacade.getImageForChip(chip)));
+		btn.setIcon(imgFacade.getImageForChip(chip));
 	}
 	
 	private void resetButtons() {

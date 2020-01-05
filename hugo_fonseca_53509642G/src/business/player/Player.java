@@ -45,7 +45,7 @@ public class Player {
 		this.chips.add(chip);
 	}
 
-	public void removeChipOfType(int type) {
+	public void removeChipOfType(double type) {
 		Chip toRemove = null;
 		for (Chip c : chips) {
 			if (c.getAmount() == type) {
