@@ -107,7 +107,7 @@ public class OrderImpl implements Order {
 		// We append the elements of the dictionary
 		products.entrySet().forEach(p -> sbInfo.append(p.getKey() + "\n"));
 		
-		if (!comment.equals("")) {
+		if (comment != null) {
 			sbInfo.append("Customer's comments: \n");
 			sbInfo.append(comment + "\n");
 		}

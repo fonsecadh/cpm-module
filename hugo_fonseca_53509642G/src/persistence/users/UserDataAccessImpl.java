@@ -69,7 +69,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 	public List<User> loadUsers() {
 		String line;
 		String[] userData = null;
-		User user = userFactory.makeUser();
+		User user = null;
 		List<User> users = new ArrayList<User>();
 
 		try {
@@ -77,6 +77,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 			while (file.ready()) {
 				line = file.readLine();
 				userData = line.split("@");
+				user = userFactory.makeUser();
 				
 				user.setID(userData[0]);
 				user.setFullName(userData[1]);
@@ -100,7 +101,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 	public User loadUserForID(String id) throws UserException {
 		String line;
 		String[] userData = null;
-		User user = userFactory.makeUser();
+		User user = null;
 		boolean found = false;
 
 		try {
@@ -108,6 +109,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 			while (file.ready()) {
 				line = file.readLine();
 				userData = line.split("@");
+				user = userFactory.makeUser();
 				
 				if (id.equals(userData[0])) {
 					user.setID(userData[0]);
@@ -135,7 +137,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 	public User loadUserForUsername(String username) throws UserException {
 		String line;
 		String[] userData = null;
-		User user = userFactory.makeUser();
+		User user = null;
 		boolean found = false;
 
 		try {
@@ -143,6 +145,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 			while (file.ready()) {
 				line = file.readLine();
 				userData = line.split("@");
+				user = userFactory.makeUser();
 				
 				if (username.equals(userData[2])) {
 					user.setID(userData[0]);

@@ -28,6 +28,7 @@ import business.exceptions.order.OrderException;
 import business.facade.BarFacade;
 import business.facade.ImageFacade;
 import business.player.Player;
+import gui.GameWindow;
 
 public class BarWindow extends JDialog {
 
@@ -38,6 +39,7 @@ public class BarWindow extends JDialog {
 	private BarFacade barFacade;
 	private ImageFacade imageFacade;
 	private Player player;
+	private GameWindow gameWindow;
 
 	private JPanel pnFilter;
 	private JButton btnAlcoholic;
@@ -73,17 +75,19 @@ public class BarWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public BarWindow() {
+	public BarWindow(GameWindow gameWindow) {
 		setTitle("Roulette: Bar");
 		setBounds(100, 100, 450, 300);
-		getContentPane().add(getPnFilter(), BorderLayout.WEST);
-		getContentPane().add(getPnBtns(), BorderLayout.SOUTH);
-		getContentPane().add(getPnOrdering(), BorderLayout.CENTER);
 
 		// Business logic
 		this.barFacade = new BarFacade();
 		this.imageFacade = new ImageFacade();
 		this.player = Player.getInstance();
+		this.gameWindow = gameWindow;
+
+		getContentPane().add(getPnFilter(), BorderLayout.WEST);
+		getContentPane().add(getPnBtns(), BorderLayout.SOUTH);
+		getContentPane().add(getPnOrdering(), BorderLayout.CENTER);
 
 	}
 
@@ -230,6 +234,7 @@ public class BarWindow extends JDialog {
 				}
 			});
 			cbProducts.setFont(new Font("Dialog", Font.BOLD, 14));
+			showPicture();
 		}
 		return cbProducts;
 	}
@@ -246,7 +251,7 @@ public class BarWindow extends JDialog {
 
 	private JLabel getLblProductIcon() {
 		if (lblProductIcon == null) {
-			lblProductIcon = new JLabel("Product Icon");
+			lblProductIcon = new JLabel("");
 			lblProductIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return lblProductIcon;
@@ -474,7 +479,7 @@ public class BarWindow extends JDialog {
 		getTxtOrderPrice().setText(String.valueOf(BigDecimal.valueOf(total).setScale(2, BigDecimal.ROUND_HALF_UP)));
 		updateShownPlayerCurrentBalance(total);
 	}
-	
+
 	private void updateShownPlayerCurrentBalance(double orderTotal) {
 		double currentBalance = player.getBalance() - orderTotal;
 		getTxtBalance().setText(String.valueOf(currentBalance));
@@ -495,7 +500,7 @@ public class BarWindow extends JDialog {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	private void checkOkBtn() {
 		if (barFacade.noProductsInOrder() == true) {
 			getBtnOk().setEnabled(false);
@@ -503,15 +508,17 @@ public class BarWindow extends JDialog {
 			getBtnOk().setEnabled(true);
 		}
 	}
-	
+
 	private void saveAndClose() {
 		this.player.setBalance(Double.parseDouble(getTxtBalance().getText()));
 		barFacade.addComment(getTaComments().getText());
 		JOptionPane.showMessageDialog(this, barFacade.getOrderInfo(), "Order details", JOptionPane.INFORMATION_MESSAGE);
+		this.gameWindow.updateShownPlayerBalance();
 		dispose();
 	}
-	
+
 	private void filterProductsByType(int type) {
 		getCbProducts().setModel(new DefaultComboBoxModel<Product>(barFacade.filterProductByType(type)));
+		showPicture();
 	}
 }

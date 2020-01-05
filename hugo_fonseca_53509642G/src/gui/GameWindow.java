@@ -44,6 +44,7 @@ import business.facade.ImageFacade;
 import business.player.Player;
 import business.roulette.Roulette;
 import gui.bank.BankWindow;
+import gui.bar.BarWindow;
 import gui.credentials.users.LogOutWindow;
 import gui.credentials.users.SignInWindow;
 import javax.swing.JMenuBar;
@@ -63,6 +64,7 @@ public class GameWindow extends JFrame {
 	private SignInWindow signInWindow;
 	private LogOutWindow logOutWindow;
 	private BankWindow bankWindow;
+	private BarWindow barWindow;
 	private ImageFacade imgFacade;
 	private BetFacade betFacade;
 	private ChipFacade chipFacade;
@@ -267,6 +269,11 @@ public class GameWindow extends JFrame {
 	private JButton getBtnBar() {
 		if (btnBar == null) {
 			btnBar = new JButton("Bar");
+			btnBar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					openBarWindow();
+				}
+			});
 			btnBar.setMnemonic('R');
 			btnBar.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -849,6 +856,11 @@ public class GameWindow extends JFrame {
 	private JMenuItem getMntmOpenBar() {
 		if (mntmOpenBar == null) {
 			mntmOpenBar = new JMenuItem("Open bar");
+			mntmOpenBar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					openBarWindow();
+				}
+			});
 			mntmOpenBar.setMnemonic('O');
 			mntmOpenBar.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -1257,7 +1269,7 @@ public class GameWindow extends JFrame {
 	}
 
 	private void openLogOutWindow() {
-		this.logOutWindow = new LogOutWindow();
+		this.logOutWindow = new LogOutWindow(this);
 		this.logOutWindow.setModal(true);
 		this.logOutWindow.setLocationRelativeTo(this);
 		this.logOutWindow.setVisible(true);
@@ -1269,13 +1281,19 @@ public class GameWindow extends JFrame {
 		this.bankWindow.setLocationRelativeTo(this);
 		this.bankWindow.setVisible(true);
 	}
-	
+
+	private void openBarWindow() {
+		this.barWindow = new BarWindow(this);
+		this.barWindow.setModal(true);
+		this.barWindow.setLocationRelativeTo(this);
+		this.barWindow.setVisible(true);
+	}
+
 	private void showAbout() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Roulette desktop application for the Human-Computer Interaction subject.\n");
 		sb.append("Author: Hugo Fonseca Díaz (UO258318)");
-		JOptionPane.showMessageDialog(this, sb.toString(), 
-				"About", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this, sb.toString(), "About", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }

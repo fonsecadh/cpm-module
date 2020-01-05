@@ -21,13 +21,14 @@ public class BarDataAccessImpl implements BarDataAccess {
 	@Override
 	public List<Product> loadProducts() {
 		String line;
-		String[] productData = null;
-		Product product = productFactory.makeDrink();
+		String[] productData = null;		
 		List<Product> products = new ArrayList<Product>();
 
 		try {
 			BufferedReader file = new BufferedReader(new FileReader(PRODUCTS_FILENAME_URL));
 			while (file.ready()) {
+				Product product = productFactory.makeDrink();
+				
 				line = file.readLine();
 				productData = line.split("@");
 

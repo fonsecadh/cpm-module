@@ -23,7 +23,7 @@ public class BarManagerImpl implements BarManager {
 
 	@Override
 	public Product[] loadProductsAsArray() {
-		List<Product> prodList = bda.loadProducts();
+		List<Product> prodList = bda.loadProducts();		
 		Product[] aux = new Product[prodList.size()];
 		return prodList.toArray(aux);
 	}

@@ -16,22 +16,22 @@
 
   <!-- views -->
   <view>
-    <name>Tabla de contenidos</name>
-    <label>Tabla de contenidos</label>
+    <name>Table of Contents</name>
+    <label>Table of Contents</label>
     <type>javax.help.TOCView</type>
     <data>TOC.xml</data>
   </view>
 
   <view>
-    <name>Indice</name>
-    <label>Indice</label>
+    <name>Index</name>
+    <label>Index</label>
     <type>javax.help.IndexView</type>
-    <data>Indice.xml</data>
+    <data>Index.xml</data>
   </view>
 
   <view>
-    <name>Busqueda</name>
-    <label>Busqueda</label>
+    <name>Search</name>
+    <label>Search</label>
     <type>javax.help.SearchView</type>
     <data engine="com.sun.java.help.search.DefaultSearchEngine">
       JavaHelpSearch

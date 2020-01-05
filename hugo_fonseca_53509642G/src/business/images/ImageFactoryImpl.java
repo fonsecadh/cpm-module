@@ -37,8 +37,11 @@ public class ImageFactoryImpl implements ImageFactory {
 
 	@Override
 	public ImageIcon makeImageForProduct(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+		ImageIcon imgIcon = new ImageIcon(ImageFactoryImpl.class.getResource("/img/" + product.getCode() + ".png"));
+		Image img = imgIcon.getImage();
+		Image newImg = img.getScaledInstance(100, 150, java.awt.Image.SCALE_SMOOTH);
+		imgIcon = new ImageIcon(newImg);
+		return imgIcon;
 	}
 
 }

@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 
 import business.facade.UserFacade;
 import business.player.Player;
+import gui.GameWindow;
 
 public class LogOutWindow extends JDialog {
 
@@ -24,6 +25,7 @@ public class LogOutWindow extends JDialog {
 	// Attributes
 	private Player player;
 	private UserFacade userFacade;
+	private GameWindow gameWindow;
 	
 	private JPanel pnInfo;
 	private JPanel pnBtn;
@@ -39,7 +41,7 @@ public class LogOutWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public LogOutWindow() {
+	public LogOutWindow(GameWindow gameWindow) {
 		setTitle("Roulette: Log Out");
 		setBounds(100, 100, 450, 300);
 		getContentPane().add(getPnInfo(), BorderLayout.NORTH);
@@ -48,6 +50,7 @@ public class LogOutWindow extends JDialog {
 		
 		// Business logic
 		this.player = Player.getInstance();
+		this.gameWindow = gameWindow;
 		this.userFacade = new UserFacade();
 		convertChipsToBalance();
 	}
@@ -168,6 +171,7 @@ public class LogOutWindow extends JDialog {
 	private void logOutAndClose() {
 		userFacade.logOutUser(player.getAssociatedUser());
 		player.setAssociatedUser(null);
+		gameWindow.dispose();
 		dispose();
 	}
 	
