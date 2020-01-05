@@ -6,12 +6,14 @@ import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import gui.credentials.bank.BankCredentialsWindow;
 import javax.swing.SpinnerNumberModel;
@@ -19,6 +21,7 @@ import javax.swing.SpinnerNumberModel;
 import business.player.Player;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 
@@ -30,7 +33,7 @@ public class RechargeWindow extends JDialog {
 	// Attributes
 	private BankCredentialsWindow bankCredentialsWindow;
 	private Player player;
-	
+
 	private JPanel pnForm;
 	private JPanel pnBtns;
 	private JButton btnOk;
@@ -48,7 +51,13 @@ public class RechargeWindow extends JDialog {
 		setBounds(100, 100, 450, 300);
 		getContentPane().add(getPnForm(), BorderLayout.CENTER);
 		getContentPane().add(getPnBtns(), BorderLayout.SOUTH);
-		
+
+		this.getRootPane().setDefaultButton(getBtnOk());
+		this.getRootPane().registerKeyboardAction(e -> {
+			bankCredentialsWindow.dispose();
+			dispose();
+		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
 		// Business logic
 		this.bankCredentialsWindow = bankCredentialsWindow;
 		this.player = Player.getInstance();
@@ -145,17 +154,15 @@ public class RechargeWindow extends JDialog {
 		}
 		return spinExtract;
 	}
-	
-	
+
 	// Auxiliary methods
 	private void rechargeBalance() {
 		try {
 			getSpinExtract().commitEdit();
 		} catch (ParseException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), 
-					"Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 		try {
 			if ((Double) getSpinExtract().getValue() >= 1) {
 				double oldBalance = player.getBalance();
@@ -165,13 +172,11 @@ public class RechargeWindow extends JDialog {
 				this.bankCredentialsWindow.dispose();
 				dispose();
 			} else {
-				JOptionPane.showMessageDialog(this, "Not a valid number", 
-						"Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Not a valid number", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (ClassCastException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), 
-					"Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 	}
 }

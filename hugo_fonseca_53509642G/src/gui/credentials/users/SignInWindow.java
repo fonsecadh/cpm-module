@@ -29,7 +29,7 @@ public class SignInWindow extends JDialog {
 	private Player player;
 	private SignUpWindow signUp;
 	private GameWindow gameWindow;
-	
+
 	private JLabel lblUsername;
 	private JLabel lblSignIn;
 	private JTextField txtUsername;
@@ -55,8 +55,10 @@ public class SignInWindow extends JDialog {
 		getContentPane().add(getPfPasswd());
 		getContentPane().add(getPnSignIn());
 		getContentPane().add(getLblNewUser());
-		getContentPane().add(getPnSignUp());
+		getContentPane().add(getPnSignUp());	
 		
+		this.getRootPane().setDefaultButton(getBtnSignIn());
+
 		// Business logic
 		this.player = Player.getInstance();
 		this.userFacade = new UserFacade();
@@ -162,44 +164,40 @@ public class SignInWindow extends JDialog {
 		}
 		return pnSignUp;
 	}
-	
-	
+
 	// Auxiliary methods
 	private void checkForm() {
-		if (getTxtUsername().getText().equals("") 
-				|| String.valueOf(getPfPasswd().getPassword()).equals("")) {
-			JOptionPane.showMessageDialog(this, "Some of the fields are empty", 
-					"Empty fields", JOptionPane.ERROR_MESSAGE);
+		if (getTxtUsername().getText().equals("") || String.valueOf(getPfPasswd().getPassword()).equals("")) {
+			JOptionPane.showMessageDialog(this, "Some of the fields are empty", "Empty fields",
+					JOptionPane.ERROR_MESSAGE);
 		} else {
 			boolean isValid = false;
 			try {
-				isValid = userFacade.validateUserCredentials(getTxtUsername().getText(), 
+				isValid = userFacade.validateUserCredentials(getTxtUsername().getText(),
 						String.valueOf(getPfPasswd().getPassword()));
 			} catch (UserException e) {
-				JOptionPane.showMessageDialog(this, e.getMessage(), 
-						"Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
-			
+
 			if (isValid) {
 				try {
 					this.player.setAssociatedUser(userFacade.loadUser(getTxtUsername().getText()));
 					this.gameWindow.onUserLogged();
 					dispose(); // Close dialog
 				} catch (UserException e) {
-					JOptionPane.showMessageDialog(this, e.getMessage(), 
-							"Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(this, "Invalid session credentials", 
-						"Invalid session", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Invalid session credentials", "Invalid session",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
-	
+
 	public GameWindow getGameWindow() {
 		return gameWindow;
 	}
-	
+
 	private void startSignUpWindow() {
 		this.signUp = new SignUpWindow(this);
 		this.signUp.setModal(true);

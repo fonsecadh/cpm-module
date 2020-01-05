@@ -26,7 +26,7 @@ public class LogOutWindow extends JDialog {
 	private Player player;
 	private UserFacade userFacade;
 	private GameWindow gameWindow;
-	
+
 	private JPanel pnInfo;
 	private JPanel pnBtn;
 	private JPanel pnAction;
@@ -47,7 +47,9 @@ public class LogOutWindow extends JDialog {
 		getContentPane().add(getPnInfo(), BorderLayout.NORTH);
 		getContentPane().add(getPnBtn(), BorderLayout.SOUTH);
 		getContentPane().add(getPnAction(), BorderLayout.CENTER);
-		
+
+		this.getRootPane().setDefaultButton(getBtnExit());
+
 		// Business logic
 		this.player = Player.getInstance();
 		this.gameWindow = gameWindow;
@@ -154,12 +156,12 @@ public class LogOutWindow extends JDialog {
 		}
 		return btnMoveBank;
 	}
-	
+
 	// Auxiliary methods
 	private void moveToBank() {
 		player.setBalance(0);
 	}
-	
+
 	private void convertChipsToBalance() {
 		double amountChips = player.getChips().stream().map(c -> c.getAmount()).reduce(0.0, (a, b) -> a + b);
 		player.removeAllChips();
@@ -167,12 +169,12 @@ public class LogOutWindow extends JDialog {
 		player.setBalance(oldBalance + amountChips);
 		getTxtBalance().setText(String.valueOf(player.getBalance()));
 	}
-	
+
 	private void logOutAndClose() {
 		userFacade.logOutUser(player.getAssociatedUser());
 		player.setAssociatedUser(null);
 		gameWindow.dispose();
 		dispose();
 	}
-	
+
 }

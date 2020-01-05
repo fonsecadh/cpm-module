@@ -6,11 +6,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -88,7 +91,11 @@ public class BarWindow extends JDialog {
 		getContentPane().add(getPnFilter(), BorderLayout.WEST);
 		getContentPane().add(getPnBtns(), BorderLayout.SOUTH);
 		getContentPane().add(getPnOrdering(), BorderLayout.CENTER);
-		
+
+		this.getRootPane().setDefaultButton(getBtnOk());
+		this.getRootPane().registerKeyboardAction(e -> dispose(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				JComponent.WHEN_IN_FOCUSED_WINDOW);
+
 		getTxtBalance().setText(String.valueOf(player.getBalance()));
 	}
 
@@ -236,7 +243,7 @@ public class BarWindow extends JDialog {
 				}
 			});
 			cbProducts.setFont(new Font("Dialog", Font.BOLD, 14));
-			showPicture();			
+			showPicture();
 		}
 		return cbProducts;
 	}

@@ -28,7 +28,7 @@ public class BankWindow extends JDialog {
 	private GameWindow gameWindow;
 	private ChipsWindow chipsWindow;
 	private Player player;
-	
+
 	private JPanel pnCurrentBalance;
 	private JPanel pnBtn;
 	private JPanel pnActions;
@@ -53,7 +53,9 @@ public class BankWindow extends JDialog {
 		getContentPane().add(getPnCurrentBalance(), BorderLayout.NORTH);
 		getContentPane().add(getPnBtn(), BorderLayout.SOUTH);
 		getContentPane().add(getPnActions(), BorderLayout.CENTER);
-		
+
+		this.getRootPane().setDefaultButton(getBtnFinish());
+
 		// Business logic
 		this.player = Player.getInstance();
 		this.gameWindow = gameWindow;
@@ -200,7 +202,7 @@ public class BankWindow extends JDialog {
 		}
 		return btnGetChips;
 	}
-	
+
 	// Auxiliary methods
 	private void openBankCredentialsWindow() {
 		this.bankCredentialsWindow = new BankCredentialsWindow(this);
@@ -208,7 +210,7 @@ public class BankWindow extends JDialog {
 		this.bankCredentialsWindow.setLocationRelativeTo(this);
 		this.bankCredentialsWindow.setVisible(true);
 	}
-	
+
 	private void openChipsWindow() {
 		this.chipsWindow = new ChipsWindow(this);
 		this.chipsWindow.setModal(true);
@@ -219,7 +221,7 @@ public class BankWindow extends JDialog {
 	public void updateCurrentBalanceTxt() {
 		this.getTxtCurrentBalance().setText(String.valueOf(player.getBalance()));
 	}
-	
+
 	private void saveAndClose() {
 		gameWindow.updateShownPlayerBalance();
 		gameWindow.updatePlayerChips();

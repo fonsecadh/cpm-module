@@ -118,6 +118,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 					user.setPasswd(userData[3]);
 					user.setBalance(Double.parseDouble(userData[4]));	
 					found = true;
+					break;
 				}
 			}
 			file.close();			
@@ -154,6 +155,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 					user.setPasswd(userData[3]);
 					user.setBalance(Double.parseDouble(userData[4]));	
 					found = true;
+					break;
 				}
 			}
 			file.close();			

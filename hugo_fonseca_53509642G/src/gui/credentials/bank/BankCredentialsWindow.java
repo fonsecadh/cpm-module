@@ -5,14 +5,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import gui.bank.BankWindow;
 import gui.bank.balance.RechargeWindow;
@@ -46,7 +49,11 @@ public class BankCredentialsWindow extends JDialog {
 		getContentPane().add(getLblSecretCode());
 		getContentPane().add(getPfSecretCode());
 		getContentPane().add(getPnBtn());
-		
+
+		this.getRootPane().setDefaultButton(getBtnOk());
+		this.getRootPane().registerKeyboardAction(e -> dispose(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				JComponent.WHEN_IN_FOCUSED_WINDOW);
+
 		// Business logic
 		this.bankWindow = bankWindow;
 	}
