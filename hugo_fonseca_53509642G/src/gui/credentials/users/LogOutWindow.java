@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
+
+import gui.GameWindow;
+
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 
@@ -16,6 +19,8 @@ public class LogOutWindow extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	// Attributes
+	private GameWindow gameWindow;
+	
 	private JPanel pnInfo;
 	private JPanel pnBtn;
 	private JPanel pnAction;
@@ -30,13 +35,15 @@ public class LogOutWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public LogOutWindow() {
+	public LogOutWindow(GameWindow gameWindow) {
 		setTitle("Roulette: Log Out");
 		setBounds(100, 100, 450, 300);
 		getContentPane().add(getPnInfo(), BorderLayout.NORTH);
 		getContentPane().add(getPnBtn(), BorderLayout.SOUTH);
 		getContentPane().add(getPnAction(), BorderLayout.CENTER);
-
+		
+		// Business logic
+		this.gameWindow = gameWindow;
 	}
 
 	private JPanel getPnInfo() {

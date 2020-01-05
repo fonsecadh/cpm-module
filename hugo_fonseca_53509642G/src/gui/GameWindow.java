@@ -42,6 +42,8 @@ import business.facade.ChipFacade;
 import business.facade.ImageFacade;
 import business.player.Player;
 import business.roulette.Roulette;
+import gui.bank.BankWindow;
+import gui.credentials.users.LogOutWindow;
 import gui.credentials.users.SignInWindow;
 
 public class GameWindow extends JFrame {
@@ -53,6 +55,8 @@ public class GameWindow extends JFrame {
 	private Roulette roulette;
 	private Player player;
 	private SignInWindow signInWindow;
+	private LogOutWindow logOutWindow;
+	private BankWindow bankWindow;
 	private ImageFacade imgFacade;
 	private BetFacade betFacade;
 	private ChipFacade chipFacade;
@@ -253,6 +257,11 @@ public class GameWindow extends JFrame {
 	private JButton getBtnLogOut() {
 		if (btnLogOut == null) {
 			btnLogOut = new JButton("Log Out");
+			btnLogOut.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					openLogOutWindow();
+				}
+			});
 			btnLogOut.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnLogOut;
@@ -348,6 +357,11 @@ public class GameWindow extends JFrame {
 	private JButton getBtnGetChips() {
 		if (btnGetChips == null) {
 			btnGetChips = new JButton("Chips");
+			btnGetChips.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					openBankWindow();
+				}
+			});
 			btnGetChips.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnGetChips;
@@ -733,6 +747,7 @@ public class GameWindow extends JFrame {
 		updatePlayerBalance();
 		updateShownPlayerBalance();
 		updatePlayerChips();
+		resetButtons();
 	}
 
 	private void updatePlayerBalance() {
@@ -883,10 +898,11 @@ public class GameWindow extends JFrame {
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
-			if (e.getPropertyName().equals("foreground")) {
+			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeNumberBet(currentBetChip.getAmount(), number));
+				getBtnRoulette().setEnabled(true);
 			}
 		}
 	}
@@ -902,10 +918,11 @@ public class GameWindow extends JFrame {
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
-			if (e.getPropertyName().equals("foreground")) {
+			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeColumnBet(currentBetChip.getAmount(), column));
+				getBtnRoulette().setEnabled(true);
 			}
 		}
 	}
@@ -921,10 +938,11 @@ public class GameWindow extends JFrame {
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
-			if (e.getPropertyName().equals("foreground")) {
+			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeDozenBet(currentBetChip.getAmount(), dozen));
+				getBtnRoulette().setEnabled(true);
 			}
 		}
 	}
@@ -940,10 +958,11 @@ public class GameWindow extends JFrame {
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
-			if (e.getPropertyName().equals("foreground")) {
+			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeFailPassBet(currentBetChip.getAmount(), pass));
+				getBtnRoulette().setEnabled(true);
 			}
 		}
 	}
@@ -959,10 +978,11 @@ public class GameWindow extends JFrame {
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
-			if (e.getPropertyName().equals("foreground")) {
+			if (e.getPropertyName().equals("foreground") && e.getNewValue().equals(Color.BLUE)) {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeOddEvenBet(currentBetChip.getAmount(), even));
+				getBtnRoulette().setEnabled(true);
 			}
 		}
 	}
@@ -982,6 +1002,7 @@ public class GameWindow extends JFrame {
 				JButton btn = (JButton) e.getSource();
 				setChipIconOnButton(btn, currentBetChip);				
 				roulette.attachBet(betFacade.makeRedBlackBet(currentBetChip.getAmount(), red));
+				getBtnRoulette().setEnabled(true);
 			}
 		}
 	}
@@ -989,9 +1010,44 @@ public class GameWindow extends JFrame {
 	private void setChipIconOnButton(JButton btn, Chip chip) {
 		btn.setIcon(new ImageIcon(imgFacade.getImageForChip(chip)));
 	}
-
-	// TODO: Make a ProcessButton for every button (only one for the numbers)
-	// TODO: Make a ProcessDrag for every chip label
-	// TODO: Store last dragged chip in order to specify the amount of the bet in
-	// the buttons
+	
+	private void resetButtons() {
+		getBtnBoardZero().setIcon(null);
+		getBtnBoardZero().setForeground(Color.WHITE);
+		for (int i = 0; i < getPnBoardColumns().getComponents().length; i++) {
+			((JButton) getPnBoardColumns().getComponents()[i]).setIcon(null);
+			((JButton) getPnBoardColumns().getComponents()[i]).setForeground(Color.WHITE);
+		}
+		for (int i = 0; i < getPnBoardDozens().getComponents().length; i++) {
+			((JButton) getPnBoardDozens().getComponents()[i]).setIcon(null);
+			((JButton) getPnBoardDozens().getComponents()[i]).setForeground(Color.WHITE);
+		}
+		for (int i = 0; i < getPnBoardOther().getComponents().length; i++) {
+			((JButton) getPnBoardOther().getComponents()[i]).setIcon(null);
+			((JButton) getPnBoardOther().getComponents()[i]).setForeground(Color.WHITE);
+		}
+		for (int i = 0; i < getPnBoardNumbers().getComponents().length; i++) {
+			((JButton) getPnBoardNumbers().getComponents()[i]).setIcon(null);
+			if (checkRed(Integer.parseInt(((JButton) getPnBoardNumbers().getComponents()[i]).getText())) == true) {
+				((JButton) getPnBoardNumbers().getComponents()[i]).setForeground(Color.RED);
+			} else {
+				((JButton) getPnBoardNumbers().getComponents()[i]).setForeground(Color.WHITE);
+			}
+		}
+	}
+	
+	private void openLogOutWindow() {
+		this.logOutWindow = new LogOutWindow(this);
+		this.logOutWindow.setModal(true);
+		this.logOutWindow.setLocationRelativeTo(this);
+		this.logOutWindow.setVisible(true);
+	}
+	
+	private void openBankWindow() {
+		this.bankWindow = new BankWindow();
+		this.bankWindow.setModal(true);
+		this.bankWindow.setLocationRelativeTo(this);
+		this.bankWindow.setVisible(true);
+	}
+	
 }
