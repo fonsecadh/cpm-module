@@ -213,7 +213,7 @@ public class SignUpWindow extends JDialog {
 				String passwd = String.valueOf(getPfPasswd().getPassword());
 				String nationalID = getTxtUserID().getText();
 				
-				if (!userFacade.existsUsername(username)) {
+				if (userFacade.isUsernameAvailable(username)) {
 					userFacade.signUpUser(nationalID, fullname, username, passwd);
 					try {
 						this.player.setAssociatedUser(userFacade.loadUser(username));

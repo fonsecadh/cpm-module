@@ -35,6 +35,11 @@ public class ChipsWindow extends JDialog {
 	private Player player;
 	private double currentPlayerBalance;
 	private ChipFacade chipFacade;
+	private int prevUnitsChipFive = 0;
+	private int prevUnitsChipTen = 0;
+	private int prevUnitsChipTwenty = 0;
+	private int prevUnitsChipFifty = 0;
+	private int prevUnitsChipOneHundred = 0;
 
 	private JPanel pnBalance;
 	private JPanel pnChips;
@@ -71,6 +76,7 @@ public class ChipsWindow extends JDialog {
 		this.player = Player.getInstance();
 		this.currentPlayerBalance = player.getBalance();
 		this.chipFacade = new ChipFacade();
+		updatePlayerBalance();
 	}
 
 	private JPanel getPnBalance() {
@@ -155,8 +161,8 @@ public class ChipsWindow extends JDialog {
 			spinnerFiveChip = new JSpinner();
 			spinnerFiveChip.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent e) {
-					checkMax(5, (Integer) spinnerFiveChip.getValue(), (Integer) spinnerFiveChip.getPreviousValue(),
-							spinnerFiveChip);
+					checkMax(5, (Integer) spinnerFiveChip.getValue(), prevUnitsChipFive, spinnerFiveChip);
+					prevUnitsChipFive = (Integer) spinnerFiveChip.getValue();
 				}
 			});
 			spinnerFiveChip.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -181,8 +187,8 @@ public class ChipsWindow extends JDialog {
 			spinnerTenChip = new JSpinner();
 			spinnerTenChip.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent e) {
-					checkMax(10, (Integer) spinnerTenChip.getValue(), (Integer) spinnerTenChip.getPreviousValue(),
-							spinnerTenChip);
+					checkMax(10, (Integer) spinnerTenChip.getValue(), prevUnitsChipTen, spinnerTenChip);
+					prevUnitsChipTen = (Integer) spinnerTenChip.getValue();
 				}
 			});
 			spinnerTenChip.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -207,8 +213,8 @@ public class ChipsWindow extends JDialog {
 			spinnerTwentyChip = new JSpinner();
 			spinnerTwentyChip.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent e) {
-					checkMax(20, (Integer) spinnerTwentyChip.getValue(), (Integer) spinnerTwentyChip.getPreviousValue(),
-							spinnerTwentyChip);
+					checkMax(20, (Integer) spinnerTwentyChip.getValue(), prevUnitsChipTwenty, spinnerTwentyChip);
+					prevUnitsChipTwenty = (Integer) spinnerTwentyChip.getValue();
 				}
 			});
 			spinnerTwentyChip.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -233,8 +239,8 @@ public class ChipsWindow extends JDialog {
 			spinnerFiftyChip = new JSpinner();
 			spinnerFiftyChip.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent e) {
-					checkMax(50, (Integer) spinnerFiftyChip.getValue(), (Integer) spinnerFiftyChip.getPreviousValue(),
-							spinnerFiftyChip);
+					checkMax(50, (Integer) spinnerFiftyChip.getValue(), prevUnitsChipFifty, spinnerFiftyChip);
+					prevUnitsChipFifty = (Integer) spinnerFiftyChip.getValue();
 				}
 			});
 			spinnerFiftyChip.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
@@ -259,8 +265,8 @@ public class ChipsWindow extends JDialog {
 			spinnerOneHundredChip = new JSpinner();
 			spinnerOneHundredChip.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent e) {
-					checkMax(100, (Integer) spinnerOneHundredChip.getValue(),
-							(Integer) spinnerOneHundredChip.getPreviousValue(), spinnerOneHundredChip);
+					checkMax(100, (Integer) spinnerOneHundredChip.getValue(), prevUnitsChipOneHundred, spinnerOneHundredChip);
+					prevUnitsChipOneHundred = (Integer) spinnerOneHundredChip.getValue();
 				}
 			});
 			spinnerOneHundredChip
@@ -309,7 +315,7 @@ public class ChipsWindow extends JDialog {
 
 	// Auxiliary methods
 	private void updateBalanceAndChipsAndClose() {
-		addChipsToPlayer();		
+		addChipsToPlayer();
 		this.player.setBalance(currentPlayerBalance);
 		this.bankWindow.updateCurrentBalanceTxt();
 		dispose();
@@ -320,22 +326,22 @@ public class ChipsWindow extends JDialog {
 		for (int i = 0; i < fiveChipUnits; i++) {
 			this.player.addChip(chipFacade.makeChipFive());
 		}
-		
+
 		int tenChipUnits = (int) getSpinnerTenChip().getValue();
 		for (int i = 0; i < tenChipUnits; i++) {
 			this.player.addChip(chipFacade.makeChipTen());
 		}
-		
+
 		int twentyChipUnits = (int) getSpinnerTwentyChip().getValue();
 		for (int i = 0; i < twentyChipUnits; i++) {
 			this.player.addChip(chipFacade.makeChipTwenty());
 		}
-		
+
 		int fiftyChipUnits = (int) getSpinnerFiftyChip().getValue();
 		for (int i = 0; i < fiftyChipUnits; i++) {
 			this.player.addChip(chipFacade.makeChipFifty());
 		}
-		
+
 		int oneHundredChipUnits = (int) getSpinnerOneHundredChip().getValue();
 		for (int i = 0; i < oneHundredChipUnits; i++) {
 			this.player.addChip(chipFacade.makeChipOneHundred());

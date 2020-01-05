@@ -28,7 +28,7 @@ public class UserFacade {
 		return um.loadUserForUsername(username);
 	}
 
-	public boolean existsUsername(String username) {
+	public boolean isUsernameAvailable(String username) {
 		return um.isUsernameAvailable(username);
 	}
 

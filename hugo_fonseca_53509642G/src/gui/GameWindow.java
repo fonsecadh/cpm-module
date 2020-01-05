@@ -166,7 +166,7 @@ public class GameWindow extends JFrame {
 		this.betFacade = new BetFacade();
 		this.chipFacade = new ChipFacade();
 		createNumberButtons();
-		// openUserCredentialsWindow();
+		openUserCredentialsWindow();
 	}
 
 	private JPanel getPnRound() {
@@ -573,6 +573,7 @@ public class GameWindow extends JFrame {
 			btnBoardZero = new JButton("0");
 			btnBoardZero.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardZero.addPropertyChangeListener(new ProcessButtonNumber(0));
+			btnBoardZero.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardZero;
 	}
@@ -601,6 +602,7 @@ public class GameWindow extends JFrame {
 			btnBoardThirdCol = new JButton("3rd Col");
 			btnBoardThirdCol.setFont(new Font("Dialog", Font.BOLD, 14));
 			btnBoardThirdCol.addPropertyChangeListener(new ProcessButtonColumn(3));
+			btnBoardThirdCol.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardThirdCol;
 	}
@@ -610,6 +612,7 @@ public class GameWindow extends JFrame {
 			btnBoardSecCol = new JButton("2nd Col");
 			btnBoardSecCol.setFont(new Font("Dialog", Font.BOLD, 14));
 			btnBoardSecCol.addPropertyChangeListener(new ProcessButtonColumn(2));
+			btnBoardSecCol.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardSecCol;
 	}
@@ -619,6 +622,7 @@ public class GameWindow extends JFrame {
 			btnBoardFirstCol = new JButton("1st Col");
 			btnBoardFirstCol.setFont(new Font("Dialog", Font.BOLD, 14));
 			btnBoardFirstCol.addPropertyChangeListener(new ProcessButtonColumn(1));
+			btnBoardFirstCol.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardFirstCol;
 	}
@@ -649,6 +653,7 @@ public class GameWindow extends JFrame {
 			btnBoardFirstDozen = new JButton("1st Dozen");
 			btnBoardFirstDozen.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardFirstDozen.addPropertyChangeListener(new ProcessButtonDozen(1));
+			btnBoardFirstDozen.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardFirstDozen;
 	}
@@ -658,6 +663,7 @@ public class GameWindow extends JFrame {
 			btnBoardSecDozen = new JButton("2nd Dozen");
 			btnBoardSecDozen.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardSecDozen.addPropertyChangeListener(new ProcessButtonDozen(2));
+			btnBoardSecDozen.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardSecDozen;
 	}
@@ -667,6 +673,7 @@ public class GameWindow extends JFrame {
 			btnBoardThirdDozen = new JButton("3rd Dozen");
 			btnBoardThirdDozen.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardThirdDozen.addPropertyChangeListener(new ProcessButtonDozen(3));
+			btnBoardThirdDozen.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardThirdDozen;
 	}
@@ -690,6 +697,7 @@ public class GameWindow extends JFrame {
 			btnBoardFail = new JButton("1-18");
 			btnBoardFail.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardFail.addPropertyChangeListener(new ProcessButtonFailPass(FailPassType.FAIL));
+			btnBoardFail.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardFail;
 	}
@@ -699,6 +707,7 @@ public class GameWindow extends JFrame {
 			btnBoardEven = new JButton("Even");
 			btnBoardEven.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardEven.addPropertyChangeListener(new ProcessButtonOddEven(OddEvenType.EVEN));
+			btnBoardEven.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardEven;
 	}
@@ -708,6 +717,7 @@ public class GameWindow extends JFrame {
 			btnBoardBlack = new JButton("Black");
 			btnBoardBlack.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardBlack.addPropertyChangeListener(new ProcessButtonRedBlack(RedBlackType.BLACK));
+			btnBoardBlack.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardBlack;
 	}
@@ -717,6 +727,7 @@ public class GameWindow extends JFrame {
 			btnBoardRed = new JButton("Red");
 			btnBoardRed.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardRed.addPropertyChangeListener(new ProcessButtonRedBlack(RedBlackType.RED));
+			btnBoardRed.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardRed;
 	}
@@ -726,6 +737,7 @@ public class GameWindow extends JFrame {
 			btnBoardOdd = new JButton("Odd");
 			btnBoardOdd.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardOdd.addPropertyChangeListener(new ProcessButtonOddEven(OddEvenType.ODD));
+			btnBoardOdd.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardOdd;
 	}
@@ -735,6 +747,7 @@ public class GameWindow extends JFrame {
 			btnBoardPass = new JButton("19-36");
 			btnBoardPass.setFont(new Font("Dialog", Font.BOLD, 18));
 			btnBoardPass.addPropertyChangeListener(new ProcessButtonFailPass(FailPassType.PASS));
+			btnBoardPass.setTransferHandler(new TransferHandler("foreground"));
 		}
 		return btnBoardPass;
 	}
@@ -800,7 +813,7 @@ public class GameWindow extends JFrame {
 		updateShownPlayerBalance();
 	}
 
-	private void updateShownPlayerBalance() {
+	public void updateShownPlayerBalance() {
 		getTxtBalance().setText(String.valueOf(player.getBalance()));
 	}
 
@@ -816,7 +829,7 @@ public class GameWindow extends JFrame {
 		getTxtOneHundredChipUnits().setText("0");
 	}
 
-	private void updatePlayerChips() {
+	public void updatePlayerChips() {
 		int chipsFive = player.getChips().stream().filter(c -> c.getAmount() == 5).collect(Collectors.toList()).size();
 		int chipsTen = player.getChips().stream().filter(c -> c.getAmount() == 10).collect(Collectors.toList()).size();
 		int chipsTwenty = player.getChips().stream().filter(c -> c.getAmount() == 20).collect(Collectors.toList()).size();
@@ -1044,7 +1057,7 @@ public class GameWindow extends JFrame {
 	}
 	
 	private void openBankWindow() {
-		this.bankWindow = new BankWindow();
+		this.bankWindow = new BankWindow(this);
 		this.bankWindow.setModal(true);
 		this.bankWindow.setLocationRelativeTo(this);
 		this.bankWindow.setVisible(true);

@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business.player.Player;
+import gui.GameWindow;
 import gui.bank.chips.ChipsWindow;
 import gui.credentials.bank.BankCredentialsWindow;
 
@@ -24,6 +25,7 @@ public class BankWindow extends JDialog {
 
 	// Attributes
 	private BankCredentialsWindow bankCredentialsWindow;
+	private GameWindow gameWindow;
 	private ChipsWindow chipsWindow;
 	private Player player;
 	
@@ -45,7 +47,7 @@ public class BankWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public BankWindow() {
+	public BankWindow(GameWindow gameWindow) {
 		setTitle("Roulette: Bank");
 		setBounds(100, 100, 450, 300);
 		getContentPane().add(getPnCurrentBalance(), BorderLayout.NORTH);
@@ -54,6 +56,7 @@ public class BankWindow extends JDialog {
 		
 		// Business logic
 		this.player = Player.getInstance();
+		this.gameWindow = gameWindow;
 		updateCurrentBalanceTxt();
 	}
 
@@ -110,7 +113,7 @@ public class BankWindow extends JDialog {
 			btnFinish = new JButton("Finish");
 			btnFinish.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					dispose();
+					saveAndClose();
 				}
 			});
 			btnFinish.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -213,5 +216,11 @@ public class BankWindow extends JDialog {
 
 	public void updateCurrentBalanceTxt() {
 		this.getTxtCurrentBalance().setText(String.valueOf(player.getBalance()));
+	}
+	
+	private void saveAndClose() {
+		gameWindow.updateShownPlayerBalance();
+		gameWindow.updatePlayerChips();
+		dispose();
 	}
 }
