@@ -101,6 +101,11 @@ public class BarWindow extends JDialog {
 	private JButton getBtnAlcoholic() {
 		if (btnAlcoholic == null) {
 			btnAlcoholic = new JButton("Alcoholic");
+			btnAlcoholic.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					filterProductsByType(0);
+				}
+			});
 			btnAlcoholic.setMnemonic('A');
 			btnAlcoholic.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -110,6 +115,11 @@ public class BarWindow extends JDialog {
 	private JButton getBtnNonAlcoholic() {
 		if (btnNonAlcoholic == null) {
 			btnNonAlcoholic = new JButton("Non Alcoholic");
+			btnNonAlcoholic.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					filterProductsByType(1);
+				}
+			});
 			btnNonAlcoholic.setMnemonic('N');
 			btnNonAlcoholic.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -480,8 +490,17 @@ public class BarWindow extends JDialog {
 		int units = (int) getSpinnerUnits().getValue();
 		try {
 			barFacade.removeProduct(selectedProduct, units);
+			checkOkBtn();
 		} catch (OrderException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void checkOkBtn() {
+		if (barFacade.noProductsInOrder() == true) {
+			getBtnOk().setEnabled(false);
+		} else {
+			getBtnOk().setEnabled(true);
 		}
 	}
 	
@@ -490,5 +509,9 @@ public class BarWindow extends JDialog {
 		barFacade.addComment(getTaComments().getText());
 		JOptionPane.showMessageDialog(this, barFacade.getOrderInfo(), "Order details", JOptionPane.INFORMATION_MESSAGE);
 		dispose();
+	}
+	
+	private void filterProductsByType(int type) {
+		getCbProducts().setModel(new DefaultComboBoxModel<Product>(barFacade.filterProductByType(type)));
 	}
 }

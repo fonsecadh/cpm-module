@@ -64,4 +64,8 @@ public class BarFacade {
 		return order.toString();
 	}
 
+	public boolean noProductsInOrder() {
+		return order.getTotal() == 0.0 ? true : false;
+	}
+
 }

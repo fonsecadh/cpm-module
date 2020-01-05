@@ -825,6 +825,11 @@ public class GameWindow extends JFrame {
 	private JMenuItem getMntmLogOut() {
 		if (mntmLogOut == null) {
 			mntmLogOut = new JMenuItem("Log Out");
+			mntmLogOut.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					openLogOutWindow();
+				}
+			});
 			mntmLogOut.setMnemonic('L');
 			mntmLogOut.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
