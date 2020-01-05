@@ -88,7 +88,8 @@ public class BarWindow extends JDialog {
 		getContentPane().add(getPnFilter(), BorderLayout.WEST);
 		getContentPane().add(getPnBtns(), BorderLayout.SOUTH);
 		getContentPane().add(getPnOrdering(), BorderLayout.CENTER);
-
+		
+		getTxtBalance().setText(String.valueOf(player.getBalance()));
 	}
 
 	private JPanel getPnFilter() {
@@ -230,11 +231,12 @@ public class BarWindow extends JDialog {
 			cbProducts.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					showPicture();
+					checkOkBtn();
 					isDeletionPossible();
 				}
 			});
 			cbProducts.setFont(new Font("Dialog", Font.BOLD, 14));
-			showPicture();
+			showPicture();			
 		}
 		return cbProducts;
 	}

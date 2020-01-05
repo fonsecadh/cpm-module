@@ -953,7 +953,8 @@ public class GameWindow extends JFrame {
 
 	private void writeInResultsTextArea() {
 		StringBuilder sb = new StringBuilder();
-		roulette.getResults().parallelStream().forEach(b -> sb.append(b.toString() + "\n"));
+		sb.append("Roulette result: " + roulette.getRoundResult().getNumber() + "\n");
+		roulette.getResults().stream().forEach(b -> sb.append(b.toString() + "\n"));
 		taResults.setText(sb.toString());
 	}
 

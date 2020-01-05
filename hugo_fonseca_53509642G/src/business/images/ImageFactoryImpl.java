@@ -39,7 +39,7 @@ public class ImageFactoryImpl implements ImageFactory {
 	public ImageIcon makeImageForProduct(Product product) {
 		ImageIcon imgIcon = new ImageIcon(ImageFactoryImpl.class.getResource("/img/" + product.getCode() + ".png"));
 		Image img = imgIcon.getImage();
-		Image newImg = img.getScaledInstance(100, 150, java.awt.Image.SCALE_SMOOTH);
+		Image newImg = img.getScaledInstance(104, 121, java.awt.Image.SCALE_SMOOTH);
 		imgIcon = new ImageIcon(newImg);
 		return imgIcon;
 	}
