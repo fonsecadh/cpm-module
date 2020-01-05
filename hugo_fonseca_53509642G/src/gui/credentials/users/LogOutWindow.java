@@ -1,17 +1,20 @@
 package gui.credentials.users;
 
-import javax.swing.JDialog;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.JTextField;
-
-import gui.GameWindow;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import java.awt.FlowLayout;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import business.facade.UserFacade;
+import business.player.Player;
 
 public class LogOutWindow extends JDialog {
 
@@ -19,7 +22,8 @@ public class LogOutWindow extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	// Attributes
-	private GameWindow gameWindow;
+	private Player player;
+	private UserFacade userFacade;
 	
 	private JPanel pnInfo;
 	private JPanel pnBtn;
@@ -35,7 +39,7 @@ public class LogOutWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public LogOutWindow(GameWindow gameWindow) {
+	public LogOutWindow() {
 		setTitle("Roulette: Log Out");
 		setBounds(100, 100, 450, 300);
 		getContentPane().add(getPnInfo(), BorderLayout.NORTH);
@@ -43,7 +47,9 @@ public class LogOutWindow extends JDialog {
 		getContentPane().add(getPnAction(), BorderLayout.CENTER);
 		
 		// Business logic
-		this.gameWindow = gameWindow;
+		this.player = Player.getInstance();
+		this.userFacade = new UserFacade();
+		convertChipsToBalance();
 	}
 
 	private JPanel getPnInfo() {
@@ -122,6 +128,11 @@ public class LogOutWindow extends JDialog {
 	private JButton getBtnExit() {
 		if (btnExit == null) {
 			btnExit = new JButton("Exit");
+			btnExit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					logOutAndClose();
+				}
+			});
 			btnExit.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnExit;
@@ -130,9 +141,34 @@ public class LogOutWindow extends JDialog {
 	private JButton getBtnMoveBank() {
 		if (btnMoveBank == null) {
 			btnMoveBank = new JButton("Transfer Balance to Bank");
+			btnMoveBank.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					moveToBank();
+				}
+			});
 			btnMoveBank.setMnemonic('T');
 			btnMoveBank.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return btnMoveBank;
 	}
+	
+	// Auxiliary methods
+	private void moveToBank() {
+		player.setBalance(0);
+	}
+	
+	private void convertChipsToBalance() {
+		double amountChips = player.getChips().stream().map(c -> c.getAmount()).reduce(0.0, (a, b) -> a + b);
+		player.removeAllChips();
+		double oldBalance = player.getBalance();
+		player.setBalance(oldBalance + amountChips);
+		getTxtBalance().setText(String.valueOf(player.getBalance()));
+	}
+	
+	private void logOutAndClose() {
+		userFacade.logOutUser(player.getAssociatedUser());
+		player.setAssociatedUser(null);
+		dispose();
+	}
+	
 }

@@ -42,4 +42,8 @@ public class UserFacade {
 		um.registerUser(user);
 	}
 
+	public void logOutUser(User user) {
+		um.updateUserBalance(user.getUserName(), user.getBalance());
+	}
+
 }

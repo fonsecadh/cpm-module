@@ -14,9 +14,10 @@ public interface UserDataAccess {
 	List<User> loadUsers();
 	User loadUserForID(String id) throws UserException;
 	User loadUserForUsername(String username) throws UserException;
+	void updateUserBalance(String username, double balance);	
 	
 	// User Factory
 	UserFactory getUserFactory();
-	void setUserFactory(UserFactory userFactory);	
+	void setUserFactory(UserFactory userFactory);
 
 }

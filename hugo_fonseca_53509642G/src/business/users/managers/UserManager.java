@@ -17,5 +17,6 @@ public interface UserManager {
 	List<User> loadUsers();
 	User loadUserForID(String id) throws UserException;
 	User loadUserForUsername(String username) throws UserException;
+	void updateUserBalance(String username, double balance);
 
 }

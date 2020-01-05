@@ -78,4 +78,8 @@ public class Player {
 		this.type = type;
 	}
 
+	public void removeAllChips() {
+		this.chips.clear();
+	}
+
 }

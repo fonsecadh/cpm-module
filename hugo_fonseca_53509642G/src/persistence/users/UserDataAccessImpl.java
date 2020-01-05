@@ -58,9 +58,7 @@ public class UserDataAccessImpl implements UserDataAccess {
 			String line = id + "@" + fullName + "@" + userName + "@" + passwd + "@" + balance;
 			file.write(line);
 			file.close();
-		}
-
-		catch (FileNotFoundException fnfe) {
+		} catch (FileNotFoundException fnfe) {
 			System.out.println("The file could not be saved.");
 		} catch (IOException ioe) {
 			new RuntimeException("I/O Error.");
@@ -176,6 +174,49 @@ public class UserDataAccessImpl implements UserDataAccess {
 	@Override
 	public void setUserFactory(UserFactory userFactory) {
 		this.userFactory = userFactory;
+	}
+
+	@Override
+	public void updateUserBalance(String username, double balance) {
+		StringBuffer inputBuffer = new StringBuffer();
+		String line;
+		String[] userData = null;
+
+		try {
+			BufferedReader file = new BufferedReader(new FileReader(USER_FILENAME_URL));
+			while (file.ready()) {
+				line = file.readLine();
+				userData = line.split("@");
+				
+				if (username.equals(userData[2])) {
+					StringBuilder sb = new StringBuilder();
+					sb.append(userData[0] + "@");
+					sb.append(userData[1] + "@");
+					sb.append(userData[2] + "@");
+					sb.append(userData[3] + "@");
+					sb.append(String.valueOf(balance));
+					line = sb.toString();
+				}
+				
+				inputBuffer.append(line);
+				inputBuffer.append("\n");				
+			}
+			file.close();	
+		} catch (FileNotFoundException fnfe) {
+			System.out.println("File not found.");
+		} catch (IOException ioe) {
+			new RuntimeException("I/O Error.");
+		}
+		
+		try {
+			BufferedWriter file = new BufferedWriter(new FileWriter(USER_FILENAME_URL));
+			file.write(inputBuffer.toString());
+			file.close();
+		} catch (FileNotFoundException fnfe) {
+			System.out.println("The file could not be saved.");
+		} catch (IOException ioe) {
+			new RuntimeException("I/O Error.");
+		}		
 	}	
 
 }

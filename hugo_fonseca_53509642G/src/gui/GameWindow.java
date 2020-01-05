@@ -49,6 +49,7 @@ import gui.credentials.users.SignInWindow;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 
 public class GameWindow extends JFrame {
@@ -862,6 +863,11 @@ public class GameWindow extends JFrame {
 	private JMenuItem getMntmOpenBank() {
 		if (mntmOpenBank == null) {
 			mntmOpenBank = new JMenuItem("Open bank");
+			mntmOpenBank.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					openBankWindow();
+				}
+			});
 			mntmOpenBank.setMnemonic('P');
 			mntmOpenBank.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -899,6 +905,11 @@ public class GameWindow extends JFrame {
 	private JMenuItem getMntmAbout() {
 		if (mntmAbout == null) {
 			mntmAbout = new JMenuItem("About");
+			mntmAbout.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					showAbout();
+				}
+			});
 			mntmAbout.setMnemonic('A');
 			mntmAbout.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -1241,7 +1252,7 @@ public class GameWindow extends JFrame {
 	}
 
 	private void openLogOutWindow() {
-		this.logOutWindow = new LogOutWindow(this);
+		this.logOutWindow = new LogOutWindow();
 		this.logOutWindow.setModal(true);
 		this.logOutWindow.setLocationRelativeTo(this);
 		this.logOutWindow.setVisible(true);
@@ -1252,6 +1263,14 @@ public class GameWindow extends JFrame {
 		this.bankWindow.setModal(true);
 		this.bankWindow.setLocationRelativeTo(this);
 		this.bankWindow.setVisible(true);
+	}
+	
+	private void showAbout() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Roulette desktop application for the Human-Computer Interaction subject.\n");
+		sb.append("Author: Hugo Fonseca Díaz (UO258318)");
+		JOptionPane.showMessageDialog(this, sb.toString(), 
+				"About", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }

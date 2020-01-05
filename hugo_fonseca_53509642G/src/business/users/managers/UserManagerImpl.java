@@ -65,4 +65,10 @@ public class UserManagerImpl implements UserManager {
 		return uda.loadUserForUsername(username);
 	}
 
+
+	@Override
+	public void updateUserBalance(String username, double balance) {
+		uda.updateUserBalance(username, balance);
+	}
+
 }
