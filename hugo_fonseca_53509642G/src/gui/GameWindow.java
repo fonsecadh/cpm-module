@@ -187,7 +187,7 @@ public class GameWindow extends JFrame {
 	private JPanel getPnBar() {
 		if (pnBar == null) {
 			pnBar = new JPanel();
-			pnBar.setLayout(new GridLayout(0, 1, 0, 0));
+			pnBar.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			pnBar.add(getLblBarIcon());
 			pnBar.add(getPnBarBtn());
 		}
@@ -225,7 +225,8 @@ public class GameWindow extends JFrame {
 
 	private JLabel getLblBarIcon() {
 		if (lblBarIcon == null) {
-			lblBarIcon = new JLabel("Bar Icon");
+			lblBarIcon = new JLabel("");
+			lblBarIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/barIcon.png")));
 			lblBarIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
 		return lblBarIcon;
