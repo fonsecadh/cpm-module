@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -415,7 +416,7 @@ public class BarWindow extends JDialog {
 
 	// Auxiliary methods
 	private void showPicture() {
-		this.imageFacade.getImageForProduct((Product) getCbProducts().getSelectedItem());
+		getLblProductIcon().setIcon(new ImageIcon(this.imageFacade.getImageForProduct((Product) getCbProducts().getSelectedItem())));
 	}
 
 	private void isDeletionPossible() {

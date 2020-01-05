@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,6 +18,7 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -31,12 +33,16 @@ import javax.swing.border.EmptyBorder;
 
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 
+import business.bets.types.FailPassType;
+import business.bets.types.OddEvenType;
+import business.bets.types.RedBlackType;
 import business.chips.Chip;
+import business.facade.BetFacade;
+import business.facade.ChipFacade;
+import business.facade.ImageFacade;
 import business.player.Player;
 import business.roulette.Roulette;
 import gui.credentials.users.SignInWindow;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
 
 public class GameWindow extends JFrame {
 
@@ -47,9 +53,10 @@ public class GameWindow extends JFrame {
 	private Roulette roulette;
 	private Player player;
 	private SignInWindow signInWindow;
+	private ImageFacade imgFacade;
+	private BetFacade betFacade;
+	private ChipFacade chipFacade;
 	private Chip currentBetChip;
-	private ProcessDrag pd = new ProcessDrag();
-	private ProcessButton pb = new ProcessButton();
 
 	private JPanel contentPane;
 	private JPanel pnRound;
@@ -151,6 +158,9 @@ public class GameWindow extends JFrame {
 		// Business logic
 		this.roulette = Roulette.getInstance();
 		this.player = Player.getInstance();
+		this.imgFacade = new ImageFacade();
+		this.betFacade = new BetFacade();
+		this.chipFacade = new ChipFacade();
 		createNumberButtons();
 		// openUserCredentialsWindow();
 	}
@@ -379,7 +389,7 @@ public class GameWindow extends JFrame {
 			lblFiveChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipFive.png")));
 			lblFiveChipIcon.setLabelFor(getTxtFiveChipUnits());
 			lblFiveChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
-			lblFiveChipIcon.addMouseListener(pd);
+			lblFiveChipIcon.addMouseListener(new ProcessDragChipFive());
 			lblFiveChipIcon.setTransferHandler(new TransferHandler("foreground"));
 			lblFiveChipIcon.setForeground(Color.BLUE);
 		}
@@ -411,7 +421,7 @@ public class GameWindow extends JFrame {
 			lblTenChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipTen.png")));
 			lblTenChipIcon.setLabelFor(getTxtTenChipUnits());
 			lblTenChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
-			lblTenChipIcon.addMouseListener(pd);
+			lblTenChipIcon.addMouseListener(new ProcessDragChipTen());
 			lblTenChipIcon.setTransferHandler(new TransferHandler("foreground"));
 			lblTenChipIcon.setForeground(Color.BLUE);
 		}
@@ -443,7 +453,7 @@ public class GameWindow extends JFrame {
 			lblTwentyChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipTwenty.png")));
 			lblTwentyChipIcon.setLabelFor(getTxtTwentyChipUnits());
 			lblTwentyChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
-			lblTwentyChipIcon.addMouseListener(pd);
+			lblTwentyChipIcon.addMouseListener(new ProcessDragChipTwenty());
 			lblTwentyChipIcon.setTransferHandler(new TransferHandler("foreground"));
 			lblTwentyChipIcon.setForeground(Color.BLUE);
 		}
@@ -475,7 +485,7 @@ public class GameWindow extends JFrame {
 			lblFiftyChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipFifty.png")));
 			lblFiftyChipIcon.setLabelFor(getTxtFiftyChipUnits());
 			lblFiftyChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
-			lblFiftyChipIcon.addMouseListener(pd);
+			lblFiftyChipIcon.addMouseListener(new ProcessDragChipFifty());
 			lblFiftyChipIcon.setTransferHandler(new TransferHandler("foreground"));
 			lblFiftyChipIcon.setForeground(Color.BLUE);
 		}
@@ -507,7 +517,7 @@ public class GameWindow extends JFrame {
 			lblOneHundredChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipOneHundred.png")));
 			lblOneHundredChipIcon.setLabelFor(getTxtOneHundredChipUnits());
 			lblOneHundredChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
-			lblOneHundredChipIcon.addMouseListener(pd);
+			lblOneHundredChipIcon.addMouseListener(new ProcessDragChipOneHundred());
 			lblOneHundredChipIcon.setTransferHandler(new TransferHandler("foreground"));
 			lblOneHundredChipIcon.setForeground(Color.BLUE);
 		}
@@ -548,6 +558,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardZero == null) {
 			btnBoardZero = new JButton("0");
 			btnBoardZero.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardZero.addPropertyChangeListener(new ProcessButtonNumber(0));
 		}
 		return btnBoardZero;
 	}
@@ -575,6 +586,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardThirdCol == null) {
 			btnBoardThirdCol = new JButton("3rd Col");
 			btnBoardThirdCol.setFont(new Font("Dialog", Font.BOLD, 14));
+			btnBoardThirdCol.addPropertyChangeListener(new ProcessButtonColumn(3));
 		}
 		return btnBoardThirdCol;
 	}
@@ -583,6 +595,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardSecCol == null) {
 			btnBoardSecCol = new JButton("2nd Col");
 			btnBoardSecCol.setFont(new Font("Dialog", Font.BOLD, 14));
+			btnBoardSecCol.addPropertyChangeListener(new ProcessButtonColumn(2));
 		}
 		return btnBoardSecCol;
 	}
@@ -591,6 +604,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardFirstCol == null) {
 			btnBoardFirstCol = new JButton("1st Col");
 			btnBoardFirstCol.setFont(new Font("Dialog", Font.BOLD, 14));
+			btnBoardFirstCol.addPropertyChangeListener(new ProcessButtonColumn(1));
 		}
 		return btnBoardFirstCol;
 	}
@@ -620,6 +634,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardFirstDozen == null) {
 			btnBoardFirstDozen = new JButton("1st Dozen");
 			btnBoardFirstDozen.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardFirstDozen.addPropertyChangeListener(new ProcessButtonDozen(1));
 		}
 		return btnBoardFirstDozen;
 	}
@@ -628,6 +643,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardSecDozen == null) {
 			btnBoardSecDozen = new JButton("2nd Dozen");
 			btnBoardSecDozen.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardSecDozen.addPropertyChangeListener(new ProcessButtonDozen(2));
 		}
 		return btnBoardSecDozen;
 	}
@@ -636,6 +652,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardThirdDozen == null) {
 			btnBoardThirdDozen = new JButton("3rd Dozen");
 			btnBoardThirdDozen.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardThirdDozen.addPropertyChangeListener(new ProcessButtonDozen(3));
 		}
 		return btnBoardThirdDozen;
 	}
@@ -658,6 +675,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardFail == null) {
 			btnBoardFail = new JButton("1-18");
 			btnBoardFail.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardFail.addPropertyChangeListener(new ProcessButtonFailPass(FailPassType.FAIL));
 		}
 		return btnBoardFail;
 	}
@@ -666,6 +684,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardEven == null) {
 			btnBoardEven = new JButton("Even");
 			btnBoardEven.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardEven.addPropertyChangeListener(new ProcessButtonOddEven(OddEvenType.EVEN));
 		}
 		return btnBoardEven;
 	}
@@ -674,6 +693,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardBlack == null) {
 			btnBoardBlack = new JButton("Black");
 			btnBoardBlack.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardBlack.addPropertyChangeListener(new ProcessButtonRedBlack(RedBlackType.BLACK));
 		}
 		return btnBoardBlack;
 	}
@@ -682,6 +702,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardRed == null) {
 			btnBoardRed = new JButton("Red");
 			btnBoardRed.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardRed.addPropertyChangeListener(new ProcessButtonRedBlack(RedBlackType.RED));
 		}
 		return btnBoardRed;
 	}
@@ -690,6 +711,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardOdd == null) {
 			btnBoardOdd = new JButton("Odd");
 			btnBoardOdd.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardOdd.addPropertyChangeListener(new ProcessButtonOddEven(OddEvenType.ODD));
 		}
 		return btnBoardOdd;
 	}
@@ -698,6 +720,7 @@ public class GameWindow extends JFrame {
 		if (btnBoardPass == null) {
 			btnBoardPass = new JButton("19-36");
 			btnBoardPass.setFont(new Font("Dialog", Font.BOLD, 18));
+			btnBoardPass.addPropertyChangeListener(new ProcessButtonFailPass(FailPassType.PASS));
 		}
 		return btnBoardPass;
 	}
@@ -733,7 +756,7 @@ public class GameWindow extends JFrame {
 		}
 		btn.setFont(new Font("Dialog", Font.BOLD, 14));
 		btn.setActionCommand(String.valueOf(pos));
-		btn.addPropertyChangeListener(pb);
+		btn.addPropertyChangeListener(new ProcessButtonNumber(number));
 		btn.setTransferHandler(new TransferHandler("foreground"));
 		return btn;
 	}
@@ -798,24 +821,173 @@ public class GameWindow extends JFrame {
 		this.signInWindow.setLocationRelativeTo(this);
 		this.signInWindow.setVisible(true);
 	}
-
-	private class ProcessDrag extends MouseAdapter {
+	
+	private class ProcessDragChipFive extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
+			currentBetChip = chipFacade.makeChipFive();
 			JComponent c = (JComponent) e.getSource();
 			TransferHandler handler = c.getTransferHandler();
 			handler.exportAsDrag(c, e, TransferHandler.COPY);
 		}
 	}
-
-	private class ProcessButton implements PropertyChangeListener {
+	
+	private class ProcessDragChipTen extends MouseAdapter {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			currentBetChip = chipFacade.makeChipTen();
+			JComponent c = (JComponent) e.getSource();
+			TransferHandler handler = c.getTransferHandler();
+			handler.exportAsDrag(c, e, TransferHandler.COPY);
+		}
+	}
+	
+	private class ProcessDragChipTwenty extends MouseAdapter {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			currentBetChip = chipFacade.makeChipTwenty();
+			JComponent c = (JComponent) e.getSource();
+			TransferHandler handler = c.getTransferHandler();
+			handler.exportAsDrag(c, e, TransferHandler.COPY);
+		}
+	}
+	
+	private class ProcessDragChipFifty extends MouseAdapter {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			currentBetChip = chipFacade.makeChipFifty();
+			JComponent c = (JComponent) e.getSource();
+			TransferHandler handler = c.getTransferHandler();
+			handler.exportAsDrag(c, e, TransferHandler.COPY);
+		}
+	}
+	
+	private class ProcessDragChipOneHundred extends MouseAdapter {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			currentBetChip = chipFacade.makeChipOneHundred();
+			JComponent c = (JComponent) e.getSource();
+			TransferHandler handler = c.getTransferHandler();
+			handler.exportAsDrag(c, e, TransferHandler.COPY);
+		}
+	}
+	
+	private class ProcessButtonNumber implements PropertyChangeListener {
+		
+		// Attribute
+		private int number;
+		
+		public ProcessButtonNumber(int number) {
+			this.number = number;
+		}
+		
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			if (e.getPropertyName().equals("foreground")) {
 				JButton btn = (JButton) e.getSource();
-				Integer position = Integer.parseInt(btn.getActionCommand());
+				setChipIconOnButton(btn, currentBetChip);				
+				roulette.attachBet(betFacade.makeNumberBet(currentBetChip.getAmount(), number));
 			}
 		}
+	}
+	
+	private class ProcessButtonColumn implements PropertyChangeListener {
+		
+		// Attributes
+		private int column;
+		
+		public ProcessButtonColumn(int column) {
+			this.column = column;
+		}
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent e) {
+			if (e.getPropertyName().equals("foreground")) {
+				JButton btn = (JButton) e.getSource();
+				setChipIconOnButton(btn, currentBetChip);				
+				roulette.attachBet(betFacade.makeColumnBet(currentBetChip.getAmount(), column));
+			}
+		}
+	}
+	
+	private class ProcessButtonDozen implements PropertyChangeListener {
+		
+		// Attributes
+		private int dozen;
+		
+		public ProcessButtonDozen(int dozen) {
+			this.dozen = dozen;
+		}
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent e) {
+			if (e.getPropertyName().equals("foreground")) {
+				JButton btn = (JButton) e.getSource();
+				setChipIconOnButton(btn, currentBetChip);				
+				roulette.attachBet(betFacade.makeDozenBet(currentBetChip.getAmount(), dozen));
+			}
+		}
+	}
+	
+	private class ProcessButtonFailPass implements PropertyChangeListener {
+		
+		// Attributes
+		private boolean pass;
+		
+		public ProcessButtonFailPass(boolean pass) {
+			this.pass = pass;
+		}
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent e) {
+			if (e.getPropertyName().equals("foreground")) {
+				JButton btn = (JButton) e.getSource();
+				setChipIconOnButton(btn, currentBetChip);				
+				roulette.attachBet(betFacade.makeFailPassBet(currentBetChip.getAmount(), pass));
+			}
+		}
+	}
+	
+	private class ProcessButtonOddEven implements PropertyChangeListener {
+		
+		// Attributes
+		private boolean even;
+		
+		public ProcessButtonOddEven(boolean even) {
+			this.even = even;
+		}
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent e) {
+			if (e.getPropertyName().equals("foreground")) {
+				JButton btn = (JButton) e.getSource();
+				setChipIconOnButton(btn, currentBetChip);				
+				roulette.attachBet(betFacade.makeOddEvenBet(currentBetChip.getAmount(), even));
+			}
+		}
+	}
+	
+	private class ProcessButtonRedBlack implements PropertyChangeListener {
+		
+		// Attributes
+		private boolean red;
+		
+		public ProcessButtonRedBlack(boolean red) {
+			this.red = red;
+		}
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent e) {
+			if (e.getPropertyName().equals("foreground")) {
+				JButton btn = (JButton) e.getSource();
+				setChipIconOnButton(btn, currentBetChip);				
+				roulette.attachBet(betFacade.makeRedBlackBet(currentBetChip.getAmount(), red));
+			}
+		}
+	}
+
+	private void setChipIconOnButton(JButton btn, Chip chip) {
+		btn.setIcon(new ImageIcon(imgFacade.getImageForChip(chip)));
 	}
 
 	// TODO: Make a ProcessButton for every button (only one for the numbers)
