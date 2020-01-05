@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -34,6 +35,8 @@ import business.chips.Chip;
 import business.player.Player;
 import business.roulette.Roulette;
 import gui.credentials.users.SignInWindow;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class GameWindow extends JFrame {
 
@@ -131,6 +134,7 @@ public class GameWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public GameWindow() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GameWindow.class.getResource("/img/roulette.jpg")));
 		setTitle("Roulette");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -148,7 +152,7 @@ public class GameWindow extends JFrame {
 		this.roulette = Roulette.getInstance();
 		this.player = Player.getInstance();
 		createNumberButtons();
-		//openUserCredentialsWindow();
+		// openUserCredentialsWindow();
 	}
 
 	private JPanel getPnRound() {
@@ -245,7 +249,14 @@ public class GameWindow extends JFrame {
 
 	private JButton getBtnRoulette() {
 		if (btnRoulette == null) {
-			btnRoulette = new JButton("RouletteIcon");
+			btnRoulette = new JButton("");
+			
+			ImageIcon imageIcon = new ImageIcon(GameWindow.class.getResource("/img/roulette.jpg"));
+			Image img = imageIcon.getImage();
+			Image newImg = img.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newImg);
+			btnRoulette.setIcon(imageIcon);
+			btnRoulette.setDisabledIcon(imageIcon);
 			btnRoulette.setEnabled(false);
 			btnRoulette.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -287,9 +298,10 @@ public class GameWindow extends JFrame {
 	private JPanel getPnChips() {
 		if (pnChips == null) {
 			pnChips = new JPanel();
-			pnChips.setLayout(new GridLayout(0, 1, 0, 0));
-			pnChips.add(getPnChipsInfo());
-			pnChips.add(getPnChipsBtn());
+			pnChips.setLayout(new BorderLayout(0, 0));
+			pnChips.add(getPnChipsInfo(), BorderLayout.CENTER);
+			pnChips.add(getPnChipsBtn(), BorderLayout.SOUTH);
+			pnChips.add(getLblPlayerChips(), BorderLayout.NORTH);
 		}
 		return pnChips;
 	}
@@ -307,7 +319,6 @@ public class GameWindow extends JFrame {
 		if (pnChipsInfo == null) {
 			pnChipsInfo = new JPanel();
 			pnChipsInfo.setLayout(new GridLayout(0, 1, 0, 0));
-			pnChipsInfo.add(getLblPlayerChips());
 			pnChipsInfo.add(getPnPlayerChips());
 		}
 		return pnChipsInfo;
@@ -316,6 +327,8 @@ public class GameWindow extends JFrame {
 	private JPanel getPnChipsBtn() {
 		if (pnChipsBtn == null) {
 			pnChipsBtn = new JPanel();
+			FlowLayout flowLayout = (FlowLayout) pnChipsBtn.getLayout();
+			flowLayout.setAlignment(FlowLayout.LEFT);
 			pnChipsBtn.add(getBtnGetChips());
 		}
 		return pnChipsBtn;
@@ -361,7 +374,8 @@ public class GameWindow extends JFrame {
 
 	private JLabel getLblFiveChipIcon() {
 		if (lblFiveChipIcon == null) {
-			lblFiveChipIcon = new JLabel("FiveChipIcon");
+			lblFiveChipIcon = new JLabel("");
+			lblFiveChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipFive.png")));
 			lblFiveChipIcon.setLabelFor(getTxtFiveChipUnits());
 			lblFiveChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 			lblFiveChipIcon.addMouseListener(pd);
@@ -392,7 +406,8 @@ public class GameWindow extends JFrame {
 
 	private JLabel getLblTenChipIcon() {
 		if (lblTenChipIcon == null) {
-			lblTenChipIcon = new JLabel("TenChipIcon");
+			lblTenChipIcon = new JLabel("");
+			lblTenChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipTen.png")));
 			lblTenChipIcon.setLabelFor(getTxtTenChipUnits());
 			lblTenChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 			lblTenChipIcon.addMouseListener(pd);
@@ -423,7 +438,8 @@ public class GameWindow extends JFrame {
 
 	private JLabel getLblTwentyChipIcon() {
 		if (lblTwentyChipIcon == null) {
-			lblTwentyChipIcon = new JLabel("TwentyChipIcon");
+			lblTwentyChipIcon = new JLabel("");
+			lblTwentyChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipTwenty.png")));
 			lblTwentyChipIcon.setLabelFor(getTxtTwentyChipUnits());
 			lblTwentyChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 			lblTwentyChipIcon.addMouseListener(pd);
@@ -454,7 +470,8 @@ public class GameWindow extends JFrame {
 
 	private JLabel getLblFiftyChipIcon() {
 		if (lblFiftyChipIcon == null) {
-			lblFiftyChipIcon = new JLabel("FiftyChipIcon");
+			lblFiftyChipIcon = new JLabel("");
+			lblFiftyChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipFifty.png")));
 			lblFiftyChipIcon.setLabelFor(getTxtFiftyChipUnits());
 			lblFiftyChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 			lblFiftyChipIcon.addMouseListener(pd);
@@ -485,7 +502,8 @@ public class GameWindow extends JFrame {
 
 	private JLabel getLblOneHundredChipIcon() {
 		if (lblOneHundredChipIcon == null) {
-			lblOneHundredChipIcon = new JLabel("OneHundredChipIcon");
+			lblOneHundredChipIcon = new JLabel("");
+			lblOneHundredChipIcon.setIcon(new ImageIcon(GameWindow.class.getResource("/img/chipOneHundred.png")));
 			lblOneHundredChipIcon.setLabelFor(getTxtOneHundredChipUnits());
 			lblOneHundredChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 			lblOneHundredChipIcon.addMouseListener(pd);
@@ -712,7 +730,7 @@ public class GameWindow extends JFrame {
 		} else {
 			btn.setForeground(Color.WHITE);
 		}
-		btn.setFont(new Font("Dialog", Font.BOLD, 14));		
+		btn.setFont(new Font("Dialog", Font.BOLD, 14));
 		btn.setActionCommand(String.valueOf(pos));
 		btn.addPropertyChangeListener(pb);
 		btn.setTransferHandler(new TransferHandler("foreground"));
@@ -762,12 +780,9 @@ public class GameWindow extends JFrame {
 	private void updatePlayerChips() {
 		int chipsFive = player.getChips().stream().filter(c -> c.getAmount() == 5).collect(Collectors.toList()).size();
 		int chipsTen = player.getChips().stream().filter(c -> c.getAmount() == 10).collect(Collectors.toList()).size();
-		int chipsTwenty = player.getChips().stream().filter(c -> c.getAmount() == 20).collect(Collectors.toList())
-				.size();
-		int chipsFifty = player.getChips().stream().filter(c -> c.getAmount() == 50).collect(Collectors.toList())
-				.size();
-		int chipsOneHundred = player.getChips().stream().filter(c -> c.getAmount() == 100).collect(Collectors.toList())
-				.size();
+		int chipsTwenty = player.getChips().stream().filter(c -> c.getAmount() == 20).collect(Collectors.toList()).size();
+		int chipsFifty = player.getChips().stream().filter(c -> c.getAmount() == 50).collect(Collectors.toList()).size();
+		int chipsOneHundred = player.getChips().stream().filter(c -> c.getAmount() == 100).collect(Collectors.toList()).size();
 
 		getTxtFiveChipUnits().setText(String.valueOf(chipsFive));
 		getTxtTenChipUnits().setText(String.valueOf(chipsTen));
@@ -801,8 +816,9 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
-	
+
 	// TODO: Make a ProcessButton for every button (only one for the numbers)
 	// TODO: Make a ProcessDrag for every chip label
-	// TODO: Store last dragged chip in order to specify the amount of the bet in the buttons
+	// TODO: Store last dragged chip in order to specify the amount of the bet in
+	// the buttons
 }

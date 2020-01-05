@@ -23,6 +23,7 @@ import business.facade.ChipFacade;
 import business.player.Player;
 
 import javax.swing.event.ChangeEvent;
+import javax.swing.ImageIcon;
 
 public class ChipsWindow extends JDialog {
 
@@ -86,8 +87,8 @@ public class ChipsWindow extends JDialog {
 	private JPanel getPnChips() {
 		if (pnChips == null) {
 			pnChips = new JPanel();
-			pnChips.setLayout(new GridLayout(0, 1, 0, 0));
-			pnChips.add(getLblChips());
+			pnChips.setLayout(new BorderLayout(0, 0));
+			pnChips.add(getLblChips(), BorderLayout.NORTH);
 			pnChips.add(getPnChipsSelector());
 		}
 		return pnChips;
@@ -140,7 +141,8 @@ public class ChipsWindow extends JDialog {
 
 	private JLabel getLblFiveChipIcon() {
 		if (lblFiveChipIcon == null) {
-			lblFiveChipIcon = new JLabel("5 Chip Icon");
+			lblFiveChipIcon = new JLabel("");
+			lblFiveChipIcon.setIcon(new ImageIcon(ChipsWindow.class.getResource("/img/chipFive.png")));
 			lblFiveChipIcon.setLabelFor(getSpinnerFiveChip());
 			lblFiveChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -165,7 +167,8 @@ public class ChipsWindow extends JDialog {
 
 	private JLabel getLblTenChipIcon() {
 		if (lblTenChipIcon == null) {
-			lblTenChipIcon = new JLabel("10 Chip Icon");
+			lblTenChipIcon = new JLabel("");
+			lblTenChipIcon.setIcon(new ImageIcon(ChipsWindow.class.getResource("/img/chipTen.png")));
 			lblTenChipIcon.setLabelFor(getSpinnerTenChip());
 			lblTenChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -190,7 +193,8 @@ public class ChipsWindow extends JDialog {
 
 	private JLabel getLblTwentyChipIcon() {
 		if (lblTwentyChipIcon == null) {
-			lblTwentyChipIcon = new JLabel("20 Chip Icon");
+			lblTwentyChipIcon = new JLabel("");
+			lblTwentyChipIcon.setIcon(new ImageIcon(ChipsWindow.class.getResource("/img/chipTwenty.png")));
 			lblTwentyChipIcon.setLabelFor(getSpinnerTwentyChip());
 			lblTwentyChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -215,7 +219,8 @@ public class ChipsWindow extends JDialog {
 
 	private JLabel getLblFiftyChipIcon() {
 		if (lblFiftyChipIcon == null) {
-			lblFiftyChipIcon = new JLabel("50 Chip Icon");
+			lblFiftyChipIcon = new JLabel("");
+			lblFiftyChipIcon.setIcon(new ImageIcon(ChipsWindow.class.getResource("/img/chipFifty.png")));
 			lblFiftyChipIcon.setLabelFor(getSpinnerFiftyChip());
 			lblFiftyChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
@@ -240,7 +245,8 @@ public class ChipsWindow extends JDialog {
 
 	private JLabel getLblOneHundredChipIcon() {
 		if (lblOneHundredChipIcon == null) {
-			lblOneHundredChipIcon = new JLabel("100 Chip Icon");
+			lblOneHundredChipIcon = new JLabel("");
+			lblOneHundredChipIcon.setIcon(new ImageIcon(ChipsWindow.class.getResource("/img/chipOneHundred.png")));
 			lblOneHundredChipIcon.setLabelFor(getSpinnerOneHundredChip());
 			lblOneHundredChipIcon.setFont(new Font("Dialog", Font.BOLD, 14));
 		}
