@@ -15,9 +15,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.net.URL;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -179,7 +183,7 @@ public class GameWindow extends JFrame {
 		contentPane.add(getPnInfo(), BorderLayout.NORTH);
 		contentPane.add(getPnLogOut(), BorderLayout.SOUTH);
 		contentPane.add(getPnBar(), BorderLayout.EAST);
-		contentPane.add(getPnGame(), BorderLayout.CENTER);		
+		contentPane.add(getPnGame(), BorderLayout.CENTER);
 
 		// Business logic
 		this.roulette = Roulette.getInstance();
@@ -189,9 +193,32 @@ public class GameWindow extends JFrame {
 		this.chipFacade = new ChipFacade();
 		createNumberButtons();
 		openUserCredentialsWindow();
-		
+
 		this.getRootPane().registerKeyboardAction(e -> openLogOutWindow(),
 				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		
+		loadHelp();
+	}
+
+	private void loadHelp() {
+		URL hsURL;
+		HelpSet hs;
+
+		try {
+			File fichero = new File("help/Help.hs");
+			hsURL = fichero.toURI().toURL();
+			hs = new HelpSet(null, hsURL);
+		}
+
+		catch (Exception e) {
+			System.out.println("Help not found");
+			return;
+		}
+
+		HelpBroker hb = hs.createHelpBroker();
+
+		hb.enableHelpKey(getRootPane(), "intro", hs);
+		hb.enableHelpOnButton(getMntmContents(), "intro", hs);
 	}
 
 	private JPanel getPnRound() {
