@@ -160,6 +160,8 @@ public class LogOutWindow extends JDialog {
 	// Auxiliary methods
 	private void moveToBank() {
 		player.setBalance(0);
+		getTxtBalance().setText(String.valueOf(player.getBalance()));
+		getBtnMoveBank().setEnabled(false);
 	}
 
 	private void convertChipsToBalance() {

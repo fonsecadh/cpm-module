@@ -327,9 +327,9 @@ public class BarWindow extends JDialog {
 			btnAdd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					addProductToOrder();
-					updateShownOrderPrice();
-					updateCurrentOrderInfo();
 					enableNextButton();
+					updateShownOrderPrice();
+					updateCurrentOrderInfo();					
 					isDeletionPossible();
 					resetSpinner();
 				}
@@ -346,9 +346,9 @@ public class BarWindow extends JDialog {
 			btnRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					deleteFromProduct();
-					updateShownOrderPrice();
-					updateCurrentOrderInfo();
 					enableNextButton();
+					updateShownOrderPrice();
+					updateCurrentOrderInfo();					
 					isDeletionPossible();
 					resetSpinner();
 				}
