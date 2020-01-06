@@ -6,5 +6,11 @@
 <toc version="1.0">
   
   <tocitem text="Roulette's Game" target="intro"/>
+  <tocitem text="How to play" target="play"/>
+  <tocitem text="Bank">
+  	<tocitem text="Get chips" target="chips"/>
+  	<tocitem text="Transfer currency" target="currency"/>
+  </tocitem>
+  <tocitem text="Bar" target="bar"/>
 
 </toc>

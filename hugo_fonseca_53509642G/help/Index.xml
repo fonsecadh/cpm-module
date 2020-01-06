@@ -5,6 +5,14 @@
 
 <index version="1.0">
 
-  <indexitem text="" target="" />
+  <indexitem text="description of the Roulette application" target="intro" />
+  <indexitem text="play the game" target="play" />
+  <indexitem text="bank" >
+  	<indexitem text="get chips" target="chips" />
+  	<indexitem text="transfer currency" target="currency" />
+  </indexitem>
+  <indexitem text="chips" target="chips" />
+  <indexitem text="currency" target="currency" />
+  <indexitem text="bar" target="bar" />
     
 </index>
