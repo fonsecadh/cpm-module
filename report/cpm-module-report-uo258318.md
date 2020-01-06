@@ -263,6 +263,120 @@ Because of not being specifically referenced in the module's requirements, we ha
 
 In this last part of the report, we will explain the business and persistence layers of the application.
 
+### Business layer
 
+#### Bar package
+
+- *Order* (interface): models a bar order.
+- *OrderImpl* (class): implements *Order* interface.
+- **factory**
+    - *BarManagerFactory* (interface): creates *BarManager* objects.
+    - *BarManagerFactoryImpl* (class): implements *BarManagerFactory* interface.
+    - *OrderFactory* (interface): creates *Order* objects.
+    - *OrderFactoryImpl* (class): implements *OrderFactory* interface.
+    - *ProductFactory* (interface): creates *Product* objects.
+    - *ProductFactoryImpl* (class): implements *ProductFactory* interface.
+- **managers**
+    - *BarManager* (interface): manages products by communicating with the BarDataAccess interface from the persistence layer.
+    - *BarManagerImpl* (class): implements *BarManager* interface. 
+- **products**
+    - *Product* (interface): models a bar product.
+    - *Drink* (class): models a drink. Implements *Product* interface.
+
+#### Bets package
+
+- *Bet* (interface): models a bet.
+- *BetImpl* (class): implements *Bet* interface.
+- *BetStatus* (enum): represents bet status.
+- **factory**
+    - *BetFactory* (interface): creates *Bet* objects.
+    - *BetFactoryImpl* (class): implements *BetFactory* interface.
+    - *BetManagerFactory* (interface): creates *BetManager* objects.
+    - *BetManagerFactoryImpl* (class): implements *BetManagerFactory* interface.
+    - *BetTypeFactory* (interface): creates *BetType* objects.
+    - *BetTypeFactoryImpl* (class): implements *BetTypeFactory* interface.
+- **managers**
+    - *BetManager* (interface): evaluates bets.
+    - *ColumnManager* (class): models a column bet manager. Implements *BetManager* interface.
+    - *DozenManager* (class): models a dozen bet manager. Implements *BetManager* interface.
+    - *FailPassManager* (class): models a fail/pass bet manager. Implements *BetManager* interface.
+    - *NumberManager* (class): models a number bet manager. Implements *BetManager* interface.
+    - *OddEvenManager* (class): models an odd/even bet manager. Implements *BetManager* interface.
+    - *RedBlackManager* (class: models a red/black bet manager. Implements *BetManager* interface.
+- **types**
+    - *BetType* (interface): models a bet type.
+    - *ColumnType* (class): models a column bet type. Implements *BetType* interface.
+    - *DozenType* (class): models a dozen bet type. Implements *BetType* interface.
+    - *FailPassType* (class): models a fail/pass bet type. Implements *BetType* interface.
+    - *NumberType* (class): models a number bet type. Implements *BetType* interface.
+    - *OddEvenType* (class): models an odd/even bet type. Implements *BetType* interface.
+    - *RedBlackType* (class): models a red/black bet type. Implements *BetType* interface.
+
+#### Chips package
+
+- *Chip* (interface): models a chip.
+- *ChipImpl* (class): implements *Chip* interface.
+- **factory**
+    - *ChipFactory* (interface): creates *Chip* objects.
+    - *ChipFactoryImpl* (class): implements *ChipFactory* interface.
+
+#### Exceptions package
+
+- **order**
+    - *OrderException* (exception): custom exception for order errors.
+- **users**
+    - *UserException* (exception): custom exception for user errors.
+
+#### Facade package
+
+- *BarFacade* (class): simple interface for the gui that manages all classes from the business layer related to the development of the bar.
+- *BetFacade* (class): same but for bet classes.
+- *ChipFacade* (class): same but for chip classes.
+- *ImageFacade* (class): same but for image classes.
+- *UserFacade* (class): same but for user classes.
+
+#### Images package
+
+- *ImageFactory* (interface): creates *ImageIcon* objects for chips and products.
+- *ImageFactoryImpl* (class): implements *ImageFactory* interface.
+
+#### Player package
+
+- *Player* (class): singleton class that models the current player of the application. Not the same as a user.
+- **type**
+    - *PlayerType* (interface): models a player type.
+    - *DefaultPlayerType* (class): default player type. Implements *PlayerType* interface. 
+
+#### Roulette package
+
+- *Roulette* (class): singleton class that models the game's roulette. Works also as the *Subject* for the bets of the current round that act like an *Observer*.
+- **results**
+    - *RoundResult* (interface): models the result of the current round.
+    - *RoundResultImpl* (class): implements *RoundResult* interface.
+
+#### Users package
+
+- *User* (interface): models a user of the application. As said before, it is not to be mistaken with a *Player*.
+- *UserImpl* (class): implements *User* interface.
+- **factory**
+    - *UserFactory* (interface): creates *User* objects.
+    - *UserFactoryImpl* (class): implements *UserFactory* interface.
+    - *UserManagerFactory* (interface): creates *UserManager* objects.
+    - *UserManagerFactoryImpl* (class): implements *UserManagerFactory* interface.
+- **managers**
+    - *UserManager* (interface): manages all things related to users, such as user credentials or communicating with the UserDataAccess interface from the persistence layer.
+    - *UserManagerImpl* (class): implements *UserManager* interface.
+
+### Persistence layer
+
+#### Bar package
+
+- *BarDataAccess* (interface): manages the products' file and communicates with the business layer related to the bar's development.
+- *BarDataAccessImpl* (class): implements *BarDataAccess* interface.
+
+#### Users package
+
+- *UserDataAccess* (interface): manages the users' file and communicates with the business layer related to the users' management.
+- *UserDataAccessImpl* (class): implements *UserDataAccess* interface.
 
 
